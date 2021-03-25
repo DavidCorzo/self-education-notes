@@ -12,3 +12,5 @@
 {"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QPointers can be uninitialized.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QAllocating and deallocating memory.\\E$"}
 {"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\Q#include <iostream> using namespace std; int main() int scores[] 100,95,89; cout << scores << endl; cout << *scores << endl; int *score_ptr scores; cout << score_ptr << endl; cout << *score_ptr << endl; return 0; /* OUTPUT: 0x61fe0c 100 0x61fe0c 100 */ We can also use array subscripting on a pointer.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QDifficult to reuse code.\\E$"}
+{"rule":"ENGLISH_WORD_REPEAT_BEGINNING_RULE","sentence":"^\\QDifficult to debug.\\E$"}

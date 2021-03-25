@@ -1,3 +1,0 @@
-RDBMS
-superviser id
-supervisee

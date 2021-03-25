@@ -1,0 +1,571 @@
+\section{What is object-oriented programming?}
+\subsection{Procedural programming and its limitations:}
+\begin{itemize}
+    \item Procedural programming is pretty much what we've been doing throughout the course.
+    \item Focus is on processes or actions that a program takes.
+    \item Programs are typically a collection of functions.
+    \item Data is declared separately.
+    \item Data is passed as arguments to into functions.
+    \item Fairly easy to learn.
+\end{itemize}
+Functions need to know the structure of the data.
+\begin{itemize}
+    \item If the structure of the data changes many functions must be changed.
+    \item Imagine a program with thousands of functions that all depend on a data structure being passed in to it, imagine that that data structure needs to change you would need to change every function, functions might even need to be modified to handle such change and a grave impact is in order, then test all the functions which makes development much more expensive.
+\end{itemize}
+
+As programs get larger they become more:
+\begin{itemize}
+    \item Difficult to understand.
+    \item Difficult to maintain.
+    \item Difficult to extend.
+    \item Difficult to debug.
+    \item Difficult to reuse code.
+    \item Fragile and easier to break.
+\end{itemize}
+
+\subsection{What is objected-oriented programming:}
+\begin{itemize}
+    \item Object oriented denotes many things such as: OO analysis, OO design, OO testing, etcetera.
+    \item Object-oriented is all about modeling you software in terms of objects and classes.
+    \item Classes and objects:
+        \begin{itemize}
+            \item Focus is on classes that model real-world domain entities.
+            \item Allows developers to think at a higher level of abstraction.
+            \item Used successfully in very large programs.
+        \end{itemize}
+\end{itemize}
+
+Why is it such a big deal?
+\begin{itemize}
+    \item As our programs grow more and more complex we need ways to deal with complexity, classes and objects are one way to do just that, rather than thinking of details we can think of just that object.
+\end{itemize}
+
+Encapsulation:
+\begin{itemize}
+    \item Objects contain data AND operations that work on that data.
+    \item Abstract Data Type (ADT).
+\end{itemize}
+
+Information hiding:
+\begin{itemize}
+    \item OO allows us to hide implementation specific logic in a class that is available only within the class, now we know that the user can mess with the user implementation specific code since they never knew about it in the first place.
+    \item Users of the class code to the interface since they don't need to know the implementation.
+    \item More abstraction.
+    \item Easier to test, debug, maintain and extend.
+\end{itemize}
+
+Reusability:
+\begin{itemize}
+    \item Easier to reuse in other applications.
+    \item Faster development.
+    \item Higher quality.
+\end{itemize}
+
+Inheritance:
+\begin{itemize}
+    \item Can create new classes in terms of existing classes.
+    \item Reusability.
+    \item Polymorphic classes.
+\end{itemize}
+
+\subsection{OO limitations}
+\begin{itemize}
+    \item Not a panacea:
+        \begin{itemize}
+            \item OO programming won't make bad code better.
+            \item Not suitable for all types of problems.
+            \item Not everything decomposes to a class.
+        \end{itemize}
+    
+    \item Learning curve:
+        \begin{itemize}
+            \item Usually a steeper learning curve, especially in C++.
+            \item Many OO languages, many variations of OO concepts.
+        \end{itemize}
+    
+    \item Design:
+        \begin{itemize}
+            \item Usually more up-front design is necessary to create good models and hierarchies.
+        \end{itemize}
+    
+    \item Programs can be:
+        \begin{itemize}
+            \item Larger in size.
+            \item Slower.
+            \item More complex.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{What are classes and objects?}
+\subsection{Classes}
+\begin{itemize}
+    \item Blueprints from which objects are created.
+    \item A user-defined data-type.
+    \item Has attributes (data).
+    \item Has methods (functions).
+    \item Can hide data and methods.
+    \item Provides a public interfase.
+\end{itemize}
+Example classes:
+\begin{itemize}
+    \item Account.
+    \item Employee.
+    \item Image.
+    \item \mintinline{cpp}{std::vector}.
+    \item \mintinline{cpp}{std::string}.
+\end{itemize}
+
+\subsection{Objects}
+\begin{itemize}
+    \item Objects are created from classes.
+    \item Represent a specific instantce of a class.
+    \item Can create many, many objects.
+    \item Each has its own identity.
+    \item Each can use the defined class methods. 
+\end{itemize}
+Examples of objects:
+\begin{itemize}
+    \item Frank's account is an instance of an account.
+    \item Jim's account is an instance of an account.
+    \item Each has its own balance, can make deposits, withdrawls, etc.
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item int are not classes but an object is declared in very much the same way any variable is.
+\end{itemize}
+\begin{minted}[autogobble]{cpp}
+    int high_score;
+    int low_score;
+    Account frank_account; // user defined type.
+    Account jim_account;
+    std::vector<int> scores;
+    std::string name;
+\end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{Declaring a class and creating objects}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    class Player {
+        // attributes
+        std::string name;
+        int health;
+        int xp;
+
+        // methods
+        void talk(std::string text_to_say);
+        bool is_dead();
+    };
+    int main() {
+        // Now that we have declared the class, we can create objects or instances of that class.
+        Player *enemy = new Player();
+        delete enemy;
+        return 0;
+    }
+\end{minted}
+
+Take the following example:
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    class Account {
+        // attributes
+        std::string name;
+        double balance;
+        // methods
+        bool withdrawl(double amount);
+        bool deposit(double amount);
+    };
+    int main() {
+        Account frank_account;
+        Account jim_account;
+        Account *mary_account = new Account();
+        delete mary_account;
+        return 0;
+    }
+\end{minted}
+
+\subsection{Creating objects}
+\begin{itemize}
+    \item Once we have objects we can use it like any other variable, for example.
+        \begin{minted}[autogobble]{cpp}
+            Account frank_account, jim_account;
+            std::vector<Account> account1 {frank_account, jim_account};
+            account1.push_back(jim_account);
+            Account accounts[] {frank_account};
+        \end{minted}
+\end{itemize}
+
+\subsection{Example}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    #include <string>
+    #include <vector>
+    using namespace std;
+    class Player { // everything inside here is 'encapsulated'.
+        // attributes 
+        string name;
+        unsigned int health;
+        int xp;
+        // methods prototypes
+        void talk(string);
+        bool is_dead();
+    };
+    class Account {
+        string name;
+        double balance;
+        
+        bool deposit(double);
+        bool withdraw(double);
+    };
+    int main() {
+        Player frank, hero;
+        Player * enemy {nullptr};
+        enemy = new Player;
+        delete enemy;
+
+        Player players[] {frank, hero};
+
+        vector<Player> player_vec;
+        player_vec.push_back(hero);
+
+        Account frank_account, jim_account;
+        return 0;
+    }
+\end{minted}
+
+%----------------------------------------------------------------------------------------
+\section{Accessing class members}
+\begin{itemize}
+    \item We can access:
+        \begin{itemize}
+            \item Class attributes.
+            \item Class methods.
+        \end{itemize}
+    
+    \item Some class members will not be accessible (because of the access modifiers).
+    \item We need an object to access instance variables.
+\end{itemize}
+
+\subsection{Access members}
+\begin{itemize}
+    \item If we have an object then we can use the dot operator to access the members.
+        \begin{minted}[autogobble]{cpp}
+            frank_account.balance;
+            frank_account.deposit(1000.00);
+        \end{minted}
+    
+    \item If we have a pointer to an object then we can use the \mintinline{cpp}{->} operator or dereference and use the dot operator to access the members.
+        \begin{minted}[autogobble]{cpp}
+            Account *frank_account = new Account();
+        (*frank_account).balance;
+        (*frank_account).deposit(1000.00);
+        \end{minted}
+        \begin{minted}[autogobble]{cpp}
+            Account *frank_account = new Account();
+            frank_account->balance;
+            frank_account->deposit(1000.00);
+        \end{minted}
+\end{itemize}
+
+\subsection{Example}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    using namespace std;
+
+    class Player {
+        public: // allows us to see the attributes and methods from main.
+        string name;
+        double health;
+        unsigned int xp;
+
+        void talk(string text_to_say) {
+            cout << name << " says " << text_to_say << endl;
+        }
+        bool is_dead(); // not implemented, if executed a linker error is going to be thrown.
+    };
+
+    int main() {
+        Player frank;
+        frank.name = "Frank"; // access the name and change it to "Frank"
+        frank.health = 100; // acces the health and change it to 100.
+        frank.xp = 12; // access the xp and change it 12.
+        frank.talk("Hello");
+
+        Player *enemy = new Player;
+        (*enemy).name = "Enemy";
+        enemy->name = "Enemy";
+        (*enemy).health = 100;
+        enemy->health = 100;
+        (*enemy).xp = 12;
+        enemy->xp = 12;
+        (*enemy).talk("I will destroy you.");
+        enemy->talk("I will destroy you.");
+        
+        return 0;
+    }
+    /* OUTPUT:
+    Frank says Hello
+    Enemy says I will destroy you.
+    Enemy says I will destroy you.
+    */
+\end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{Public and private}
+\begin{itemize}
+    \item \mintinline{cpp}{public:}
+        \begin{itemize}
+            \item Accessible everywhere.
+        \end{itemize}
+    
+    \item \mintinline{cpp}{private:}
+        \begin{itemize}
+            \item Accessible only by memebers or friends (we don't know yet) of the class.
+        \end{itemize}
+    
+    \item \mintinline{cpp}{protected:}
+        \begin{itemize}
+            \item Used with inheritance (we don't know that yet.)
+        \end{itemize}
+\end{itemize}
+
+\subsection{Declaration}
+\begin{itemize}
+    \item Once you declare an access modifier, everything from that point forward will have tha access modifier applied to it.
+        \begin{minted}[autogobble]{cpp}
+            class Class_name {
+                public: 
+                // declaration(s);
+            };
+        \end{minted}
+    
+    \item By default everything in a class will be private if no access modifier is specified.
+        \begin{minted}[autogobble]{cpp}
+            class Class_name {
+                private: 
+                // declaration(s);
+            };
+        \end{minted}
+    
+    \item Protected comes in when using inheritance, its basically the private access modifier for inheritance.
+        \begin{minted}[autogobble]{cpp}
+            class Class_name {
+                protected:
+                // declaration(s);
+            };
+        \end{minted}
+    
+    \item It is common to combine access modifiers because we want to hide only certain things.
+        \begin{minted}[autogobble]{cpp}
+            class Player {
+                private:
+                std::string name;
+                unsigned int health;
+                int xp;
+                public:
+                void talk(std::string text_to_say);
+                bool is_dead();
+            };
+        \end{minted}
+    
+    \item If you try to access members declared private you will get a compiler error.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+
+            class Player {
+                private:
+                std::string name;
+                unsigned int health;
+                int xp;
+                public:
+                void talk(std::string text_to_say);
+                bool is_dead();
+            };
+
+
+            int main() {
+                Player frank;
+                frank.name = "Frank"; // compiler error.
+                frank.health = 100; // compiler error.
+                frank.talk("Ready to battle.");
+                return 0;
+            }
+        \end{minted}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Implementing member methods}
+\begin{itemize}
+    \item Very similar to how we implemented functions.
+    \item Member methods have access to the member attributes.
+        \begin{itemize}
+            \item So you don't need to pass them as arguments.
+        \end{itemize}
+
+    \item Can be implemented outside the class declarationg.
+        \begin{itemize}
+            \item Need to use \verb|class_name::method_name|.
+        \end{itemize}
+    
+    \item Can separate specification from implementation.
+        \begin{itemize}
+            \item .h file for the class declaration.
+            \item .cpp file for the class implementation.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Inside the class declaration}
+\begin{minted}[autogobble]{cpp}
+    class Account {
+        private:
+        double balance;
+        public:
+        void set_balance(double bal) {
+            balance = bal;
+        }
+        double get_balance() {
+            return balance;
+        }
+    };
+\end{minted}
+
+\subsection{Outside the class declaration}
+Just have the method prototypes inside the class.
+\begin{minted}[autogobble]{cpp}
+    class Account {
+        private:
+        double balance;
+        public:
+        void set_balance(double bal);
+        double get_balance();
+    };
+
+    void Account::set_balance(double bal) {
+        balance = bal;
+    }
+
+    void Account::get_balance() {
+        return balance;
+    }
+\end{minted}
+
+\subsection{Separate specification from implementation}
+An include-guard is included so that if you include the file more than once you won't have a class redefinition error.
+\begin{minted}[autogobble]{cpp}
+    #ifndef _ACCOUNT_H_ // if this is not defined
+    #define _ACCOUNT_H_ // define it. Otherwise skip to #endif
+
+    #endif
+\end{minted}
+Some compilers allow you to include-guard your files with a simple preprocessor directive called \mintinline{cpp}{#pragma}.
+\begin{minted}[autogobble]{cpp}
+    #pragma once 
+    class Account {};
+
+\end{minted}
+Specify the class in a file ``Account.h'':
+\begin{minted}[autogobble]{cpp}
+    #ifndef _ACCOUNT_H_
+    #define _ACCOUNT_H_
+
+    class Account {
+        private:
+        double balance;
+        public:
+        void set_balance(double bal);
+        double get_balance();
+    };
+
+    #endif
+\end{minted}
+Implement the class in ``Account.cpp''
+\begin{minted}[autogobble]{cpp}
+    #include "Account.h"
+    void Account::set_balance(double bal) {
+        balance = bal;
+    }
+    double Account::get_balance() {
+        return balance;
+    }
+\end{minted}
+
+\subsection{Example}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    using namespace std;
+
+    class Account {
+    private:
+        string name;
+        double balance;
+    public:
+        void set_balance(double bal) {balance = bal;}
+        double get_balance() {return balance;}
+
+        void set_name(string n);
+        string get_name();
+        bool deposit(double amount);
+        bool withdraw(double amount);
+    };
+
+    void Account::set_name(string n) {
+        name = n;
+    }
+    string Account::get_name() {
+        return name;
+    }
+    bool Account::deposit(double amount) {
+        balance += amount;
+        return true;
+    }
+    bool Account::withdraw(double amount) {
+        if (balance-amount >= 0) {
+            balance -= amount;
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
+
+
+    int main() {
+        Account frank_account;
+        frank_account.set_name("Frank's account");
+        frank_account.set_balance(1000.00);
+        if (frank_account.deposit(200.00)) {
+            cout << "Deposit OK" << endl;
+        }
+        else {
+            cout << "Deposit Not allowed." << endl;
+        }
+
+        if (frank_account.withdraw(500.00)) {
+            cout << "Withdraw OK" << endl;
+        } 
+        else {
+            cout << "Not sufficient funds." << endl;
+        }
+
+        if (frank_account.withdraw(1500.00)) {
+            cout << "Withdraw OK" << endl;
+        }
+        else {
+            cout << "Not sufficient funds" << endl;
+        }
+        return 0;
+    }
+    /* OUTPUT:
+    Deposit OK
+    Withdraw OK
+    Not sufficient funds
+    */
+\end{minted}
