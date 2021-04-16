@@ -1125,3 +1125,320 @@ Example:
     */
 \end{minted}
 
+\section{Shallow Copying with the Copy Constructor}
+\begin{itemize}
+    \item Consider a class that contains a pointer as a data member.
+    \item Constructor allocates storage dynamically and initializes the pointer, the destructor releases the memory allocated by the constructor.
+    \item The default copy constructor conducts a memberwise copy of the data members, thus each data member is copied from the source object and the pointer's value is copied, not the values it points to, thus we have two objects that point to the same values and the change in the pointer's values can be done using both objects. This can lead to all sorts of problems for example if one object's destructor is called and releases the memory the other object will still point to the released storage.
+\end{itemize}
+
+\subsection{Example}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    using namespace std;
+
+    class Shallow {
+        public:
+            int *data;
+        Shallow(int d); // Constructor.
+        Shallow(const Shallow &Source); // Copy constructor.
+        ~Shallow(); // Destructor.
+    };
+
+    Shallow::Shallow(int d) {
+        data = new int; // allocate storage.
+        *data = d;
+    }
+
+    Shallow::~Shallow() {
+        delete data; // free storage.
+        cout << "Destructor freeing data" << endl;
+    }
+
+    Shallow::Shallow(const Shallow &source) : data(source.data) {
+        cout << "Copy constructor - Shallow" << endl;
+    }
+
+    void display_shallow(Shallow obj) { // obj is a copy of obj1.
+        cout << *obj.data << endl;
+        // obj goes out of scope and is thus destroyed. The pointer is freed.
+    }
+
+    int main() {
+        Shallow obj1 {100};
+        display_shallow(obj1);
+        cout << *obj1.data << endl; // Referencing a pointer that has already been freed.
+
+        return 0;
+    }
+    /* OUTPUT:
+    Copy constructor - Shallow
+    100
+    Destructor freeing data   
+    15869168 // trash data
+    */
+\end{minted}
+
+\section{Deep Copying with the Copy constructor}
+\begin{itemize}
+    \item Create a copy of the pointed-to data. Each copy will have a pointer to unique storage in the heap. Deep copy when you have a raw pointer as a class member.
+    \item You can also delegate constructors from copy constructors.
+\end{itemize}
+
+\subsection{Example}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    using namespace std;
+
+    class Deep {
+        public:
+        int *data;
+        Deep(int d);
+        Deep(const Deep &source);
+        ~Deep();
+    };
+
+    Deep::Deep(int d) {
+        data = new int; // allocate storage.
+        *data = d;
+    }
+
+    Deep::~Deep() {
+        delete data; // free storage.
+        cout << "Destructor freeing data" << endl;
+    }
+
+    // Deep::Deep(const Deep &source) {
+    //     data = new int;
+    //     *data = *source.data;
+    //     cout << "Copy constructor -deep" << endl;
+    // }
+
+    Deep::Deep(const Deep &source) : Deep{*source.data} /* Delegating to the first constructor */ {
+        cout << "Copy constructor -deep" << endl;
+    }
+
+    void display_deep(Deep s) {
+        cout << *s.data << endl;
+    }
+
+    int main() {
+        Deep obj1 {100};
+        display_deep(obj1);
+        *obj1.data = 100;
+        return 0;
+    }
+    /* OUTPUT:
+    Copy constructor -deep
+    100
+    Destructor freeing data
+    Destructor freeing data
+    */
+\end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{Move constructor}
+\begin{itemize}
+    \item Sometimes when we excecute the compiler creates unnamed temporary values:
+        \begin{minted}[autogobble]{cpp}
+            int total {0};
+            total = 100 + 200;
+        \end{minted}
+    
+    \item In the above, 100 + 200 is not addressable, it is a right-hand side value which then gets assigned to the left-hand side which is the variable 'total' and the temporary objects.
+    \item Naturally, the problem here is that this temporary values can be very big and with objects, shallow copies and deep pointer copies the overhead can get really big and this is why we need the move constructors come in.
+    \item Sometimes copy constructors are called many times automaticallt due to the copy semantics of C++.
+    \item Copy constructors doing deep copying can have a significant performance (bottleneck).
+    \item C++11 introduced move semantics and the move constructor, the move constructor moves an object rather than copying it.
+    \item Optional but recomended when you have raw pointers.
+    \item Copy elision : C++ may optimize copying away completely (RVO- Return Value Optimization).
+    \item If you don't provide a move construtor then what will be used instead is the copy constructor, for efficiency you should always provide a move constructor.
+\end{itemize}
+
+\subsection{r-value references}
+\begin{itemize}
+    \item Used in moving semantics and perfect forwarding.
+    \item Move semantics is all about r-value references.
+    \item Used by move constructor and move assignment operator to efficiently move an objet rather than copy it. 
+    \item R-value reference operator (\&\&).
+    \item Example of l-value reference parameters:
+        \begin{minted}[autogobble]{cpp}
+            int x {10};
+            int &l_ref = x; // l-value reference.
+            l_ref = 10; // change x to 10.
+
+            int &&r_ref = 200; // r-value ref.
+            r_ref = 300; // change r_ref to 300.
+
+            int &&x_ref = x; // compiler error.
+        \end{minted}
+    
+    \item Another example:
+        \begin{minted}[autogobble]{cpp}
+            int x {100}; // x is an l-value.
+            void func(int &num); // Define function that expects an l-value.
+            func(x); // x is an l-value so OK.
+            func(200); // 200 is a r-value.
+        \end{minted}
+    
+    \item Example of r-value reference parameters:
+        \begin{minted}[autogobble]{cpp}
+            int x {100}; // x is an l-value.
+            void func(int &&num); // A funcion that expects an r-value reference.
+            func(200); // calls func with an r-value.
+            func(x); // error: x is an l-value.
+        \end{minted}
+    
+    \item We could, in any case, overload the functions.
+        \begin{minted}[autogobble]{cpp}
+            int x {100};
+    
+            void func(int &num); // function that expects a l-value.
+            void func(int &&num); // function that expects a r-value.
+
+            func(x); // calls: func(int &num);
+            func(200); // calls: func(int &&num);
+        \end{minted}
+\end{itemize}
+
+\subsection{Move constructors}
+\begin{itemize}
+    \item Move constructors basically is the memberwise copy of objects but the pointer that is copied in one of the objects is nulled out in the other, so just one pointer is being used, you just moved a pointer not all the deep copy things the pointers where pointing to.
+    \item Another way of thinking about it is that the move constructor just steals the data and then nulls out the source pointer.
+\end{itemize}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    #include <vector>
+    using namespace std;
+
+    class Move {
+        public: 
+        int *data;
+        Move(int d); // Constructor.
+        Move(const Move &source); // Copy constructor.
+        ~Move(); // Destructor.
+        Move(Move &&source) noexcept; // Move constructor.
+    };
+
+    Move::Move(int d) {
+        data = new int;
+        *data = d;
+        cout << "Constructor called: " << *data << endl;
+    }
+
+    Move::Move(const Move &source) : Move(*source.data) {
+        cout << "Copy constructor called -deep copy: " << *data << endl;
+    }
+
+    Move::Move(Move &&source) noexcept : data{source.data} {
+        source.data = nullptr;
+        cout << "Move constructor - moving resource: " << *data << endl;
+    }
+
+    Move::~Move() {
+        cout << ((data == nullptr)? "Destructor called for nullptr.": "Destructo called.") << endl;
+        delete data;
+    }
+
+    int main() {
+        vector<Move> vec;
+        // Move{10} is un-named, C++ will use the copy constructors to make copies, 
+        // but since we have provided a move constructor C++ wont use the copy cosntructor.
+        vec.push_back(Move{10}); 
+        vec.push_back(Move{20}); 
+        return 0;
+    }
+    /* OUTPUT:
+    Constructor called: 10
+    Move constructor - moving resource: 10
+    Destructor called for nullptr.
+    Constructor called: 20
+    Move constructor - moving resource: 20
+    Move constructor - moving resource: 10
+    Destructor called for nullptr.
+    Destructor called for nullptr.
+    Destructo called.
+    Destructo called.
+    */
+\end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{The 'this' pointer}
+\begin{itemize}
+    \item 'this' is a reserved word that referes to the current object.
+    \item Contains the address of the object, so it's a pointer to the object.
+    \item Can only beused in class scope.
+    \item All members acces is done via the 'this' pointer.
+    \item Can be used bu the programmer to: 
+        \begin{itemize}
+            \item Access data members and methods.
+            \item To determine if two objects are the same (later on).
+            \item Can be dereferences (*this) to yield the current object.
+        \end{itemize}
+    
+    \item This is also used to have same name parameters and class data members.
+        \begin{minted}[autogobble]{cpp}
+            void account::set_balance(double balance) {
+                balance = balance; // which balance? The parameter or the data memeber?
+            }
+
+            void account::set_balance(double balance) {
+                this->balance = balance; // Now it is unambigous.
+            }
+        \end{minted}
+    
+    \item To determine object identity (this will be useful to overload operators.):
+        \begin{minted}[autogobble]{cpp}
+            int Account::compare_balance(const Account &other) {
+                if (this == &other) {
+                    std::cout << "The same objects" << std::endl;
+                }
+            }
+            frank_account.compare(frank_account);
+        \end{minted}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\section{Using const with classes}
+\begin{itemize}
+    \item const classes.
+        \begin{itemize}
+            \item Pass arguments to class member methods as \mintinline{cpp}{const}.
+            \item We can also create const objects.
+            \item What happens if we call member functions on const objects?
+            \item const-correctness. 
+        \end{itemize}
+    
+    \item Creating a const object:
+        \begin{itemize}
+            \item villain is a cont object so it's attributes cannot change.
+                \begin{minted}[autogobble]{cpp}
+                    const Player villain {"Villain", 100, 55};
+                \end{minted}
+            
+            \item What happens when we call member methods on a const object?
+                \begin{minted}[autogobble]{cpp}
+                    const Player villain {"Villain", 100, 55};
+                    void display_player_name(const Player &p) {
+                        cout << p.get_name() << endl;
+                    }
+                    display_player_name(villain); // Error. Even if we are not changing the variables and data members the compiler does not allow it.
+                \end{minted}
+            
+            \item The compiler assumes that any method called can potentially modify the object, so in the class declaration we must declare methods as const as well, that way we tell the compiler that we are sure that that method will not change the object. Once you have declared a method to be const if you change any data member in the method body the compiler will produce an error.
+                \begin{minted}[autogobble]{cpp}
+                    class Player {
+                        private:
+                        ...
+                        public: 
+                        ...
+                        std::string get_name() const; // This method will not modify the data members.
+                    };
+                    const Player villain {"Villain", 100, 55}; 
+                    villain.set_name("Nice guy"); // Not allowed.
+                    std::cout << villain.get_name() << std::endl; // OK
+                \end{minted}
+        \end{itemize}
+\end{itemize}
