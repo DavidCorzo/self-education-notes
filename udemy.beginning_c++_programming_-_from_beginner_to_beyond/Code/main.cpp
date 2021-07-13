@@ -1,10 +1,23 @@
-class Player {
-    private:
-     ...
-    public: 
-     ...
-     std::string get_name() const;
-};
-const Player villain {"Villain", 100, 55}; 
-villain.set_name("Nice guy"); // Not allowed.
-std::cout << villain.get_name() << std::endl; // OK
+#include <iostream>
+#include <vector>
+#include "Mystring.h"
+
+using namespace std;
+
+int main() {
+    Mystring a{"Hello"}; // overloaded constructor
+    a.display();
+    a = Mystring{"Hola"}; // overloaded constructor 
+    a.display();
+    a = "Bonjour";
+    a.display();
+    return 0;
+}
+
+/* OUTPUT:
+Hello: 5
+Using move assignment
+Hola: 4
+Using move assignment
+Bonjour: 7
+*/

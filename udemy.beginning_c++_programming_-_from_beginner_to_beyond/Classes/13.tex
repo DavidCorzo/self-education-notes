@@ -1413,7 +1413,7 @@ Example:
     
     \item Creating a const object:
         \begin{itemize}
-            \item villain is a cont object so it's attributes cannot change.
+            \item villain is a const object so it's attributes cannot change.
                 \begin{minted}[autogobble]{cpp}
                     const Player villain {"Villain", 100, 55};
                 \end{minted}
@@ -1441,4 +1441,284 @@ Example:
                     std::cout << villain.get_name() << std::endl; // OK
                 \end{minted}
         \end{itemize}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\section{Static Class Members}
+\begin{itemize}
+    \item Class data members can be declared as static.
+        \begin{itemize}
+            \item A single data member that belongs to the class, not the objects.
+            \item Useful to store class-wide information.
+            \item Example: a variable that counts the instances of the class, it cannot be a member variable it needs to be a static member.
+        \end{itemize}
+    \item Class functions can be declared as static.
+        \begin{itemize}
+            \item Independent of any objects.
+            \item Can be called using the class name.
+        \end{itemize}
+    
+    \item Example of counting the number of players instanciated in the program:
+        \begin{minted}[autogobble]{cpp}
+            class Player {
+                private: 
+                    static int num_players;
+                public:
+                    static int get_num_players() {
+                        ...
+                    }
+            };
+        \end{minted}
+    
+    \item A static variable is only intialized ONCE. This happens tipically in the cpp file not the header. You can only instantiate the static variables outside the class, not inside.
+        \begin{minted}[autogobble]{cpp}
+            #include "Player.h"
+            int Player::num_players = 0; // initialization (only once)
+        \end{minted}
+    
+    \item Static methods only have access to static data. It does not access to non-static data members.
+        \begin{minted}[autogobble]{cpp}
+            int Player::get_num_players() {
+                return num_players;
+            }
+        \end{minted}
+    
+    \item Lets write an example of how to increment and decrement a static variable that counts the instances of an object.
+        \begin{minted}[autogobble]{cpp}
+            Player::Player(std::string name_val, int health_val, int xp_val) : name{name_val}, health{health_val}, xp{xp_val} {
+                ++num_players;
+            }
+            Player::~Player() {
+                --num_players;
+            }
+        \end{minted}
+        \begin{itemize}
+            \item Be careful to only have the increment in one constructor, since if you delegate constructors you might be incrementing/decrementing the static variable by more than one.
+        \end{itemize}
+    
+    \item Now by calling the method ``display\_active\_players'' we can check how many instances we have of the Player class.
+        \begin{minted}[autogobble]{cpp}
+            void display_active_players() {
+                cout << "Active players:" << Player::get_num_players() << endl;
+            }
+        \end{minted}
+\end{itemize}
+
+\section{Example}
+In ``Player.h''
+\begin{minted}[autogobble]{cpp}
+    #ifndef PLAYER_H 
+    #define PLAYER_H
+    #include <string>
+    class Player {
+        private:
+            static int num_players;
+            std::string name;
+            int health;
+            int xp;
+        public: 
+
+        std::string get_name() {return name;}
+        int get_health() {return health;}
+        int get_xp() {return xp;}
+        
+        Player(std::string name_val = "None", int health_val = 0, int xp_val = 0);
+        // Copy constructors
+        Player(const Player &source) {}
+        // Destructor
+        ~Player();
+
+        static int get_num_players(); // does not have access to name, health, or xp
+    }
+\end{minted}
+In ``Player.cpp''
+\begin{minted}[autogobble]{cpp}
+    #include "Player.h"
+    int Player::num_players {0};
+
+    Player::Player(std::string name_val, int health_val, int xp_val) 
+        : name{name_val}, health{health_val}, xp{xp_val} {
+        ++num_players;
+    }
+    Player::Player(const Player &source) {
+    }
+    Player::~Player() {
+        --num_players;
+    }
+    int Player::get_num_players() {
+        return num_players;
+    }
+\end{minted}
+In ``main.cpp''
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    #include "Player.h"
+    using namespace std;
+
+    void display_active_players() {
+        cout << "Active players: " << Player::get_num_players() << endl;
+    }
+
+    int main() {
+        display_active_players();
+        Player hero{"Hero"};
+        display_active_players();
+        {
+            Player frank{"Frank"};
+            display_active_players();
+        }
+        display_active_players();
+        return 0;
+    }
+    /* OUTPUT:
+    0
+    1
+    2
+    1
+    */
+\end{minted}
+
+%----------------------------------------------------------------------------------------
+\section{Structs vs Classes}
+\begin{itemize}
+    \item \mintinline{cpp}{struct} is supported in C++ and it comes from C.
+    \item In addition to define a \mintinline{cpp}{class} we can declare a \mintinline{cpp}{struct}.
+    \item Essentially the same as a \mintinline{cpp}{class} except that all the members are public by default.
+\end{itemize}
+
+\subsection{When to use a class or struct?}
+\begin{itemize}
+    \item \mintinline{cpp}{struct}
+        \begin{itemize}
+            \item Use \mintinline{cpp}{struct} for passive objects with public access.
+        \end{itemize}
+    \item \mintinline{cpp}{class}
+        \begin{itemize}
+            \item Use class for active objects with passive access.
+            \item Implementing getters/setters as needed.
+            \item Implementing member methods as needed.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item \mintinline{cpp}{class}
+        \begin{minted}[autogobble]{cpp}
+            struct Person {
+                std::string name; // public
+                std::string get_name(); // public 
+            }
+            Person p;
+            p.name = "Frank"; // OK
+            std::cout << p.get_name(); // OK
+        \end{minted}
+        
+    \item \mintinline{cpp}{struct}
+        \begin{minted}[autogobble]{cpp}
+            class Person {
+                std::string name; // private
+                std::string get_name(); // private
+            };
+            Person p;
+            p.name = "Frank"; // compiler error, data is private.
+            std::cout << p.get_name(); // compiler error, data is private.
+        \end{minted}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Friends of a class}
+\begin{itemize}
+    \item Friends are a very big controversial in C++, the whole argument is wether friends aid encasulation or enhance it. When a class extends friendship to a fucntion of a class then the other class (the one being granted friendship) can now access the private class members.
+    \item Friend:
+        \begin{itemize}
+            \item A function of class that has access to private class members.
+            \item And, that function of or class is NOT a member of the class it is accessing.
+        \end{itemize}
+    
+    \item Function:
+        \begin{itemize}
+            \item Can be regular non-member functions.
+            \item Can be member methods of another class.
+        \end{itemize}
+    
+    \item Class:
+        \begin{itemize}
+            \item Another class can have access to private class members.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Friends of a class}
+\begin{itemize}
+    \item Friendship must be granted not taken:
+        \begin{itemize}
+            \item Declared explicitly in the class that is granting friendship.
+            \item Declared in the function prototype with the keyword friend.
+        \end{itemize}
+    
+    \item Friendship is not symmetric. (not reciprocal)
+        \begin{itemize}
+            \item Must be explicitly granted.
+                \begin{itemize}
+                    \item If A is a friend of B.
+                    \item B is NOT a friend of A.
+                \end{itemize}
+        \end{itemize}
+    
+    \item Friendship is not transitive:
+        \begin{itemize}
+            \item Must be explicitly granted.
+                \begin{itemize}
+                    \item If A is a friend of B AND 
+                    \item B is a friend of C 
+                    \item Then A is NOT a friend of C.
+                \end{itemize}
+        \end{itemize}
+    
+    \item Friendship is not inherited.
+    
+    \item Example of non-member friend functions:
+        \begin{minted}[autogobble]{cpp}
+            class Player {
+                friend void display_player(Player &p);
+                std::string name;
+                int health;
+                int xp;
+                public:
+                ...
+            };
+            // Now lets declare a non-member function that will change the private members of Player.
+            void display_player(Player &p) {
+                std::cout << p.name << std::endl;
+                std::cout << p.health << std::endl;
+                std::cout << p.xp << std::endl;
+            }
+        \end{minted}
+    
+    \item Example of other class member function friends:
+        \begin{minted}[autogobble]{cpp}
+            class other_class {
+                ...
+                public:
+                void display_player(Player &p) {
+                    std::cout << p.name << std::endl;
+                    std::cout << p.health << std::endl;
+                    std::cout << p.xp << std::endl;
+                }
+            };
+        \end{minted}
+    
+    \item Declaring an entire class a friend.
+        \begin{minted}[autogobble]{cpp}
+            class Player {
+                friend class other_class;
+                std::string name;
+                int health;
+                int xp;
+            };
+        \end{minted}
+    
+    \item Friendship allows you to not write setters and getters just for using the attributes in one other class, it allows you to grant other classes permision to change those variables without having to write setters and getters.
+    \item Friendship doesn't always only serve to save time with writing setters/getters, it works for all sorts of things and must only be used when they make sense.
+    \item Only the minimal friendship should be granted.
 \end{itemize}

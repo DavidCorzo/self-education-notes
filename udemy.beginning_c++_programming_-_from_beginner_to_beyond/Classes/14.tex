@@ -1,0 +1,482 @@
+\section{Section overview}
+\begin{itemize}
+    \item Operator overloading allows the user to use the operator with objects.
+    \item Overloading operators as member functions.
+    \item Overloading operators as global functions.
+    \item Overloading stream insertion (\mintinline{cpp}{<<}) and extraction operators (\mintinline{cpp}{>>}).
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\section{What is operator overloading?}
+\begin{itemize}
+    \item Using traditional operators such as \verb|+, =, *, etc.| with user-defined types.
+    \item Allows user defined types to behave similar to built-in-types.
+    \item Can make code more readable and writeable.
+    \item Not done automatically (except for the assignment operator). Operator overloading operations must be explicitly defined.
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item Suppose we have a Number class that models any number, so we can do anything with numbers such as complex numbers, integers, decimals, etc.
+    \item For this kind of thing we would need to make this class call functions or methods to multiply - for example - and this does not feel natural.
+        \begin{minted}[autogobble]{cpp}
+            Number result = multiply(add(a, b), divide(c, d));
+            Number result = (a.add(b)).multiply(c.divide(d));
+        \end{minted}
+    
+    \item For C++ it does not make sense to do operations with two objects, thus you need to tell the C++ compiler what you mean when you are doing an operation with two objects, you can do this with methods - like exemplified above - or with overloading operators.
+    \item Only overload operators when it makes sense, otherwise the code is not going to be readable and calling a function/method is better.
+    \item Lets overload the \verb|+, *| operators.
+        \begin{minted}[autogobble]{cpp}
+            Number result = (a + b) * (c /d);
+        \end{minted}
+    
+    \item Overloading operators is just for easier programming, behind the scenes we are still calling functions and methods. 
+\end{itemize}
+
+\subsection{What operators can be overloaded?}
+\begin{itemize}
+    \item The majority of C++'s operators can be overloaded.
+    \item The following operators cannot be overloaded:
+        \begin{center}
+            \begin{tabular}{ |c|c| }
+                \hline
+                    \mintinline{cpp}{::} & Scope resolution operator \\
+                    \mintinline{cpp}{:?} & Conditional operator \\
+                    \mintinline{cpp}{.*} & member operator \\
+                    \mintinline{cpp}{.} & dot operator \\
+                    \mintinline{cpp}{sizeof} & sizeof operator \\
+                \hline
+            \end{tabular}
+        \end{center}
+\end{itemize}
+
+\subsection{Some basic rules}
+\begin{itemize}
+    \item Precedence and associativity cannot be changed. You cannot make operators so that one operation takes place before another when the operators do not behave like that normally.
+    \item 'arity' cannot be changed (i.e. can't make the division operator unary), this means that if the operator expected to do something with two arguments then when you overload it, it expects two arguments. Example: $a + b$ expects argument a and argument b, you cannot overload it so that it takes in a third or takes in just one, it remains at 2.
+    \item Can't overload operators for primitive type (\mintinline{cpp}{int, double}, etc).
+    \item Can't create new operators.
+    \item \mintinline{cpp}{[], (), ->}, and the assignment operator (\mintinline{cpp}{=}) must be declared as member methods.
+    \item Other operators can be declared as member methods or global functions.
+\end{itemize}
+
+\subsection{Examples}
+\begin{center}
+    \begin{tabular}{ |c|c| }
+        \hline
+            {
+                \begin{minted}[autogobble]{cpp}
+                    int a = b + c;
+                    a < b;
+                    std::cout << a;
+                \end{minted}
+            } &
+            {
+                \begin{minted}[autogobble]{cpp}
+                    std::string s1 = s2 + s3;
+                    s1 < s2;
+                    std::cout << s1;
+                \end{minted}
+            } \\
+        \hline
+            {
+                \begin{minted}[autogobble]{cpp}
+                    double a = b + c;
+                    a < b;
+                    std::cout << a;
+                \end{minted}
+            } & 
+            {
+                \begin{minted}[autogobble]{cpp}
+                    std::string my_string = s2 + s3;
+                    s1 < s2;
+                    s1 == s2;
+                    std::cout << s1;
+                \end{minted}
+            } \\
+        \hline
+        \end{tabular}
+\end{center}
+
+\subsection{The class we will be using through out this section}
+Class definition in Mystring.h:
+\begin{minted}[autogobble]{cpp}
+    #ifndef MYSTRING_H
+        #define MYSTRING_H
+
+    class Mystring {
+    private:
+        char *str;
+    public:
+        Mystring();
+        Mystring(const char *s);
+        Mystring(const Mystring &source);
+        ~Mystring();
+
+        void display() const;
+        int get_length() const;
+        const char *get_str() const;
+    };
+    #endif
+\end{minted}
+Class implementation in Mystring.cpp:
+\begin{minted}[autogobble]{cpp}
+    // no args constructor.
+    Mystring::Mystring() : str(nullptr) {
+        // Make an empty string
+        str = new char[1];
+        *str = '\0';
+    }
+
+    // copy constructor.
+    Mystring::Mystring(const char *s) : str{nullptr} {
+        if (s == nullptr) {
+            str = new char[1];
+            *str = '\0';
+        }
+        else {
+            str = new char[strlen(s) + 1];
+            strcpy(str, s);
+        }
+    }
+
+    // destructor.
+    Mystring::~Mystring() {
+        delete[] str;
+    }
+
+    // print the string.
+    void Mystring::display() const {
+        std::cout << str << ": " << get_length() << std::endl;
+    }
+
+    // string length.
+    int Mystring::get_length() const { return strlen(str); }
+
+    // string getter.
+    const char *Mystring::get_str() const { return str; }
+\end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{Overloading the assignment operator}
+\begin{itemize}
+    \item We will overload the assignment operator to mean deep copy from a string object into another string object.
+    \item C++ provides a default assignment operator used for assigning one object to another.
+        \begin{minted}[autogobble]{cpp}
+            Mystring s1 {"frank"};
+            Mystring s2 = s1; // NOT assignment it is the same as Mystring s2 {s1}; this is done my constructors to initialize.
+            s2 = s1; // assignment, once initialized the assignment can be called.
+        \end{minted}
+    
+    \item Default is memberwise assignment (shallow copy):
+        \begin{itemize}
+            \item If we have raw pointer data member we must use deep copy.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Overloading the copy assignment operator (deep copy)}
+\begin{itemize}
+    \item The assignment must be overloaded as a member function. So we provide a member prototype:
+        \begin{verbatim}
+            Type &Type::operator=(const Type &rhs);
+        \end{verbatim}
+        \begin{itemize}
+            \item Replace ``Type'' with the name of the class in question.
+        \end{itemize}
+        \begin{minted}[autogobble]{cpp}
+            Mystring &Mystring::operator=(const Mystring &rhs);
+            s2 = s1; // we write this.
+            s2.operator=(s1); // operator= method is called.
+        \end{minted}
+        \begin{itemize}
+            \item Behind the scenes the method ``.operator='' is called.
+        \end{itemize}
+\end{itemize}
+
+Overloading the copy assignment operator (deep copy) step by step.
+\begin{minted}[autogobble]{cpp}
+    Mystring &Mystring::operator=(const Mystring &rhs) {
+        if (this == &rhs) {
+            return *this;
+        }
+        delete[] str;
+        str = new char[std::strlen(rhs.str) + 1];
+        std::strcpy(str, rhs.str);
+        return *this;
+    }
+\end{minted}
+\begin{itemize}
+    \item First, check for self assignment, if the right hand side (rhs) is exactly the same as the left hand side (lhs) then we terminate the function by returning \mintinline{cpp}{this} since we already made the copy. We check the address of both pointers, if they are the same, then we assigning an object to itself.
+        \begin{minted}[autogobble]{cpp}
+            if (this == &rhs) { // p1 = p1;
+                return *this; // return current object.
+            }
+        \end{minted}
+    
+    \item Deallocate storage for \mintinline{cpp}{this->str} since we are overwriting it. Since we need to deallocate this data because we will allocate the string somewhere else. This is to avoid memory leaks.
+        \begin{minted}[autogobble]{cpp}
+            delete[] str;
+        \end{minted}
+    
+    \item Allocate storage for the deep copy.
+        \begin{minted}[autogobble]{cpp}
+            str = new char[std::strlen(rhs.str) + 1];
+        \end{minted}
+    
+    \item Perform the copy. Use \mintinline{cpp}{strcpy()} function to copy the string one character at a time.
+        \begin{minted}[autogobble]{cpp}
+            std::strcpy(str, rhs.str);
+        \end{minted}
+    
+    \item Return the current by reference to allow chain assignment. Remember chain assignment is when we have several assignments in the same line (example: \mintinline{cpp}{s1 = s2 = s3 = s4;})
+        \begin{minted}[autogobble]{cpp}
+            return *this; // s1 = s2 = s3 = s4;
+        \end{minted}
+\end{itemize}
+
+\subsection{Example}
+Now lets add the overloaded assignment operator to the Mystring class. This is in Mystring.h.
+\begin{minted}[autogobble]{cpp}
+    #ifndef MYSTRING_H
+        #define MYSTRING_H
+    class Mystring {
+    private:
+        char *str;
+    public:
+        Mystring();
+        Mystring(const char *s);
+        Mystring(const Mystring &source);
+        ~Mystring();
+
+        // copy assignment (overloaded).
+        Mystring &operator=(const Mystring &rhs); 
+
+        void display() const;
+        int get_length() const;
+        const char *get_str() const;
+    };
+    #endif
+\end{minted}
+On Mystring.cpp I add this implementation.
+\begin{minted}[autogobble]{cpp}
+    Mystring &Mystring::operator=(const Mystring &rhs) {
+        std::cout << "Copy assignment" << std::endl;
+        if (this == &rhs) {
+            return *this;
+        }
+        delete[] this->str;
+        str = new char[std::strlen(rhs) + 1];
+        std::strcpy(this->str, rhs.str);
+        return *this;
+    }
+\end{minted}
+On the main.cpp:
+\begin{minted}[autogobble]{cpp}
+    int main() {
+        Mystring a {"hello"};
+        Mystring b;
+        b = a;
+        b = "This is a test.";
+        return 0;
+    }
+    /* OUTPUT:
+    Copy assignment
+    Copy assignment
+    */
+\end{minted}
+
+%----------------------------------------------------------------------------------------
+\section{Overloading the move assignment operator}
+\begin{itemize}
+    \item Move assignment operator is also denoted with the '='.
+    \item You can choose to overload the move assignment operator.
+        \begin{itemize}
+            \item C++ will use the copy assignment operator if necessary.
+        \end{itemize}
+        \begin{minted}[autogobble]{cpp}
+            Mystring s1;
+            s1 = Mystring {"Frank"}; // move assignment, this is an unnamed object that is constructed and has no name (this is an r value), by moving it to s1 it is granted a name.
+        \end{minted}
+    
+    \item The assignment deep copy operator in the last section works with left value references, so values. The move assignment works with right value references. This means temporary unnamed objects that need assignment (move). 
+    \item You don't need to provide a move assignment operator, if you don't C++ will use the copy constructor by default. It is always recommended to provide a move assignment operator and a move constructor.
+    \item The main difference between the move assignment operator and the copy assignment operator (seen in the last section) is that in one we are deep copying every character - in this case - of the string, while in this one we are just stealing the pointer from the right hand side and assigning it to the left.
+\end{itemize}
+
+\subsection{Overloading the move assignment operator}
+\begin{itemize}
+    \item \begin{verbatim}
+        Type &Type::operator=(Type &&rhs);
+    \end{verbatim}
+    \begin{minted}[autogobble]{cpp}
+        // in the Mystring class.
+        Mystring &Mystring::operator=(Mystring &&rhs);
+        s1 = Mystring{"Joe"}; // move operator= called.
+        s1 = "Frank"; // move operator= called.
+    \end{minted}
+\end{itemize}
+
+\subsection{Overloading the move assignment operator - steps}
+\begin{minted}[autogobble]{cpp}
+    Mystring &Mystring::operator=(Mystring &&rhs) {
+        if (this == &rhs) { // self assignment.
+            return *this;   // return current object.
+        }
+        delete[] str; // deallocate current storage.
+        str = rhs.str; // steal the pointer
+        rhs.str = nullptr; // null out the rhs object.
+        return *this; return *this;
+    }
+\end{minted}
+\begin{itemize}
+    \item Check for self assignment:
+        \begin{minted}[autogobble]{cpp}
+            if (this == &rhs) {
+                return *this;
+            }
+        \end{minted}
+    
+    \item Deallocate storage \mintinline{cpp}{for this->str} since we are overwriting it and we don't want a memory leak.
+        \begin{minted}[autogobble]{cpp}
+            delete[] str;
+        \end{minted}
+    
+    \item Steal the pointer from the rhs object and assignment it to this->str:
+        \begin{minted}[autogobble]{cpp}
+            str = rhs.str;
+        \end{minted}
+    
+    \item Null out the rhs pointer:
+        \begin{minted}[autogobble]{cpp}
+            rhs.str = nullptr;
+        \end{minted}
+    
+    \item Return the current object by reference to allow chain assignment.
+        \begin{minted}[autogobble]{cpp}
+            return *this;
+        \end{minted}
+\end{itemize}
+
+\subsection{Example}
+Comparing the move assignment operator and the copy assignment operator.
+On the Mystring.h:
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    #include <vector>
+    #include <string.h>
+
+    #ifndef MYSTRING_H
+        #define MYSTRING_H
+
+    class Mystring {
+    private:
+        char *str;
+    public:
+        Mystring(); // no args constructor.
+        Mystring(const char *s); // overloaded constructor.
+        Mystring(const Mystring &source); // copy constructor
+        ~Mystring(); // destructor
+        Mystring(Mystring &&source); // move constructor
+
+        Mystring &operator=(const Mystring &rhs); // copy assignment.
+        Mystring &operator=(Mystring &&rhs); // Move assignment.
+
+        void display() const;
+        int get_length() const;
+        const char *get_str() const;
+    };
+
+    // no args constructor.
+    Mystring::Mystring() : str(nullptr) {
+        // Make an empty string
+        str = new char[1];
+        *str = '\0';
+    }
+
+    // copy constructor.
+    Mystring::Mystring(const char *s) : str{nullptr} {
+        if (s == nullptr) {
+            str = new char[1];
+            *str = '\0';
+        }
+        else {
+            str = new char[strlen(s) + 1];
+            strcpy(str, s);
+        }
+    }
+
+    // destructor.
+    Mystring::~Mystring() {
+        delete[] str;
+    }
+
+    // move constructor
+    Mystring::Mystring(Mystring &&source) : str{source.str} {
+        source.str = nullptr;
+        std::cout << "Move contructor used" << std::endl;
+    }
+
+    // move assignment.
+    Mystring &Mystring::operator=(Mystring &&rhs) {
+        std::cout << "Using move assignment" << std::endl;
+        if (this == &rhs) {
+            return *this;
+        }
+        delete[] str;
+        str = rhs.str;
+        rhs.str = nullptr;
+        return *this;
+    }
+
+
+    // print the string.
+    void Mystring::display() const {
+        std::cout << str << ": " << get_length() << std::endl;
+    }
+
+    // string length.
+    int Mystring::get_length() const { return strlen(str); }
+
+    // string getter.
+    const char *Mystring::get_str() const { return str; }
+
+    // copy assignment operator overloading.
+    Mystring &Mystring::operator=(const Mystring &rhs) {
+        if (this == &rhs) {
+            return *this;
+        }
+        delete[] str;
+        str = new char[strlen(rhs.str) + 1];
+        strcpy(str, rhs.str);
+        return *this;
+    }
+    #endif
+\end{minted}
+On the main.cpp:
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    #include <vector>
+    #include "Mystring.h"
+
+    using namespace std;
+
+    int main() {
+        Mystring a{"Hello"}; // overloaded constructor
+        a.display();
+        a = Mystring{"Hola"}; // overloaded constructor 
+        a.display();
+        a = "Bonjour";
+        a.display();
+        return 0;
+    }
+
+    /* OUTPUT:
+    Hello: 5
+    Using move assignment
+    Hola: 4
+    Using move assignment
+    Bonjour: 7
+    */
+\end{minted}
