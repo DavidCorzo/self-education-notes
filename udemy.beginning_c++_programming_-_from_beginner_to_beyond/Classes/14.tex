@@ -63,7 +63,7 @@
 
 \subsection{Examples}
 \begin{center}
-    \begin{tabular}{ |c|c| }
+    \begin{tabular}{ |p{5cm}|p{6cm}| }
         \hline
             {
                 \begin{minted}[autogobble]{cpp}
@@ -202,13 +202,13 @@ Overloading the copy assignment operator (deep copy) step by step.
             return *this;
         }
         delete[] str;
-        str = new char[std::strlen(rhs.str) + 1];
-        std::strcpy(str, rhs.str);
+        str = new char[strlen(rhs.str) + 1];
+        strcpy(str, rhs.str);
         return *this;
     }
 \end{minted}
 \begin{itemize}
-    \item First, check for self assignment, if the right hand side (rhs) is exactly the same as the left hand side (lhs) then we terminate the function by returning \mintinline{cpp}{this} since we already made the copy. We check the address of both pointers, if they are the same, then we assigning an object to itself.
+    \item First, check for self assignment, if the right hand side (rhs) is exactly the same as the left hand side (lhs) then we terminate the function by returning \mintinline{cpp}{*this} since we already made the copy and there is nothing else to do. We check the address of both pointers, if they are the same, then we assigning an object to itself.
         \begin{minted}[autogobble]{cpp}
             if (this == &rhs) { // p1 = p1;
                 return *this; // return current object.
@@ -267,13 +267,16 @@ On Mystring.cpp I add this implementation.
             return *this;
         }
         delete[] this->str;
-        str = new char[std::strlen(rhs) + 1];
-        std::strcpy(this->str, rhs.str);
+        str = new char[strlen(rhs) + 1];
+        strcpy(this->str, rhs.str);
         return *this;
     }
 \end{minted}
 On the main.cpp:
 \begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    #include <cstring>
+    #include "Mystring.h"
     int main() {
         Mystring a {"hello"};
         Mystring b;
@@ -327,7 +330,7 @@ On the main.cpp:
         delete[] str; // deallocate current storage.
         str = rhs.str; // steal the pointer
         rhs.str = nullptr; // null out the rhs object.
-        return *this; return *this;
+        return *this; 
     }
 \end{minted}
 \begin{itemize}
@@ -480,3 +483,373 @@ On the main.cpp:
     Bonjour: 7
     */
 \end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{Overloading operators as member functions}
+\begin{itemize}
+    \item Don't be confused by 'member functions' this just means methods. 
+    \item You can overload operators using methods or functions in a program, if you use method the operator will be overloaded for that object. In this case this is member function overloading
+\end{itemize}
+
+\subsection{Unary operands}
+\begin{itemize}
+    \item Unary operators as member methods. (\mintinline{cpp}{++, --, -, !})
+        \begin{verbatim}
+            ReturnType Type::operatorOp();
+        \end{verbatim}
+        \begin{minted}[autogobble]{cpp}
+            Number Number::operator-() const;
+            Number Number::operator++(); // pre-increment
+            Number Number::operator++(int); // post-increment
+            Number Number::operator!() const;
+
+            Number n1 {100};
+            Number n2 = -n1; // n1.operator-()
+            n2 = ++n1; // n1.operator++()
+            n2 = n1++; // n1.operator++(int)
+        \end{minted}
+    
+    \item Example with the Mystring class.
+        \begin{itemize}
+            \item Lets use the \mintinline{cpp}{operator-} to make lower case a upper case string.
+        \end{itemize}
+        \begin{minted}[autogobble]{cpp}
+            Mystring larry1 {"LARRY"};
+            Mystring larry2;
+            larry1.display(); // LARRY 
+            larry2 = -larry1; // larry1.operator-()
+            larry1.display(); // LARRY 
+            larry2.display(); // larry
+        \end{minted}
+    
+    \item Code to make a string minus mean lower case:
+        \begin{minted}[autogobble]{cpp}
+            Mystring Mystring::operator-() const {
+                char *buff = new char[strlen(str) + 1];
+                strcpy(buff, str);
+                for (size_t i = 0; i < strlen(buff); i++) {
+                    buff[i] = tolower(buff[i]);
+                }
+                Mystring temp {buff};
+                delete[] buff;
+                return temp;
+            }
+        \end{minted}
+\end{itemize}
+
+\subsection{Binary operators as member methods}
+\begin{itemize}
+    \item Binary operators are \mintinline{cpp}{+, -, ==, !=, <, >}
+        \begin{verbatim}
+            ReturnType Type::operatorOp(const Type &rhs);
+        \end{verbatim}
+        \begin{minted}[autogobble]{cpp}
+            Number Number::operator+(const Number &rhs) const;
+            Number Number::operator-(const Number &rhs) const;
+            bool Number::operator==(const Number &rhs) const;
+            bool Number::operator<(const Number &rhs) const;
+
+            Number n1 {100}, n2 {200};
+            Number n2 = n1 + n2; // n1.operator+(n2)
+            n3 = n1 - n2; // n1.operator-(n2)
+            if (n1 == n2) ... // n1.operator==(n2)
+        \end{minted}
+    
+    \item Example of implementation of equality operator in the Mystring class.
+        \begin{minted}[autogobble]{cpp}
+            bool Mystring::operator==(const Mystring &rhs) const {
+                if (std::strcmp(str, rhs.str) == 0) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        \end{minted}
+    
+    \item Example of string concatenation using the + operator overloading:
+        \begin{minted}[autogobble]{cpp}
+            Mystring larry {"Larry"};
+            Mystring moe {"Moe"};
+            Mystring result = larry + stooges; // larry.operator+(stooges);
+            result = moe + "is also a stooge"; // compiler error, moe.operator+("is also a stooge"); the right side needs to be the same type as the class you are usig.
+            result = "Moe" + stooges; // "Moe".operator+(stooges); ERROR.
+        \end{minted}
+    
+    \item Mystring operator+ (concatenation):
+        \begin{minted}[autogobble]{cpp}
+            Mystring Mystring::operator+(const Mystring &rhs) const {
+                size_t buff_size = 
+                      std::strlen(str) 
+                    + std::strlen(rhs.str) + 1;
+                char *buff = new char[buff_size];
+                std::strcpy(buff, str);
+                std::strcat(buff, rhs.str);
+                Mystring temp {buff};
+                delete[] buff;
+                return temp;
+            }
+        \end{minted}
+\end{itemize}
+
+\subsection{The complete code would look like this}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    #include <vector>
+    #include <cstring>
+
+    using namespace std;
+
+    class Mystring {
+    private:
+        char *str;
+    public:
+        Mystring();
+        Mystring(const char *s);
+        Mystring(const Mystring &source);
+        ~Mystring();
+
+        // copy assignment (overloaded).
+        Mystring &operator=(const Mystring &rhs);
+        // move assignment (overloaded).
+        Mystring & operator=(Mystring &&rhs);
+        // operator minus to make lower case.
+        Mystring operator-() const;
+        // operator plus to make concatenation.
+        Mystring operator+(const Mystring &rhs) const;
+        // equality operator ==
+        bool operator==(const Mystring &rhs) const;
+
+        void display() const;
+        int get_length() const;
+        const char *get_str() const;
+    };
+    // no args constructor.
+    Mystring::Mystring() : str(nullptr) {
+        // Make an empty string
+        str = new char[1];
+        *str = '\0';
+    }
+
+    // overloaded constructor.
+    Mystring::Mystring(const char *s) : str{nullptr} {
+        if (s == nullptr) {
+            str = new char[1];
+            *str = '\0';
+        }
+        else {
+            str = new char[strlen(s) + 1];
+            strcpy(str, s);
+        }
+    }
+
+    // copy constructor
+    Mystring::Mystring(const Mystring &source) 
+        : str{nullptr} {
+        str = new char[strlen(source.str)+ 1];
+        strcpy(str, source.str);
+        std::cout << "Copy constructor used" << std::endl;
+    }
+
+
+
+    // destructor.
+    Mystring::~Mystring() {
+        delete[] str;
+    }
+
+    // print the string.
+    void Mystring::display() const {
+        std::cout << str << ": " << get_length() << std::endl;
+    }
+
+    // string length.
+    int Mystring::get_length() const { return std::strlen(str); }
+
+    // string getter.
+    const char *Mystring::get_str() const { return str; }
+
+    // copy assignment operator overloading.
+    Mystring &Mystring::operator=(const Mystring &rhs) {
+        // std::cout << "Copy assignment" << std::endl;
+        if (this == &rhs) {
+            return *this;
+        }
+        delete[] this->str;
+        str = new char[strlen(rhs.str) + 1];
+        strcpy(this->str, rhs.str);
+        return *this;
+    }
+
+    // move assignment operator.
+    Mystring &Mystring::operator=(Mystring &&rhs) {
+        if (this == &rhs) { // self assignment.
+            return *this;   // return current object.
+        }
+        delete[] str; // deallocate current storage.
+        str = rhs.str; // steal the pointer
+        rhs.str = nullptr; // null out the rhs object.
+        return *this; 
+    }
+
+    // equality operator.
+    bool Mystring::operator==(const Mystring &rhs) const {
+        return (std::strcmp(this->str, rhs.str) == 0);
+    }
+
+    // make lower case with -
+    Mystring Mystring::operator-() const {
+        char *buff = new char[std::strlen(str) + 1];
+        std::strcpy(buff, str);
+        for (size_t i {0}; i < std::strlen(buff); i++ ) {
+            buff[i] = std::tolower(buff[i]);
+        }
+        Mystring temp {buff};
+        delete[] buff;
+        return temp;
+    }
+
+    // concatenate with +
+    Mystring Mystring::operator+(const Mystring &rhs) const {
+        char *buff = new char[std::strlen(str) + std::strlen(rhs.str) + 1];
+        std::strcpy(buff, str);
+        std::strcat(buff, rhs.str);
+        Mystring temp {buff};
+        delete[] buff;
+        return temp;
+    }   
+
+
+    int main() {
+        cout << std::boolalpha << endl;
+        Mystring larry{"Larry"};
+        Mystring moe{"Moe"};
+
+        Mystring stooge = larry;
+        larry.display();
+        moe.display();
+
+        std::cout << (larry == moe) << std::endl;
+        std::cout << (larry == stooge) << std::endl;
+
+        larry.display();
+        Mystring larry2 = -larry;
+        larry2.display();
+
+        Mystring stooges = larry + "Moe";
+
+        Mystring two_stooges = moe + " " + "Larry";
+
+        return 0;
+    }
+
+    /* OUTPUT:
+    Copy constructor used
+    Larry: 5
+    Moe: 3
+    false
+    true
+    Larry: 5
+    larry: 5
+    */
+\end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{Overloading operators as Global functions}
+\begin{itemize}
+    \item Overloading operators can be done by member functions (by methods that describe interactions with multiple instances of a class) or by global functions.
+    \item Some operators - for example the unary operators - need to be overloaded using global functions. The reason for this is basically because you do not have two operands.
+    \item These are not member functions, therefore we no longer have a \mintinline{cpp}{this} pointer refering to the object in the left hand side. These operators don't really need access to private attributes in the class, and thus they are overloaded using non member functions. If they must do anything with private attributes it is usually just the matter of declaring them to be friends of the class.
+    \item In the case of a unary operator, only a single parameter is specified in the parameter list.
+    \item Example:
+        \begin{minted}[autogobble]{cpp}
+            Mystring operator-(const Mystring &obj) {
+                char *buff = new char[std::strlen(obj.str) + 1];
+                std::strcpy(buff, obj.str);
+                for (size_t i {0}; i < std::strlen(buff); i++) {
+                    buff[i] = std::tolower(buff[i]);
+                }
+                Mystring temp {buff};
+                delete[] buff;
+                return temp;
+            }
+        \end{minted}
+\end{itemize}
+
+\subsection{Binary operators as global functions}
+\begin{itemize}
+    \item \mintinline{cpp}{+, - ==, <, >}, etc:
+        \begin{verbatim}
+            ReturnType operatorOp(const Type &lhs, const Type &rhs);
+        \end{verbatim}
+        \begin{minted}[autogobble]{cpp}
+            Number operator+(const Number &lhs, const Number &rhs);
+            Number operator-(const Number &lhs, const Number &rhs);
+            Number operator==(const Number &lhs, const Number &rhs);
+            Number operator<(const Number &lhs, const Number &rhs);
+
+            Number n1 {100}, n2 {200};
+            Number n3 = n1 + n2; // operator+(n1, n2)
+            n3 = n1 - n2; // operator-(n1, n2)
+            if (n1 == n2) { ... } // operator==(n1, n2)
+        \end{minted}
+    
+    \item This following example assumes that the function being overloaded is a friend of the Mystring class since we are accessing private attributes, otherwise we would need getters and setters. Overloading the \mintinline{cpp}{operator==}
+        \begin{minted}[autogobble]{cpp}
+            bool operator==(const Mystring &lhs, const Mystring &rhs) {
+                if (std::strcmp(lhs.str, rhs.str) == 0) {
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+        \end{minted}
+    
+    \item The following example is overloading the \mintinline{cpp}{operator+} for concatentation as a non-member function:
+        \begin{minted}[autogobble]{cpp}
+            Mystring larry {"Larry"};
+            Mystring moe {"Moe"};
+            Mystring stooges {" is one of the three stooges"};
+
+            Mystring result = larry + stooges; // operator+(larry, stooges);
+
+            result = moe + " is also a stooge"; // operator+(moe, "is also a stooge")
+
+            result = "Moe" + stooge; // ok with non member functions.
+        \end{minted}
+        \begin{itemize}
+            \item The order of the arguments with non member functions is irrelevant, with member functions we needed the left to be an object in order to perform the concatenation.
+        \end{itemize}
+        \begin{minted}[autogobble]{cpp}
+            Mystring operator+(const Mystring &lhs, const Mystring &rhs) {
+                size_t buff_size = std::strlen(lhs.str) + std::strlen(rhs.str) + 1;
+                char *buff = new char[buff_size];
+                std::strcpy(buff, lhs.str);
+                std::strcat(buff, rhs.str);
+                Mystring temp {buff};
+                delete[] buff;
+                return temp;
+            }
+        \end{minted}
+\end{itemize}
+
+\subsection{Declaring friends of a class}
+\begin{itemize}
+    \item Friends need to be declared inside the class, it doesn't matter where you declare them, you can declare them inside the private area, public area, or the protected area.
+    \item Example:
+        \begin{minted}[autogobble]{cpp}
+            class MyClass {
+                friend bool func1() {};
+                friend bool func2() {};
+            };
+        \end{minted}
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item 
+\end{itemize}
+

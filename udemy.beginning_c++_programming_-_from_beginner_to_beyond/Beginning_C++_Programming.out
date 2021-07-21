@@ -1,0 +1,15 @@
+\BOOKMARK [0][-]{chapter.1}{Operator overloading}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Section overview}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{What is operator overloading?}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.2.1}{Example}{section.1.2}% 4
+\BOOKMARK [2][-]{subsection.1.2.2}{What operators can be overloaded?}{section.1.2}% 5
+\BOOKMARK [2][-]{subsection.1.2.3}{Some basic rules}{section.1.2}% 6
+\BOOKMARK [2][-]{subsection.1.2.4}{Examples}{section.1.2}% 7
+\BOOKMARK [2][-]{subsection.1.2.5}{The class we will be using through out this section}{section.1.2}% 8
+\BOOKMARK [1][-]{section.1.3}{Overloading the assignment operator}{chapter.1}% 9
+\BOOKMARK [2][-]{subsection.1.3.1}{Overloading the copy assignment operator \(deep copy\)}{section.1.3}% 10
+\BOOKMARK [2][-]{subsection.1.3.2}{Example}{section.1.3}% 11
+\BOOKMARK [1][-]{section.1.4}{Overloading the move assignment operator}{chapter.1}% 12
+\BOOKMARK [2][-]{subsection.1.4.1}{Overloading the move assignment operator}{section.1.4}% 13
+\BOOKMARK [2][-]{subsection.1.4.2}{Overloading the move assignment operator - steps}{section.1.4}% 14
+\BOOKMARK [2][-]{subsection.1.4.3}{Example}{section.1.4}% 15
