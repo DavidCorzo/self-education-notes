@@ -1,0 +1,62 @@
+\documentclass{book}
+
+\usepackage{minted}
+\usepackage{generalsnips}
+\usepackage{programmingsnips}
+\usepackage{calculussnips}
+\usepackage[margin = 1in]{geometry}
+\usepackage{pdfpages}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage[utf8]{inputenc}
+\usepackage{titlesec}
+\usepackage{xpatch}
+\usepackage{fancyhdr}
+\usepackage{tikz}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\usepackage{bytefield}
+\usepackage{fancyvrb}
+\usepackage{fvextra}
+\usepackage{float}
+\usepackage{makecell}
+\usepackage{longtable}
+\usepackage{algorithmicx}
+\usepackage[linesnumbered,boxed]{algorithm2e} % ruled
+\usepackage{tikz}
+\usepackage{float}
+\usepackage{graphicx}
+\usepackage{listings}
+% \usepackage[backend=biber]{biblatex}
+% \addbibresource{bibliography.bib}
+% \usepackage[export]{adjustbox}
+\darktheme
+\pagestyle{plain}
+
+\title{\Huge Cisco CCNA 200-301 - The Complete Guide To Getting Certified}
+\date{} % , 12:01PM
+\author{David Corzo}
+
+\setautogobble
+
+\newcommand{\figs}{./figs}
+\newcommand{\code}{./Code}
+
+\fvset{frame=single,numbers=left,numbersep=3pt,breakanywhere=true,breaklines=true}
+\tikzblockdefinitions
+% \UseRawInputEncoding
+
+\begin{document}
+\maketitle 
+\tableofcontents
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\section{Host to host communications}
+\input{./classes/03.tex}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\end{document}
+

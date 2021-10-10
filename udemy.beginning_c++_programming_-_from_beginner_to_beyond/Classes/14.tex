@@ -849,7 +849,217 @@ On the main.cpp:
 \end{itemize}
 
 \subsection{Example}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    #include <vector>
+    #include <cstring>
+
+    using namespace std;
+
+    class Mystring {
+        friend bool operator==(const Mystring &lhs, const Mystring &rhs);
+        friend Mystring operator-(const Mystring &obj);
+        friend Mystring operator+(const Mystring &lhs, const Mystring &rhs);
+    private:
+        char *str;
+    public:
+        Mystring();
+        Mystring(const char *s);
+        Mystring(const Mystring &source);
+        ~Mystring();
+
+        // copy assignment (overloaded).
+        Mystring &operator=(const Mystring &rhs);
+        // move assignment (overloaded).
+        Mystring & operator=(Mystring &&rhs);
+
+        void display() const;
+        int get_length() const;
+        const char *get_str() const;
+    };
+    // no args constructor.
+    Mystring::Mystring() : str(nullptr) {
+        // Make an empty string
+        str = new char[1];
+        *str = '\0';
+    }
+    // overloaded constructor.
+    Mystring::Mystring(const char *s) : str{nullptr} {
+        if (s == nullptr) {
+            str = new char[1];
+            *str = '\0';
+        }
+        else {
+            str = new char[strlen(s) + 1];
+            strcpy(str, s);
+        }
+    }
+    // copy constructor
+    Mystring::Mystring(const Mystring &source) 
+        : str{nullptr} {
+        str = new char[strlen(source.str)+ 1];
+        strcpy(str, source.str);
+        std::cout << "Copy constructor used" << std::endl;
+    }
+    // destructor.
+    Mystring::~Mystring() {
+        delete[] str;
+    }
+
+    // print the string.
+    void Mystring::display() const {
+        std::cout << str << ": " << get_length() << std::endl;
+    }
+
+    // string length.
+    int Mystring::get_length() const { return std::strlen(str); }
+
+    // string getter.
+    const char *Mystring::get_str() const { return str; }
+    // copy assignment operator overloading.
+    Mystring &Mystring::operator=(const Mystring &rhs) {
+        // std::cout << "Copy assignment" << std::endl;
+        if (this == &rhs) {
+            return *this;
+        }
+        delete[] this->str;
+        str = new char[strlen(rhs.str) + 1];
+        strcpy(this->str, rhs.str);
+        return *this;
+    }
+    // move assignment operator.
+    Mystring &Mystring::operator=(Mystring &&rhs) {
+        if (this == &rhs) { // self assignment.
+            return *this;   // return current object.
+        }
+        delete[] str; // deallocate current storage.
+        str = rhs.str; // steal the pointer
+        rhs.str = nullptr; // null out the rhs object.
+        return *this; 
+    }
+    // Equality non-member function
+    bool operator==(const Mystring &lhs, const Mystring &rhs) {
+        return (std::strcmp(lhs.str, rhs.str) == 0);
+    }
+    // Make lowercase non-member function
+    Mystring operator-(const Mystring &obj) {
+        char *buff = new char[std::strlen(obj.str) + 1];
+        std::strcpy(buff, obj.str);
+        for (size_t i {0}; i < std::strlen(buff); i++) {
+            buff[i] = std::tolower(buff[i]);
+        }
+        Mystring temp {buff};
+        delete[] buff;
+        return temp;
+    }
+    // Concatenation non-member function
+    Mystring operator+(const Mystring &lhs, const Mystring &rhs) {
+        char *buff = new char[std::strlen(lhs.str) + std::strlen(rhs.str) + 1];
+        std::strcpy(buff, lhs.str);
+        std::strcat(buff, rhs.str);
+        Mystring temp {buff};
+        delete[] buff;
+        return buff;
+    }
+
+    int main() {
+        cout << std::boolalpha << endl;
+        Mystring larry{"Larry"};
+        larry.display();
+
+        larry = -larry;
+        larry.display();
+
+        Mystring moe{"Moe"};
+        
+        Mystring stooge = larry;
+
+        std::cout << (larry == moe) << std::endl;
+        std::cout << (larry == stooge) << std::endl;
+
+        Mystring stooges = "Larry" + moe;
+        stooges.display();
+
+        Mystring two_stooges = moe + " " + "Larry";
+        two_stooges.display();
+
+        return 0;
+    }
+
+    /* OUTPUT:
+    Larry: 5
+    larry: 5
+    Copy constructor used
+    false
+    true
+    */
+\end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{Overloading the stream insertion and extraction operators}
 \begin{itemize}
-    \item 
+    \item Overloading these operators mean we can now print and insert strings to ouw object very much like the \mintinline{cpp}{std::cout}.
+    \item Examples:
+        \begin{minted}[autogobble]{cpp}
+            // <<
+            Mystring larry {"Larry"};
+            cout << larry << endl; // Larry 
+            Player hero {"Hero", 100, 33};
+            cout << hero << endl; // {name: hero, health: 100, xp:33}
+
+            // >>
+            Mystring larry;
+            cin >> larry;
+            Player hero;
+            cin >> hero;
+        \end{minted}
+    
+    \item Stream insertion and extraction operators are usually overloaded using non member functions, this makes sense because:
+        \begin{itemize}
+            \item It doesn't make sense to implement as member methods:
+                \begin{itemize}
+                    \item The left operand must be a user-defined class of the type we are overloading.
+                        \begin{minted}[autogobble]{cpp}
+                            Mystring larry;
+                            larry << cout; // ???
+                        \end{minted}
+                    \item Not the way we normally use these operators.
+                        \begin{minted}[autogobble]{cpp}
+                            Player hero;
+                            hero >> cin; // ???
+                        \end{minted}
+                    
+                    \item You can overload them as member functions, however you can overload them as member functions and use the \mintinline{cpp}{hero << cout;} code, but it will be weird and not many will understand.
+                \end{itemize}
+        \end{itemize}
+    
+    \item Example \mintinline{cpp}{<<}:
+        \begin{minted}[autogobble]{cpp}
+            std::ostream &operator<<(std::ostream &os, const Mystring &obj) {
+                os << obj.str; // if friend function.
+                // os << obj.get_str(); // if not a friend function.
+                return os;
+            }
+        \end{minted}
+        \begin{itemize}
+            \item Return a reference to the \mintinline{cpp}{ostream} so we can keep inserting.
+            \item Don't return \mintinline{cpp}{ostream} by value! It needs to be a reference, otherwise you are copying the entire stream.
+        \end{itemize}
+    
+    \item Example \mintinline{cpp}{>>}:
+        \begin{minted}[autogobble]{cpp}
+            std::istream & operator>>(std::istream &is, Mystring &obj) {
+                char *buff = new char[1000];
+                is >> buff;
+                obj = Mystring{buff}; // If you have a copy or move assignment.
+                delete[] buff;
+                return is;
+            }
+        \end{minted}
+        \begin{itemize}
+            \item Return a reference to the \mintinline{cpp}{istream} so we can keep inserting.
+            \item Update the object passed in.
+        \end{itemize}
 \end{itemize}
 
