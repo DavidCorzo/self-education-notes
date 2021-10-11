@@ -28,7 +28,8 @@ Some other caracteristics of networks are:
     \item Scalability: the topology design lends itself to grow as needed.
     \item Reliability: similar to availability, making sure the network is going to continue to work.
 \end{itemize}
-    
+
+%----------------------------------------------------------------------------------------
 \section{The OSI Reference model}
 \begin{itemize}
     \item The OSI model stands for Open Systems Interconnect model. 
@@ -69,4 +70,91 @@ Layer 6 and 7 - application and presentation - are considered the upper level, t
     \item Us relevant: Please Do Not Teach Students Pointless Acronyms.
     \item Useful: Please Do Not Take Sales People's Advice.
     \item Favorite: Please Do Not Touch Superman's Private Area.
+\end{itemize}
+
+
+\section{TCP/IP Stack}
+\begin{itemize}
+    \item TCP/IP was developed during the 1960s by the US department of defense's Advanced Research Projects Agency (ARPA).
+    \item It is a protocol stack which consists of multiple protocols including TCP (Transmission Control Protocol) and IP (Internet Protocol). It is not a single protocol, it is a protocol stack.
+    \item An analogy to understand what a protocol is is when diplomats meet each other, there is a certain way they are expected to behave and to communicate with each other, in computer networking protocols basically mean the same thing. You have two hosts and they are going to communicate with each other, there has to be a protocol that describes that communication is going to be and how is it going to behave.
+    \item It is the main protocol stack used in computer operations today.
+        \begin{itemize}
+            \item There used to be many other protocols such as Ipxspx and apple talk. But today TCP/IP is pretty much standard, other protocols are pretty much dead.
+        \end{itemize}
+    \item Whereas the OSI reference model is conceptual, the TCP/IP stack is actually used to transfer data in production networks.
+    \item TCP/IP is also layered but does not use all the OSI layers, though the layers are equivalent in operation and function.
+        \begin{itemize}
+            \item It does actually use all of the layers, but in the documentations only 4 are layed out.
+        \end{itemize}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\subsection{Comparing the OSI model with the TCP/IP}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-10-20-20-19.png}
+% 	\caption{}
+\end{figure}
+Notice that the TCP/IP does cover all the layers of the OSI model, however it sometimes uses the layers together. The application layer - in the TCP/IP - maps to the OSI model's layer 5,6, and 7 - session, presentation, and application -.
+Below that we have the transport layer - in the TCP/IP stack - which notice maps directly to the transport layer in the OSI model. The internet layer in the TCP/IP is equivalent to the network layer in the OSI model. Last we have the network access in the TCP/IP stack that maps to the OSI layer 1 and 2 - physical and data-link-.
+
+\begin{itemize}
+    \item While both the OSI model and the TCP/IP stack are very important in networking. We are going to typically be referencing more the OSI model than the TCP/IP stack.
+\end{itemize}
+
+\subsection{Hosts communication terminology}
+When two hosts communicate with each other, they talk using something called protocol data unit (PDU), which is the entire communication that happens on the OSI model (sender from layer 7 to layer 1 and receiver from layer 1 back to layer 7).
+
+The data exchanged varies in terminology according to which layer of the TCP/IP stack is being talked about.
+\begin{itemize}
+    \item The application layer communicates using data to the application layer in the other host.
+    \item The transport layer communicates using segments to the transport layer in the other host.
+    \item The internet layer communicates using packets to the internet layer in the other host.
+    \item The network access layer communicates using frames to the network access layer of the other host.
+\end{itemize}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-10-20-30-40.png}
+% 	\caption{}
+\end{figure}
+In the networking world the OSI model is more commonly referenced than the TCP/IP stack in terms of layers - which means that it is more common to refer to the layers of the OSI model than the layers of the TCP/IP -. However when we are talking about host communications terminology, it is more common to speak of the TCP/IP communications terminology - which means that it is more common to use 'data' if you are refering to the layer 5,6, and 7 of the OSI model, layer 3 call it a packet, layer 4 call it a segment-. Another very important thing is that networking people usually refer to the PDU as the name packet, the correct name is a PDU not a packet since the packet is used for layer 2 (internet layer) communication, but people typically use the term packet and PDU interchangeably, while technically wrong, but in day-to-day communcations when refering to host communications it is not uncommon to call it packet meaning the entire stack.
+
+
+%----------------------------------------------------------------------------------------
+\section{The upper OSI layers}
+\begin{itemize}
+    \item The networking engineers do not typically work directly with the upper 3 layers of the OSI model, but we still need to know what they do.
+    \item They are more relevant to application developers.
+    \item In this lecture I will primarily be giving you the Cisco definitions of the layers.
+    \item Information included in the upper layers would include the message body and subject line in an email message for example.
+\end{itemize}
+
+\subsection{Layer 7 - the application layer}
+\begin{itemize}
+    \item The application layer provides network services to the applications of the end user.
+    \item If differs from the other layers in that it does not provide services to any other OSI layer.
+    \item The application layer establishes the availability of intended communications partners.
+        \begin{itemize}
+            \item Intended communcation partners are the hosts that the current hosts is trying to communicate with.
+        \end{itemize}
+    \item It then synchronizes and establishes agreement on procedures for error recovery and control of data integrity.
+        \begin{itemize}
+            \item Data integrity is verifying that data has not been corrupted or damaged in transit.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Layer 6 - the presentation layer}
+\begin{itemize}
+    \item The presentation layer ensures that the information that is sent at the application layer of one system is readable by the application layer of another system.
+    \item The presentation layer can translate among multiple data formats using a common format (eg computers with different encoding schemes)
+\end{itemize}
+
+\subsection{Layer 5 - session layer}
+\begin{itemize}
+    \item The session layer establishes, manages, and terminates sessions between two communicating hosts.
+    \item THe session layer also synchronizes dialog between the presentation layers of the two hosts and manages their data exchange.
+    \item For example, web servers have many users, so there are many communication processes open (session) at anygiven time to track. The session layer keeps track of all of the opened sessions.
+    \item It also offers efficient data transfers, CoS (Class of Service), and exception reporting of upper layer problems.
 \end{itemize}

@@ -4,3 +4,10 @@
 \BOOKMARK [2][-]{subsection.0.2.1}{Example}{section.0.2}% 4
 \BOOKMARK [2][-]{subsection.0.2.2}{Benefits of the OSI model}{section.0.2}% 5
 \BOOKMARK [2][-]{subsection.0.2.3}{OSI Acronyms}{section.0.2}% 6
+\BOOKMARK [1][-]{section.0.3}{TCP/IP Stack}{}% 7
+\BOOKMARK [2][-]{subsection.0.3.1}{Comparing the OSI model with the TCP/IP}{section.0.3}% 8
+\BOOKMARK [2][-]{subsection.0.3.2}{Hosts communication terminology}{section.0.3}% 9
+\BOOKMARK [1][-]{section.0.4}{The upper OSI layers}{}% 10
+\BOOKMARK [2][-]{subsection.0.4.1}{Layer 7 - the application layer}{section.0.4}% 11
+\BOOKMARK [2][-]{subsection.0.4.2}{Layer 6 - the presentation layer}{section.0.4}% 12
+\BOOKMARK [2][-]{subsection.0.4.3}{Layer 5 - session layer}{section.0.4}% 13
