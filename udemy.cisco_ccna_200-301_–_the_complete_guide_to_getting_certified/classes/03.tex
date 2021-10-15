@@ -14,7 +14,7 @@ In a larger company we would not just have end-hosts connected to switches conne
 All this is expressed in the next, \emph{network topology diagram}.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-10-13-28-12.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-10-13-28-12.png}
     % 	\caption{}
 \end{figure}
 
@@ -43,13 +43,13 @@ An example is how you send an email. The sender (the person sending the email) a
 In the layer 7 - the application layer - which is the layer containing the ``from:'' or the ``to:'' field, this is collected at an application layer. Next the data will be encapsulated by the layer 6 - presentation layer - which deals with the format the data is being handled with. Then the layer 6 information is encapsulated into the layer 5 - session layer - information. That then gets encapsulated to the 4th layer - the transport layer -  which is the layer that specifies what communcation will be used - TCP, UDP, Port number - to prepare it for the next layer. That gets encapsulated into layer 3 - the network layer - which includes the source and destination IP address, a device that operates at layer 3 is the routers. The next the packet is almost being finished, and passed on to the layer 2 - the data link layer - which specifies the mac address - in case we are sending this over an ethernet network -, devices that operate at this layer are switches. Finally the encapsulated and consolidated packet is ready to be sent, this is done in layer 1 - which is the Physical layer - which literally means sending the packet through the wire, a network device that used to be used in this layer are hubs - which are not used anymore -. The email has been sent. The packets travel through the wires and devices to the receiver and the receiver receives packets in the form of electrical signals. 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-10-13-54-03.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-10-13-54-03.png}
 % 	\caption{}
 \end{figure}
 The receiver will process the information being received from layer 1 to layer 7, which means that the receiver will grab the data from the first layer and decapsulate it until it has layer 7 data. It comes in at the physical layer, then it it will pass to the data link layer which is 2nd layer, it will perform checks to ensure that the the destination mac address is really for the receiver, if it is not, the receiver will just discard the packet. Next it will look at the layer 3 - which is the network layer - it will check the destination ip address and check if the packet is for it, otherwise it will discard the packet. Then we carry on with the next layer, layer 4 - the transport layer - it will check the port number in which it was received and some other validations. It will continue through the session layer - layer 5 -, the presentation layer - layer 6 -, and the application layer - layer 7 -.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-10-14-12-16.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-10-14-12-16.png}
 % 	\caption{}
 \end{figure}
 Layer 6 and 7 - application and presentation - are considered the upper level, typically used by developers not network engineers. Usually network engineers start to become interested from layer 4 downward.
@@ -94,7 +94,7 @@ Layer 6 and 7 - application and presentation - are considered the upper level, t
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-10-20-20-19.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-10-20-20-19.png}
 % 	\caption{}
 \end{figure}
 Notice that the TCP/IP does cover all the layers of the OSI model, however it sometimes uses the layers together. The application layer - in the TCP/IP - maps to the OSI model's layer 5,6, and 7 - session, presentation, and application -.
@@ -116,7 +116,7 @@ The data exchanged varies in terminology according to which layer of the TCP/IP 
 \end{itemize}
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-10-20-30-40.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-10-20-30-40.png}
 % 	\caption{}
 \end{figure}
 In the networking world the OSI model is more commonly referenced than the TCP/IP stack in terms of layers - which means that it is more common to refer to the layers of the OSI model than the layers of the TCP/IP -. However when we are talking about host communications terminology, it is more common to speak of the TCP/IP communications terminology - which means that it is more common to use 'data' if you are refering to the layer 5,6, and 7 of the OSI model, layer 3 call it a packet, layer 4 call it a segment-. Another very important thing is that networking people usually refer to the PDU as the name packet, the correct name is a PDU not a packet since the packet is used for layer 2 (internet layer) communication, but people typically use the term packet and PDU interchangeably, while technically wrong, but in day-to-day communcations when refering to host communications it is not uncommon to call it packet meaning the entire stack.
@@ -157,4 +157,58 @@ In the networking world the OSI model is more commonly referenced than the TCP/I
     \item THe session layer also synchronizes dialog between the presentation layers of the two hosts and manages their data exchange.
     \item For example, web servers have many users, so there are many communication processes open (session) at anygiven time to track. The session layer keeps track of all of the opened sessions.
     \item It also offers efficient data transfers, CoS (Class of Service), and exception reporting of upper layer problems.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{The lower OSI layers}
+\begin{itemize}
+    \item Whereas network engineers are not particularly interested in the upper OSI layers, we are very concerned with the lower 4 layers of the OSI model. These are incredibly important and are almost like the daily routine to network engineer.
+    \item Each of these layers have their own dedicated section later and you will learn much more detailed information about them throughout the course.
+\end{itemize}
+
+\subsection{Layer 4 - transport layer}
+\begin{itemize}
+    \item The main characteristics of the transport layer are wether TCP or UDP transport is used, and the port number. 
+    \item We haven't really seen what is TCP and UDP, for now you can think of it as modes of transportation where each one has different advantages. The TCP is very reliable, therefore if priority is reliability we use TCP. If speed is more important than reliability - like for voice of video traffic - then we use UDP instead.
+    \item We haven't seen what ports are, but for now you just need to know that different processes occur in these ports, for example the 80th port is used for http web traffic and port 25 is used for email.
+    \item Definition:
+        \begin{itemize}
+            \item The transport layer defines services to segment, transfer, and reassemble the data for individual communications between the end devices.
+            \item It breaks down large files into smaller segments that are less likely to incur transmission problems.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Layer 3 - network layer}
+\begin{itemize}
+    \item The most important information at the network layer is the source and destination IP address. Other information is also carried, but the main is the source and destination of IPs.
+    \item Routers operate at layer 3.
+    \item Definition: 
+        \begin{itemize}
+            \item The network layer provides connectivity and path selection between two host systems that may be located on geographically separated networks. 
+            \item The network layer is the layer that manages the connectivity of hosts by providing logical addressing (IP addressing is our logical addressing).
+        \end{itemize}
+\end{itemize}
+
+\subsection{Layer 3 - the data-link layer}
+\begin{itemize}
+    \item The most important information at the data-link layer is the source and destination layer 2 address. Again - just like in layer 3 and 4 - there is also other information but the main one is the source and destination layer address.
+    \item For example the source and destination MAC address if ethernet is the layer 2 technology. Different layer 2 technologies use different formats for their addressing, for example, old legacy frame relay uses DLCI or DCE numbers for the addressing. Today the typical address used at this layer is the MAC address.
+    \item Switches operate at layer 2.
+    \item Definition:
+        \begin{itemize}
+            \item The data link layer defines how data is formated for transmission and how access to physical media is controlled.
+            \item It also typically includes error detection and correction to ensure a reliable delivery of data.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Layer 1 - the physical layer}
+\begin{itemize}
+    \item The physical layer concerns literally the physical components of the network, for example the cables being used.
+    \item Definition:
+        \begin{itemize}
+            \item The physical link enables bit transmission between end devices.
+            \item It defines specifications needed for activating, maintaining, and deactivating the physical link between end devices.
+            \item For example, voltage levels, physical data rates, maximum transmission distances, physical connectors, etcetera.
+        \end{itemize}
 \end{itemize}
