@@ -79,26 +79,26 @@ To continue the example in which we were connecting in London to the NY office, 
 For this initial configuration, we need a Console Cable (DB9 to RJ45) in order to connect to the router via a wire and send the configurations. Simply connect the cable to the console port on the router or switch and use the cable - which usually comes with your device.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-14-22-28-42.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-14-22-28-42.png}
 	\caption{Console Cable DB9 to RJ45}
 \end{figure}
 
 The console cable has two ends, one is the DB9 which is the thicker end, it is called that because it has 9 pins need to be connected to that end. 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-14-22-29-57.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-14-22-29-57.png}
 	\caption{DB9 end}
 \end{figure}
 The other end is very similar to an ethernet cable. However, THIS IS NOT AN ETHERNET CABLE. It is a RJ45, it is not using ethernet and it doesn't require IP addresses, this only grants you low level access to the command line. 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-14-22-31-28.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-14-22-31-28.png}
 	\caption{RJ45}
 \end{figure}
 When you connect to make the initial configurations to the router using the console cable, the RJ45 - the one that looks like an ethernet connection but is not - end of the cable is the one that is going to be connected to the switch. The other end - the serial connector - plugs in to the computer. This is a problem for computers that don't include the DB9 connector, for this you can buy an adaptor from DB9 to USB.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-14-22-33-54.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-14-22-33-54.png}
 % 	\caption{}
 \end{figure}
 
@@ -106,7 +106,7 @@ When you connect to make the initial configurations to the router using the cons
 With newer cisco devices the cable included comes already with a USB end for the computer since most computers don't come with DB9 cable support. So the newer console cables come with some modifications, not only the USB end for the computer but they actually removed the RJ45 ethernet looking but not ethernet end to be instead a microusb end.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-14-22-37-53.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-14-22-37-53.png}
 	\caption{USB to microusb}
 \end{figure}
 
@@ -114,10 +114,10 @@ With newer cisco devices the cable included comes already with a USB end for the
 First identify the console port on the router and connect the appropriate end (microusb or RJ45) to the router, the other end to your computer (USB or DB9). Launch putty and click that the connection type is going to be 'Serial'. Now you are going to have to specify your COM port correctly, if you don't know which one it is follow the following steps (windows):
 \begin{itemize}
     \item Make sure that you have installed the driver software for the console cable in order for the COM port to be enabled.
-    \item Open device manager and look in 'Ports (COM & LTP)'. 
+    \item Open device manager and look in 'Ports (COM \& LTP)'. 
         \begin{figure}[H]
             \centering
-            \includegraphics[width=0.4\textwidth]{./Figs/2021-10-14-22-44-59.png}
+            \includegraphics[width=\width\textwidth]{./Figs/2021-10-14-22-44-59.png}
         % 	\caption{}
         \end{figure}
     
@@ -126,7 +126,7 @@ First identify the console port on the router and connect the appropriate end (m
 Then you need to select the speed, specified in the 'Serial' tab, and set flow control to None.
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.4\textwidth]{./Figs/2021-10-14-22-47-00.png}
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-14-22-47-00.png}
 % 	\caption{}
 \end{figure}
 Return to the 'Session' tab and click on 'Open'. Now turn on your router, you will start to get output on the screen. The next thing is that the router will boot up, this will take some time so give it some time.
@@ -137,4 +137,153 @@ Return to the 'Session' tab and click on 'Open'. Now turn on your router, you wi
     \item As well as for initial configuration, the console port - and cable - can be used if the device's IP addresses become unresponsive.
     \item It can also be used to troubleshoot the bootup process. You can view the device booting up from a console connection but this is not possible with SSH because the system must have booted already before the IP addresses will be live.
     \item Another case is when a device just appears to be completely unresponsive but you can see that the device is on, that indicates that the device is probably failing to boot up. Again trying to connect to it over the network will not work, you need to take out your console cable and troubleshoot it. It will not work by connecting to it because the IP is only live until it has completed the bootup process, therefore you cannot connect it through the network, but you can connect to it over the cable and power the device on and you can watch if any problems ensue.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Navigating the cisco IOS Operating System Part 1}
+\subsection{Booting up, and prompt initial configurations}
+Once you buy a router and connect the console cable to it, output will be displayed on the screen of the PC you connecting the other end of the console cable to. This means that the router is booting up. Once it has finished booting up a prompt will appear and ask you if ``Would you like to enter the initial configuration dialogue? [yes/no]: ''. If I say yes, it will take me to a command line driven wizard which would help me do the initial setup. However this option is not usually used, so we will say no. Once you say no, another prompt will appear ``Would you like to terminate autoinstall? [yes]: '' type yes. Once you have said yes to the previous prompt the command line will take you to the user exec prompt, however this command line environment is very limited in the number of commands we can process. If you want to see which commands are supported in the exec prompt type ``?''. This will print some of the commands, the 'More' word at the bottom signals that there are more commands, to see the rest of the commands we can hit the enter key and it will display the new commands line by line, by using the space bar you can display the commands page by page.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-16-12-59-47.png}
+% 	\caption{}
+\end{figure}
+Now, as you continue to type commands and output is printed to the screen, some previously typed lines are going to be erased, to save them you hit on Putty reconfiguration, go to the window tab, in the attribute called ``Lines of scrollback: '' set it to a large number such as 2,000.
+
+\subsection{Switching from user exec prompt to privilaged exec mode}
+As we said the exec prompt is very limited and we can't do much in this prompt, so we are going to switch to another prompt called the privileged exec mode, to go to a privileged exec mode simply type ``enable'' or it's abbreviation ``en''. Then the command prompt changes, now instead of each line being something like ``Router$>$'' you have something like ``Router\#''. To be switch from privileged exec mode to normal exec user mode simply type ``Disable'' or it's abbreviation ``disa''.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\width\textwidth]{./Figs/2021-10-16-13-08-34.png}
+% 	\caption{}
+\end{figure}
+
+\subsection{Ambiguous abbreviations}
+Abbreviations for command need to map uniquely to one command. For example we can abbreviate the ``enable'' command to just ``en'' because it is the only command that starts with ``en'' therefore that abbreviation is not ambiguous. With the ``disable'' command we cannot abbreviate as ``di'' because it is not the only command that starts with ``di'' other commands such as ``dir'' and ``disconnect'' also starts with ``di'', therefore to make it unique we not only need to add an ``s'' to ``di'' but also an ``a'' to make it ``disa''. To see if an abbreviation is ambigous you can type the abbreviation followed by a question mark. Such as: \verb|Router# di?|. It is important that when you are checking this the question mark is included after the proposed abbreviation without a space because a space and then question mark is something else.
+
+\subsection{The show command, tab completion and errors}
+The ``show'' command - or it's abbreviation ``sh'' are used to be able to see information inside the kernel. When you type in abbreviation followed by a space followed by a question mark, the kernel will return all the possible keywords that are available for that particular command, this is known as context sensitive help - which means which combinations of commands we can use together.  If we type ``sh ?'' it will print all keywords that can be used with the ``sh'' command before it. If we say something like ``sh aaa ?'' which are both commands, are asking the kernel to tell us which other commands can go after a command that is of the structure ``sh aaa''. Also abbreviations can be expanded to the full equivalent by using tab, so for example entering a command such as ``acct-stop-cache'' you can instead type in ``acc'' and press tab and the kernel will insert the full equivalent of ``acct-stop-cache'', if the word is ambiguous yu will probably need to add more characters to make it unique. If you make a typo and hit tab the kernel will print an error saying that the command expansion is invalid, and a marker \verb|^| will indicate on which letter the command failed. If you do an incomplete command then an error will be printed saying that the command was incomplete.
+
+\subsection{Breaking out of commands with ctrl+c}
+If we type a command and we want to break out of it, by simply typing ctrl+c we can break out of that command and any process being executed by that command is now canceled.
+
+\subsection{More on the enable prompt and debug}
+The enable prompt is the prompt where we will most likely be working on. There are commands that allow you to debug information or processes. You can see all available debug commands by typing ``debug ?'' with a space - because we need a context sensitive help -. This will allow us to see information and see if they are running as intended. You cannot make changes to such information in the privilege exec prompt, to make changes you need to enter to another prompt called the global configurations prompt.
+
+\subsection{The global configurations prompt}
+To actually correct and change how processes and configurations are set we need to go to the global configuration which you can go there by typing ``configure terminal'' or its abbreviation ``conf t''. To see if you have entered into the other prompt correctly, the lines will now start with something like ``Router(config)\#''
+
+
+%----------------------------------------------------------------------------------------
+\section{Navigating the cisco IOS operating system Part 2}
+\subsection{Command history}
+Lets enter a couple of random commands - you don't need to understand the commands - just to create some commands in order to be able to visualize the history. 
+\begin{verbatim}
+1 -> Router(config)#ip host Server1 1.1.1.1
+2 -> Router(config)#ip host Server2 2.2.2.2
+3 -> Router(config)#Router1
+                          ^
+    % Invalid input detected at the '^' marker.
+\end{verbatim}
+See the commands we typed in, the first one was ok, the second was ok, but the third one has an error. We need to fix the typo in command 3. We can surely type the command again and problem solved, but imagine it is a gigantic command and just one typo got an error and typing it again is going to be a waste of time. By simply hitting the up-arrow-key the last command will be re-written in the current line, there you can correct the typo and enter. If the typo is at the beggining of the command, to get to the beggining in one step you can type ctr+A which will put the mouse cursor in the begging of the line.
+
+The command history saves all the commands you've typed in, it does not matter if they worked or not, they are saved in the command history. Therefore, by pressing the up-arrow-key you can put previous commands in the current line, and by pressing the down arrow key you can navigate downward through the history. The command history only shows the commands in the global configuration prompt, not on the enable prompt or in the user exec mode.
+
+Remember the commands are valid depending on the command prompt level, you cannot do a command that is intended to be only runned in a certain prompt - such as the user exec prompt, etcetera - and then expect to use the same command in global configuration prompt or some other prompt. The command history comes in handy not just for typos but also if you make a mistake and type in a command at the wrong prompt level, therefore you can get to the right level and then by hitting the up-key you can run the same command and you don't waste time. For example:
+\begin{verbatim}
+Router(config)#hostname Router1
+Router1(config)#show ip interface brief 
+                  ^
+% Invalid input detected at the '^' marker.
+\end{verbatim}
+We are at the wrong prompt layer, show commands need to have the proper privileges, we can give the command proper privileges by saying ``do'' at the beggining - remember you are not supposed to know what these commands do right now, it is just for show -.
+Press the up key and this will appear again:
+\begin{verbatim}
+Router1(config)#show ip interface brief
+\end{verbatim}
+Put ctrl+a to go the the beggining of the line and type in ``do''.
+\begin{verbatim}
+Router1(config)#do show ip interface brief
+\end{verbatim}
+Now it should work.
+
+\subsection{Prompts so far}
+So far we have seen that 3 prompts exists, and sort of seen how they are used and what they do. 
+\begin{enumerate}
+    \item User exec mode prompt 
+    \item The priviliged exec mode - also known as the enable prompt -
+    \item The global configuration: used to set configurations for things that affect the router as a whole.
+\end{enumerate}
+There are other levels, such as the interface configuration level which you can get to by typing:
+\begin{verbatim}
+Router1(config)#interfase fast fastEthernet 0/0
+Router1(config if)#
+\end{verbatim}
+
+\subsection{Exiting pompts or 'dropping levels'}
+If you want to drop down a level you can say ``exit'' command, this will take you to the previous level. If you want to drop all the way back to the enable prompt you can simply type in the ``end'' command or by hitting the ctrl+c command.
+
+\subsection{Most common commands}
+\begin{itemize}
+    \item \verb|show ip interface brief| : shows all the interfaces on the router, and the ip addresses as well as the protocol.
+    \item \verb|show running config| : shows the entire configuration on the router. Remember by hitting the space bar you can scroll through pages since this command does print out a lot of text.
+    \item \verb|sh run int fast0/0| : shows the configurations of a specified interface (int this case interface 0/0).
+    \item \begin{verbatim}sh run | begin hostname\end{verbatim} : this command use a 'pipe' (which we haven't seen), you can see if a command use a 'pipe' if the pipe symbol - which is '|' - is present in the command. In general, you can see the context of this command by simply putting a space and then a question mark after the pipe symbol, in this case the 'begin hostname' is simply to display the configurations running on that specific host name.
+\end{itemize}
+
+\subsection{The IOS command line is not case sensitive except for one thing}
+Take into account that IOS is not case sensitive except for 'pipes' which use regular expression which is case sensitive. An example is: 
+\begin{verbatim}
+Router1#sh run | begin Hostname
+Router1#
+\end{verbatim}
+After hitting enter to run the command the command printed no output, this is because 'Hostname' with a capital letter 'H' does not exit in the router so there is no output to show running configurations from. Pipes use REGULAR EXPRESSINS which you don't really need to know anything about yet except that they ARE CASE SENSITIVE. This is the only exception to the IOS command line. Pipes are the only exception to the IOS command line.
+
+
+%----------------------------------------------------------------------------------------
+\section{Cisco IOS Configuration management}
+In this section we will learn about IOS configuration management and running/startup configuration. It is important to realize that in IOS everytime you make a change the change takes effect immediately, the change goes into the running configuration which takes effect immediately, this is the running configurations which take in commands and go into effect immediately. Aside from the running configurations we also have the startup configurations - which are different from the running configurations - the startup configurations changes take effect when the router is restarted or rebooted, commands in the running config do not get saved permanently until you explicitly save them to the startup configuration, this is done so that you only make the changes take effect if you are sure they are correct. For example if you have a router and send configurations that are catastrophic but you have not saved it yet, you can simply restart the router and the changes that were catastrophic would simply never had taken place, this is a last resort.
+
+\subsection{Example of saving to startup configurations}
+Make sure you are in the user privilege exec prompt to do this, type ``copy run start'' and the kernel will ask you to enter a destination filename, it is common practice to stick with the default destination filename, and now if you hit ``sh start'' which means to show the startup configurations the changes were saved permanently.
+
+\subsection{Backing up configurations}
+*Sidenote: cisco does have an automated way of backing up configurations from a centralized server, but you can also backup manually as well.
+Simply type: 
+\begin{verbatim}
+Router1#copy run ?
+Router1#copy run flash:my-configuration
+Destination filename [my-config]? 
+935 bytes copied in 1.236 secs (756 bytes/sec)
+\end{verbatim}
+In this case we backed it up to a special location inside the router that is a flask drive location. If something were to happen we can retrieve our configurations from the configuration file backed up in the flash. To see if the configurations are indeed in the flash we can type the following command: ``sh flash'' (the name of the configuration file should be there). If we were to want to restore a back up we simple need to copy the back up to the start up config, but when you do a copy it is going to actually merge the commands rather than replace so typically you are going to want to replace the entire startup configuration, to do this you simply need to erase the startup configuration using the ``erase start'' - in newer routers and ``wr erase'' in older routers - once the startup config has been erased you can simply use the ``copy flash:my-config start'' to copy the backup to replace the startup configuration file.
+
+\subsection{Backing up outside the router}
+If the whole router blows up we would loose everything including the flash configurations, therefore it is a good idea to store those configs in a place where we can retrieve them even if the router blows up or anything of the sort. For this we can use a tftp server to backup the configurations. For this type the following commands:
+\begin{verbatim}
+Router1#copy run tftp
+Address or name of remote host []? 10.10.10.10
+Destination filename [router1-config]? router1-config-111111
+\end{verbatim}
+The tftp server commands require that you have a tftp server to back up configurations, enter the IP address of the tftp server you have and then type in the name of the file you want, typically it is a good idea to save it as the routername followed by config followed by the date the backup is being performed.
+
+\subsection{How to check the contents of my backup configurations files}
+Use the the following command (replacing the configuration filename placeholder with your actual filename, in this case it would be ``my-config''):
+\begin{verbatim}
+Router1#more flash:my-config
+\end{verbatim}
+
+\subsection{Configuration storage locations}
+\begin{itemize}
+    \item For the device to bootup it needs to load the IOS operating system image that is stored in flash.
+        \begin{itemize}
+            \item The IOS operating system image is stored in Flash.
+        \end{itemize}
+    \item Once the operating system is up and running you startup configurations will be loaded and processed.
+        \begin{itemize}
+            \item The startup configuration is stored in NVRAM (non-volatile memory).
+        \end{itemize}
+    
+    \item The running configuration is stored in normal memory, which is RAM. It is loaded into RAM from the Startup Config when the device boots up.
 \end{itemize}
