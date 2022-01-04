@@ -1,0 +1,51 @@
+\BOOKMARK [0][-]{chapter.1}{Introduction, What is a Database?}{}% 1
+\BOOKMARK [1][-]{section.1.1}{What is SQL?}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{What is a database?}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Computers with databases}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{Database Management System \(DBMS\)}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{C.R.U.D}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.6}{Two types of databases}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.7}{Relational Database \(SQL\)}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.8}{Non-relational databases}{chapter.1}% 9
+\BOOKMARK [1][-]{section.1.9}{Database Queries}{chapter.1}% 10
+\BOOKMARK [1][-]{section.1.10}{Wrap up}{chapter.1}% 11
+\BOOKMARK [0][-]{chapter.2}{Tables \046 Keys}{}% 12
+\BOOKMARK [1][-]{section.2.1}{Primary keys, Surrogate and Natural keys}{chapter.2}% 13
+\BOOKMARK [2][-]{subsection.2.1.1}{Another example}{section.2.1}% 14
+\BOOKMARK [2][-]{subsection.2.1.2}{Difference between Surrogate and natural keys}{section.2.1}% 15
+\BOOKMARK [1][-]{section.2.2}{Foreign Keys and composite keys}{chapter.2}% 16
+\BOOKMARK [0][-]{chapter.3}{SQL Basics}{}% 17
+\BOOKMARK [1][-]{section.3.1}{Structured Query Language \(SQL\)}{chapter.3}% 18
+\BOOKMARK [1][-]{section.3.2}{Queries}{chapter.3}% 19
+\BOOKMARK [0][-]{chapter.4}{Creating Tables}{}% 20
+\BOOKMARK [1][-]{section.4.1}{Required software}{chapter.4}% 21
+\BOOKMARK [1][-]{section.4.2}{Data types}{chapter.4}% 22
+\BOOKMARK [1][-]{section.4.3}{Creating a table}{chapter.4}% 23
+\BOOKMARK [0][-]{chapter.5}{Inserting Data}{}% 24
+\BOOKMARK [1][-]{section.5.1}{Insert data into the database}{chapter.5}% 25
+\BOOKMARK [0][-]{chapter.6}{Constraints }{}% 26
+\BOOKMARK [1][-]{section.6.1}{NOT NULL, UNIQUE}{chapter.6}% 27
+\BOOKMARK [0][-]{chapter.7}{Update \046 Delete}{}% 28
+\BOOKMARK [1][-]{section.7.1}{Updating and deleting rows in sql databases}{chapter.7}% 29
+\BOOKMARK [0][-]{chapter.8}{Basic Queries}{}% 30
+\BOOKMARK [1][-]{section.8.1}{Basic Queries}{chapter.8}% 31
+\BOOKMARK [0][-]{chapter.9}{Creating Company Database}{}% 32
+\BOOKMARK [1][-]{section.9.1}{Complicated Company Database Schema}{chapter.9}% 33
+\BOOKMARK [1][-]{section.9.2}{Coding the schema of the company}{chapter.9}% 34
+\BOOKMARK [0][-]{chapter.10}{More Basic Queries}{}% 35
+\BOOKMARK [1][-]{section.10.1}{SELECT statements and prompts}{chapter.10}% 36
+\BOOKMARK [0][-]{chapter.11}{Functions}{}% 37
+\BOOKMARK [1][-]{section.11.1}{Prompts to functions}{chapter.11}% 38
+\BOOKMARK [0][-]{chapter.12}{Wildcards}{}% 39
+\BOOKMARK [1][-]{section.12.1}{Wildcards}{chapter.12}% 40
+\BOOKMARK [0][-]{chapter.13}{Union}{}% 41
+\BOOKMARK [1][-]{section.13.1}{Unions}{chapter.13}% 42
+\BOOKMARK [0][-]{chapter.14}{Joins}{}% 43
+\BOOKMARK [0][-]{chapter.15}{Nested Queries}{}% 44
+\BOOKMARK [0][-]{chapter.16}{On Delete}{}% 45
+\BOOKMARK [0][-]{chapter.17}{Triggers}{}% 46
+\BOOKMARK [0][-]{chapter.18}{ER Diagrams Intro}{}% 47
+\BOOKMARK [0][-]{chapter.19}{Designing an ER Diagram}{}% 48
+\BOOKMARK [1][-]{section.19.1}{Conversion of the Data Requirements Document into an ER diagram}{chapter.19}% 49
+\BOOKMARK [0][-]{chapter.20}{Converting ER Diagrams to Schemas}{}% 50
+\BOOKMARK [1][-]{section.20.1}{Steps}{chapter.20}% 51

@@ -1,0 +1,38 @@
+\section{What does ``parametric'' mean?}
+\begin{itemize}
+    \item Nonparametric implies that there is something that is parametric. What is the difference'
+    \item Most statistical methods we are familiar with (such as the confidence intervals, t-tests, ANOVA, linear regression, etc) make assumptions about probability distributions of the population under analysis (often we need a normal distribution).
+    \item A lot of the assumptions underneath these things we are more familiar with is the assumption that the observations are normally distributed. 
+    \item Given these assumptions we can develop sampling distributions. And then from the sampling distributions we can derive sample statistics (mean, standard deviation, etc).
+    \item Parametric methods are a family of statistical methods that most often make the assumption that the underlying observations are normally distributed. 
+\end{itemize}
+
+\section{What does ``Nonparametric'' mean?}
+\begin{itemize}
+    \item In parametric tests, assumptions are made about the underlying distribution of the population.
+    \item Nonparametric methods DO NOT make these assumptions, nor require these assumptions.
+    \item Sometimes we call these methods ``distribution free'' fro this reason, there is NO underlying assumption about the distribution of the data. 
+    \item While parametric methods will mostly require quantitative data, nonparametric methods allow us to work with \textbf{qualitative (nominal/ordinal)} data.
+        \begin{itemize}
+            \item Nominal: 
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=4cm]{\figs/examples_nominal_ordinal}
+                    \caption{\href{https://www.formpl.us/blog/nominal-ordinal-data\#:\~:text=Examples\%20of\%20nominal\%20data\%20include,with\%20a\%20level\%20of\%20order.}{source}}
+                \end{figure}
+            \item Ordinal: Ordinal data is a kind of categorical data with a set order or scale to it. A linker scale for categorical ranking is considered to be categorical or a type of ordinal data.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=4cm]{\figs/ordinal_data}
+                    \caption{\href{https://www.formpl.us/blog/ordinal-data}{source}}
+                \end{figure}
+        \end{itemize}
+    
+    \item Most of the time, even quantitative data is converted to nominal / ordinal data for use with non-parametric methods; the most common type being ranked observations.
+        \begin{itemize}
+            \item Basically you can perform nonparametric methods on ordinal or nominal data, the reason you can do this is that you will always convert the data, regardless of the type, you are not interested in the quantitative characteristics of the data.
+        \end{itemize}
+\end{itemize}
+
+\section{Sign test}
+

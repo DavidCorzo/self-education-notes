@@ -1,0 +1,79 @@
+\section{Required software}
+\begin{itemize}
+    \item MySQL: is a relational database management system.
+        \begin{itemize}
+            \item We can set a mySQL database server, which is a server were when it is running you can search for things in the database and perform the usual CRUD operations.
+        \end{itemize}
+
+    \item popsql: is an IDE, we will use this to have ease of use with the mySQL server.
+\end{itemize}
+
+\section{Data types}
+\begin{itemize}
+    \item There are lots of data types you can use on mySQL.
+    \item The most common are:
+        \begin{center}
+            \begin{tabular}{ |c|p{12cm}| }
+                \hline
+                    \mintinline{sql}{INT} & Whole number. \\
+                \hline
+                    \mintinline{sql}{DECIMAL(M,N)} & Decimal Numbers - Exact value. The (whole number part, how many decimals it will have). \\
+                \hline
+                    \mintinline{sql}{VARCHAR(l)} & String of text of length 1. Inside the parenthesis you put the length of the string you want, for example (100) means 100 characters. \\
+                \hline
+                    \mintinline{sql}{BLOB} & Binary Large Object, Stores large data, such as images or files. \\
+                \hline
+                    \mintinline{sql}{DATE} & 'YYYY-MM-DD' \\
+                \hline
+                    \mintinline{sql}{TIMESTAMP} & 'YYYY-MM-DD HH:MM:SS' Used for recording when something happened. \\
+                \hline
+            \end{tabular}
+        \end{center}
+\end{itemize}
+
+\section{Creating a table}
+\begin{itemize}
+    \item To create a table we must instruct the program which data types the database will store.
+    \item Writing things in all caps is optional but as convention it is preferred because it makes it easy to distinguish SQL from other elements.
+    \item Every command in SQL needs to be terminated with a semicolon.
+    \item Create a table:
+        \begin{minted}[autogobble]{sql}
+            CREATE TABLE student (
+                -- columns:
+                student_id INT PRIMARY KEY,
+                name VARCHAR(20),
+                major VARCHAR(20)
+            );
+        \end{minted}
+    
+    \item You can define the primary key after table creation:
+        \begin{minted}[autogobble]{sql}
+            CREATE TABLE student (
+                -- columns:
+                student_id INT,
+                name VARCHAR(20),
+                major VARCHAR(20)
+                PRIMARY KEY(student_id)
+            );
+        \end{minted}
+    
+    \item You can use the DESCRIBE to list the table elements:
+        \begin{minted}[autogobble]{sql}
+            DESCRIBE student;
+        \end{minted}
+    
+    \item To delete the table you can use DROP TABLE:
+        \begin{minted}[autogobble]{sql}
+            DROP TABLE student;
+        \end{minted}
+    
+    \item To add a column:
+        \begin{minted}[autogobble]{sql}
+            ALTER TABLE student ADD gpa DECIMAL(3,2); -- store student's GPA
+        \end{minted}
+    
+    \item To delete a column:
+        \begin{minted}[autogobble]{sql}
+            ALTER TABLE student DROP COLUMN gpa;
+        \end{minted}
+\end{itemize}

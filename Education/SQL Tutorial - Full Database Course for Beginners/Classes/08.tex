@@ -1,0 +1,55 @@
+\section{Basic Queries}
+\begin{itemize}
+    \item \mintinline{sql}{SELECT} keyword allows us to ask the database management system for a particular piece of information, it is like a google search.
+    \item When you want to select everything you just put an \mintinline{sql}{*}.
+    \item Example:
+        \begin{minted}[autogobble]{sql}
+            SELECT major FROM student; -- gets all the majors that exist in the table.
+            SELECT name FROM student; -- gets all the names that exist in the table.
+            SELECT name, major FROM student; -- gets all the names and majors that exist in the table
+            SELECT student.name, student.major FROM student; -- gets the names and the majors.
+        \end{minted}
+    
+    \item The following orders the query results by name, in alphabetical order.
+        \begin{minted}[autogobble]{sql}
+            SELECT name, major FROM student ORDER BY name; 
+        \end{minted}
+    
+    \item Order by query results in descending order, in this case reverse alphabetical order.
+        \begin{minted}[autogobble]{sql}
+            SELECT name, major FROM student ORDER BY name DESC; 
+        \end{minted}
+    
+    \item The following orders by major and if they have the same major then sql will order them according to student\_id:
+        \begin{minted}[autogobble]{sql}
+            SELECT * FROM student ORDER BY major, student_id;
+        \end{minted}
+    
+    \item You can also limit the amount of results, in this case 2:
+        \begin{minted}[autogobble]{sql}
+            SELECT * FROM student ORDER BY student_id DESC LIMIT 2;
+        \end{minted}
+    
+    \item To select the name and major if the major is chemistry or biology:
+        \begin{minted}[autogobble]{sql}
+            SELECT name, major FROM student WHERE major = 'Chemistry' OR major = 'Biology';
+        \end{minted}
+    
+    \item To select all people with major not equal to chemistry:
+        \begin{minted}[autogobble]{sql}
+            SELECT name, major FROM student WHERE major <> 'Chemistry'; -- <> means not equals.
+        \end{minted}
+    
+    \item Select all people with student id less than 3:
+        \begin{minted}[autogobble]{sql}
+            SELECT * FROM student WHERE student_id < 3;
+        \end{minted}
+    
+    \item Select everything from the table where the name is Clair, Kate or Mike: Then select all where the majors are biology or chemistry:
+        \begin{minted}[autogobble]{sql}
+            SELECT * FROM student WHERE name IN ('Clair', 'Kate', 'Mike');
+            SELECT * FROM student WHERE major IN ('Biology', 'Chemistry');
+        \end{minted}
+    
+    \item Writing queries gets more complex as the database schema gets more complex.
+\end{itemize}

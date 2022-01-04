@@ -1,0 +1,4 @@
+{"rule":"FOR_NOUN_SAKE","sentence":"^\\QInformation is for convenience sake only and not necessary for shopping.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QYou can have multiple foreign keys: In the above figure, take for example, Angela Martin has the superviser id=101, this means that whoever has the id 101 is Angela's superviser, in this case id 101 is Michael Scott.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QIn this case “clubs” is a multi-values attribute because a student could be involved in more than one club or zero, it can have more than one value, they are not going to have more than one gpa or more than one name, but they can be involved in more than one club.\\E$"}
+{"rule":"MORFOLOGIK_RULE_EN_US","sentence":"^\\QHas honors can be derived from the gpa.\\E$"}

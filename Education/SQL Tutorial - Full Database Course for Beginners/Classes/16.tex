@@ -1,0 +1,17 @@
+\begin{itemize}
+    \item How to delete entries when they have foreign keys linked to them.
+    \item ON DELETE SET NULL is basically when we delete an employee all foreign associated to that employee is going to be set to null.
+    \item ON CASCADE is basically when we delete an employee the rows in other tables containing employee ids pointing to the deleted employee are also going to get eliminated.
+    \item The code below signifies that if the employee id in the employee table gets deleted the value of that foreign key is set to null. 
+        \begin{minted}[autogobble]{sql}
+            CREATE TABLE branch (
+                branch_id INT PRIMARY KEY,
+                branch_name VARCHAR(40),
+                mgr_id INT,
+                mgr_start_date DATE,
+                FOREIGN KEY(mgr_id) REFERENCES employee(emp_id) ON DELETE SET NULL
+            );
+        \end{minted}
+    
+    \item You might want to consider using set null when the attribute being deleted is no essential, if it is essential then use cascade.
+\end{itemize}
