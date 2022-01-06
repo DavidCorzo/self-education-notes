@@ -1,50 +1,8 @@
-\BOOKMARK [0][-]{chapter.1}{Host to host communications}{}% 1
-\BOOKMARK [1][-]{subsection.1.0.1}{A very basic introduction to networking}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.1}{The OSI Reference model}{chapter.1}% 3
-\BOOKMARK [2][-]{subsection.1.1.1}{Example}{section.1.1}% 4
-\BOOKMARK [2][-]{subsection.1.1.2}{Benefits of the OSI model}{section.1.1}% 5
-\BOOKMARK [2][-]{subsection.1.1.3}{OSI Acronyms}{section.1.1}% 6
-\BOOKMARK [1][-]{section.1.2}{TCP/IP Stack}{chapter.1}% 7
-\BOOKMARK [2][-]{subsection.1.2.1}{Comparing the OSI model with the TCP/IP}{section.1.2}% 8
-\BOOKMARK [2][-]{subsection.1.2.2}{Hosts communication terminology}{section.1.2}% 9
-\BOOKMARK [1][-]{section.1.3}{The upper OSI layers}{chapter.1}% 10
-\BOOKMARK [2][-]{subsection.1.3.1}{Layer 7 - the application layer}{section.1.3}% 11
-\BOOKMARK [2][-]{subsection.1.3.2}{Layer 6 - the presentation layer}{section.1.3}% 12
-\BOOKMARK [2][-]{subsection.1.3.3}{Layer 5 - session layer}{section.1.3}% 13
-\BOOKMARK [1][-]{section.1.4}{The lower OSI layers}{chapter.1}% 14
-\BOOKMARK [2][-]{subsection.1.4.1}{Layer 4 - transport layer}{section.1.4}% 15
-\BOOKMARK [2][-]{subsection.1.4.2}{Layer 3 - network layer}{section.1.4}% 16
-\BOOKMARK [2][-]{subsection.1.4.3}{Layer 3 - the data-link layer}{section.1.4}% 17
-\BOOKMARK [2][-]{subsection.1.4.4}{Layer 1 - the physical layer}{section.1.4}% 18
-\BOOKMARK [0][-]{chapter.2}{The cisco IOS Operating System}{}% 19
-\BOOKMARK [1][-]{section.2.1}{Introduction}{chapter.2}% 20
-\BOOKMARK [1][-]{section.2.2}{Cisco operating systems}{chapter.2}% 21
-\BOOKMARK [2][-]{subsection.2.2.1}{A short history of cisco operating systems}{section.2.2}% 22
-\BOOKMARK [1][-]{section.2.3}{Connecting to a cisco device over the network}{chapter.2}% 23
-\BOOKMARK [2][-]{subsection.2.3.1}{Connecting over the network}{section.2.3}% 24
-\BOOKMARK [2][-]{subsection.2.3.2}{Installing Putty}{section.2.3}% 25
-\BOOKMARK [2][-]{subsection.2.3.3}{Out of band management}{section.2.3}% 26
-\BOOKMARK [1][-]{section.2.4}{Making the initial connection to a cisco device}{chapter.2}% 27
-\BOOKMARK [2][-]{subsection.2.4.1}{Newer console cables}{section.2.4}% 28
-\BOOKMARK [2][-]{subsection.2.4.2}{Connecting via console cable to a real router}{section.2.4}% 29
-\BOOKMARK [2][-]{subsection.2.4.3}{Console connection troubleshooting}{section.2.4}% 30
-\BOOKMARK [1][-]{section.2.5}{Navigating the cisco IOS Operating System Part 1}{chapter.2}% 31
-\BOOKMARK [2][-]{subsection.2.5.1}{Booting up, and prompt initial configurations}{section.2.5}% 32
-\BOOKMARK [2][-]{subsection.2.5.2}{Switching from user exec prompt to privilaged exec mode}{section.2.5}% 33
-\BOOKMARK [2][-]{subsection.2.5.3}{Ambiguous abbreviations}{section.2.5}% 34
-\BOOKMARK [2][-]{subsection.2.5.4}{The show command, tab completion and errors}{section.2.5}% 35
-\BOOKMARK [2][-]{subsection.2.5.5}{Breaking out of commands with ctrl+c}{section.2.5}% 36
-\BOOKMARK [2][-]{subsection.2.5.6}{More on the enable prompt and debug}{section.2.5}% 37
-\BOOKMARK [2][-]{subsection.2.5.7}{The global configurations prompt}{section.2.5}% 38
-\BOOKMARK [1][-]{section.2.6}{Navigating the cisco IOS operating system Part 2}{chapter.2}% 39
-\BOOKMARK [2][-]{subsection.2.6.1}{Command history}{section.2.6}% 40
-\BOOKMARK [2][-]{subsection.2.6.2}{Prompts so far}{section.2.6}% 41
-\BOOKMARK [2][-]{subsection.2.6.3}{Exiting pompts or 'dropping levels'}{section.2.6}% 42
-\BOOKMARK [2][-]{subsection.2.6.4}{Most common commands}{section.2.6}% 43
-\BOOKMARK [2][-]{subsection.2.6.5}{The IOS command line is not case sensitive except for one thing}{section.2.6}% 44
-\BOOKMARK [1][-]{section.2.7}{Cisco IOS Configuration management}{chapter.2}% 45
-\BOOKMARK [2][-]{subsection.2.7.1}{Example of saving to startup configurations}{section.2.7}% 46
-\BOOKMARK [2][-]{subsection.2.7.2}{Backing up configurations}{section.2.7}% 47
-\BOOKMARK [2][-]{subsection.2.7.3}{Backing up outside the router}{section.2.7}% 48
-\BOOKMARK [2][-]{subsection.2.7.4}{How to check the contents of my backup configurations files}{section.2.7}% 49
-\BOOKMARK [2][-]{subsection.2.7.5}{Configuration storage locations}{section.2.7}% 50
+\BOOKMARK [0][-]{chapter.1}{OSI Layer 4 - The transport layer}{}% 1
+\BOOKMARK [1][-]{section.1.1}{Introduction}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{Layer 4 - The transport layer}{chapter.1}% 3
+\BOOKMARK [2][-]{subsection.1.2.1}{Port numbers}{section.1.2}% 4
+\BOOKMARK [2][-]{subsection.1.2.2}{TCP}{section.1.2}% 5
+\BOOKMARK [2][-]{subsection.1.2.3}{UDP}{section.1.2}% 6
+\BOOKMARK [2][-]{subsection.1.2.4}{UDP vs TCP}{section.1.2}% 7
+\BOOKMARK [2][-]{subsection.1.2.5}{Common applications and their destination ports}{section.1.2}% 8
