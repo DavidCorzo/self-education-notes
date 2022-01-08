@@ -201,8 +201,248 @@
                     \item The reason you want to get your IP is set automatically on desktops is because you would not want to set it up manually because you would need to see which IP address is not in use and then set it up, instead you are automatically assigned one. With servers and routers you can do it manually because you they are fewer and they are going to almost always be the same IP address.
                 \end{itemize}
             \item To understand how the logical separation between subnets works, you need to understand the IP address in binary.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Calculating and IPv4 Address in binary}
+\begin{itemize}
+    \item Each octet in the IP address has a value ranging from 0 to 255.
+        \begin{itemize}
+            \item Since an octet has 8 bits, and its binary we know that it has a maximum of 255.
+                \begin{center}
+                    \begin{tabular}{ |c|c|c|c|c|c|c|c| }
+                        \hline
+                            128 & 64 & 32 & 16 & 8 & 4 & 2 & 1  \\
+                        \hline
+                            0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                        \hline
+                            1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+                        \hline
+                    \end{tabular}
+                \end{center}
+            
+            \item Notice if we replace the 8 bits with 0's we get 0. If we replace everything with 1 we get $\displaystyle 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255$.
+        \end{itemize}
+    
+    \item Example: Let's convert that 192.168.10.15 address to binary, starting with the first octet of 192.
+        \begin{itemize}
+            \item Write out the binary columns on a piece of paper to do this: The final result is 11000000
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-21-01-16.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item The second octet of 168.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-21-03-21.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item And so on.
+            \item The final answer should be:
+                \[
+                  192.168.10.15 = 11000000.10101000.00001010.00001111
+                \]
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-21-05-33.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item To set the boundary between logical network (subnet), the IP address is combined with the subnet mask. 
+    \item The subnet masked has not been explained, it will be explained in the next section.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{The subnet mask}
+\begin{itemize}
+    \item The subnet mask:
+        \begin{itemize}
+            \item The subnet mask can be visualized by using the command prompt. You can enter the appropriate command to show you your IP and you will see your IP, default gateway, and it's subnet mask.
+            \item A host can send traffic directly to another host on the same subnet via switches.
+            \item For host to send traffic to another host in a different subnet, it must be forwarded by a router.
                 \begin{itemize}
-                    \item 
+                    \item Routers are devices that link our different subnets together and route the traffic between them.
                 \end{itemize}
+            \item The host therefore sends to understand if the destination is on the same or a different subnet in order to know how to send it.
+                \begin{itemize}
+                    \item If the destination is on the same subnet it can send it there directly and no router is required. If the destination host is not in the same subnet then we must send it to a router, this router is the default gateway. 
+                    \item The way that the sender host knows if the destination host is on the same network is by simply comparing the sender's and reciever's IP address and subnet mask, if the mask is the same then just switches are required and no routing is done.
+                \end{itemize}
+            \item The subnet mask is used for this. 
+            \item The subnet mask is also 32 bits long and can be written in dotted decimal or slash notation.
+        \end{itemize}
+    
+    \item Network and host portion:
+        \begin{itemize}
+            \item A host's IP address is divided into a network portion and a host portion.
+            \item The subnet mask defines where the boundary is.
+            \item The easiest way to explain this is through example...
+        \end{itemize}
+    
+    \item Subnet 'Masking':
+        \begin{itemize}
+            \item Let's say the host's IP address is 192.168.10.15 and its subnet mask is 255.255.255.0
+            \item We write the IP address out in binary notation, and then the subnet mask underneath.
+            \item Starting wit IP$=$192.168.10.15 and subnet mask$=$255.255.255.0 we convert to binary:
+                \begin{align*}
+                    192.168.10.15 &= 11000000\;10101000\;00001010\;00001111 \\ 
+                    255.255.255.0 &= 11111111\;11111111\;11111111\;00000000 \\
+                \end{align*}
+                \begin{itemize}
+                    \item Notice the IP address, the IP address actuall contains part of the subnet mask, we just need to know where it starts and where it ends. The way we know when it starts is by simply seeint the subnet mask, whenever there is a 1 aligned in the position, this means that part of the IP is also the network address.
+                    \item So in this example notice that the first 24 bits in the subnet mask are set to 1. This means that the first 24 bits -- or from bit 0-23 -- of the IP are part of the network address.
+                    \item It is counter intuitive but just see how the numbers are linged up. We convert them to binary and align them up vertically as for the first bit of the IP address to correspond with the first bit of the subnet mask, same with the second, third, ... all the way up to the 32nd bit.
+                    \item Now you see the subnet mask, wherever there is a 1, that is the network address.
+                        \begin{figure}[H]
+                            \centering
+                            \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-21-31-50.png}
+                        % 	\caption{}
+                        \end{figure}
+                    
+                    \item In the picture above, notice the red line, the 1s come up to the third octet. To the left of that border lies the network address, to the right of that border lies the host address.
+                \end{itemize}
+            
+            \item The IP address is compared ('masked') with the subnet mask.
+            \item A '1' in the subnet mask indicates that bit in the IP address is part of the network address.
+            \item A '0' indicates the bit is part of the host address.
+            
+            \item Below you can see the network portion:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-21-33-42.png}
+                % 	\caption{}
+                \end{figure}
+                
+            \item Below you can see the host portion:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-21-34-47.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item Local subnet or routed traffic:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-21-37-50.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item If the host wants to communicate with another host with an IP address which also begins with 192.168.10 (network portion for the example 192.168.10.20), it knows it's on the same subnet and it can send the traffic directly.
+            \item If it wants to communicate with another host with any other network address (for example 192.168.11.20), it knows it has to send the traffic via a router.
+            \item For a destination address to be in the same subnet, the network portion has to be exactly 192.168.10.
+            \item Otherwise it's a in a different subnet and traffic must be sent via a router.
+        \end{itemize}
+    
+    \item Valid subnet masks:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-21-41-33.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item The subnet mask always begins with contiguous '1's.
+            \item For example: $\displaystyle 11111111.11110000.00000000.00000000$ is a legal subnet mask.
+            \item $\displaystyle 11101101.11110000.00001111$ is not.
+            \item With IP addresses the '0's and '1's can be mixed, in the subnet mask it is always a '1's and then '0's, we don't mix them up in subnet masks.
+        \end{itemize}
+    
+    \item The host portion:
+        \begin{itemize}
+            \item The host portion of the address is available to be allocated to the different hosts on the subnet (eg PCs, Servers, Printers, Router interfaces and Switch Management Addresses).
+            \item With two exceptions (that will be explained in a moment).
+            \item Again, this is the host portion of the address:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-21-43-42.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item Host addresses:
+        \begin{itemize}
+            \item The host portion of the address specifies the individual host and must be unique on that subnet.
+            \item Hosts do not have to be numbered sequentially.
+                \begin{itemize}
+                    \item Any number can be assigned as long as they are not duplicated.
+                \end{itemize}
+            \item If the network portion of the address is 10.10.10.10, you can have a host with IP address 10.10.10.10 and another with 10.10.10.20.
+            \item You can't have two different hosts both with IP address 10.10.10.10. That would be a duplicate IP address. Whenever another host sent traffic to 10.10.10.10, the network wouldn't know which one to send it to.
+            \item We have host 10.10.10.10 on one subnet and host 10.10.20.10 on another subnet.
+        \end{itemize}
+    
+    \item The network address (network ID) FIRST EXCEPTION:
+        \begin{itemize}
+            \item The first exception to the host portion is that all '0's in the host portion designates the network address and is not allowed to be allocated to a host.
+                \begin{itemize}
+                    \item Basically you can pick the host portion to be anything except all 0s because all 0s it is asumed to be the network address.
+                \end{itemize}
+            
+            \item In our example the network address is 192.168.10.0. Remember the network address is also 32 bits, it just so happens that when you have the host portion in all 0s, that has been reserved for the network address and you cannot allocate it to a host. In our example the network address is 192.168.10.0.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-22-13-51.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item The broadcast address SECOND EXCEPTION:
+        \begin{itemize}
+            \item The second exception to host numbers are all 1s. 
+            \item All '1's designates the directed broadcast address for the subnet.
+            \item Traffic with this destination address will be sent to all hosts in the subnet.
+            \item In our example the broadcast address is 192.168.10.255.
+            \item So all 0s and all 1s in the host's portion are the exceptions.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-22-16-26.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item Host addresses:
+        \begin{itemize}
+            \item So taking out the exceptions of the host portion (all 1's and all 0's) that leaves the host portion free to be anything from 1-254. In our example that leaves 192.168.10.1 to 192.168.10.254 available to be allocated to hosts. All hosts connected to network address 192.168.10.0 can send traffic directly through switches because they are in the same subnet without going via their default gateway router.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Slash notation}
+\begin{itemize}
+    \item Subnet mask in slash notation:
+        \begin{itemize}
+            \item So notice that the subnet mask is always contigous 1s followed by contigous 1s. This is long and tidious, there is a better way of writing it down. For IP address 192.168.10.15 and subnet mask 255.255.255.0 we can simply enumerate the 32 bits of the subnet mask and just write down the range from 1-n where the '1's are at.
+            \item Because the subnet mask always begines with contiguous '1's, it will be 1 to 32 bits ling counting from left to right.
+            \item This allows us to write the subnet mask in slash notation which is more convenient than dotted decimal for network diagrams or in conversation.
+            \item So look at the following example:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-22-23-51.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item We see that the first three octets are 1s and the last octet is all 0s. So the slash notation for this case would be \verb|/24| because the first 24 bits are set to 1, the remaining are 0s.
+            \item In cisco IOS the subnet mask is written in dotted decimal.
+        \end{itemize}
+    
+    \item Subnet mask in slash notation example 2:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./Figs/2022-01-07-22-29-18.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item This example can be written as either 10.10.10.15 255.0.0.0 or 10.10.10.15\verb|/|8.
+            \item The network address is 10.0.0.0/8.
+            \item The last three octets is the host portion.
+            \item The available addresses would be 10.0.0.1 to 10.255.255.255.254, not 10.255.255.255 because that is the broadcast address.
         \end{itemize}
 \end{itemize}

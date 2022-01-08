@@ -1,8 +1,9 @@
-\BOOKMARK [0][-]{chapter.1}{OSI Layer 4 - The transport layer}{}% 1
+\BOOKMARK [0][-]{chapter.1}{OSI Layer 3 - The network layer}{}% 1
 \BOOKMARK [1][-]{section.1.1}{Introduction}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{Layer 4 - The transport layer}{chapter.1}% 3
-\BOOKMARK [2][-]{subsection.1.2.1}{Port numbers}{section.1.2}% 4
-\BOOKMARK [2][-]{subsection.1.2.2}{TCP}{section.1.2}% 5
-\BOOKMARK [2][-]{subsection.1.2.3}{UDP}{section.1.2}% 6
-\BOOKMARK [2][-]{subsection.1.2.4}{UDP vs TCP}{section.1.2}% 7
-\BOOKMARK [2][-]{subsection.1.2.5}{Common applications and their destination ports}{section.1.2}% 8
+\BOOKMARK [1][-]{section.1.2}{The IP header}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{Unicast, Broadcast, and Multicast Traffic}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{Converting from decimal to binary}{chapter.1}% 5
+\BOOKMARK [1][-]{section.1.5}{IPv4 Addresses}{chapter.1}% 6
+\BOOKMARK [1][-]{section.1.6}{Calculating and IPv4 Address in binary}{chapter.1}% 7
+\BOOKMARK [1][-]{section.1.7}{The subnet mask}{chapter.1}% 8
+\BOOKMARK [1][-]{section.1.8}{Slash notation}{chapter.1}% 9
