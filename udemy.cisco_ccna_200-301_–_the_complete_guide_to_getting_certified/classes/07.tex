@@ -111,4 +111,135 @@
                 \end{figure}
             \item 131.192.0.0/16.
         \end{itemize}
+    
+    \item Class C:
+        \begin{itemize}
+            \item Class C addresses are used for small networks.
+            \item The three high-order bits in a class C address are always set to binary 1 1 0.
+            \item The default subnet mask is /24.
+            \item Valid network addresses range from 192.0.0.0 to 223.255.255.0/24.
+            \item This allows for 2,097,152 networks and 254 hosts per network.
+            \item This could be allocated as is for a real world network, or subnetted into smaller subnets.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-13-14-48-41.png}
+                % 	\caption{}
+                \end{figure}
+            \begin{itemize}
+                \item 195.0.192.0/24
+            \end{itemize}
+        \end{itemize}
+    
+    \item A quick note on private addresses:
+        \begin{itemize}
+            \item There is also a range of reserved private addresses in each class.
+            \item These are valid to be assigned to hosts but they are not routable on the public internet.
+            \item They were originally designed for hosts in a closed private network with no internet connectivity.
+                \begin{itemize}
+                    \item For example in a highschool that has a computers class that does not want them to browse the internet, rather just communcate with each other, these would be put on a private address.
+                    \item Another perk is that private IP addresses are free, a public IP you need to pay.
+                \end{itemize}
+            \item Ranges used for private addresses are:
+                \begin{itemize}
+                    \item Class A: 10.0.0.0 to 10.255.255.255
+                    \item Class B: 172.16.0.0 to 172.31.255.255
+                    \item Class C: 192.168.0.0 to 192.168.255.255
+                \end{itemize}
+            \item Private addresses will be discussed in a later lecture in this section.
+        \end{itemize}
 \end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{IP address classes D and E}
+\begin{itemize}
+    \item Address classes:
+        \begin{itemize}
+            \item Class A, B and C include all the addresses with are valid to be assigned to hosts.
+            \item What about 244.0.0.0 to 255.255.255.255?
+        \end{itemize}
+    
+    \item Class D:
+        \begin{itemize}
+            \item Class D addresses are reserved for IP multicast addresses.
+            \item To four high-order bits in a class D address are always set to binary 1 1 1 0.
+            \item These addresses are not allocated to hosts and there is no default subnet mask.
+            \item Valid addresses range from 224.0.0.0 to 239.255.255.255
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-13-14-58-36.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item 227.1.192.5
+        \end{itemize}
+    
+    \item Reminder on unicast traffic:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./Figs/2022-01-13-15-14-03.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item On unicast traffic the sender (10.10.10.10/24) sends something via the network to one of the receivers on the network 10.10.10.15/24. The information will travel independently to him using the layer 3 ip and since they are in the same subnet, they can communicate directly. So we unicast the traffic to the destination host via a switch.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-13-15-15-59.png}
+                % 	\caption{}
+                \end{figure}
+            \item Now lets suppose the source host wants to send exactly the same traffic to another host on another network 10.10.20.15/24, the traffic will now be unicast via a router to the destination host. Notice that the traffic is being sent independently to each host even though its entirely the same traffic, if we had 1MB traffic unicast to each device we would use 1MB for exactly the same material, what we want is to send it once and the same traffic to be reused to the next host accordingly.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-13-15-17-00.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item We can improve this by simply using multicast traffic instead of unicast. With unicast we send the traffic to a reserved address, and from there it forwards it to the destination hosts, and it only gets sent once, it does not consume as much bandwidth because the traffic is just sent once. 
+            \item So here is how this works: in the sender a special application is going to send the traffic to a special and reserved destination called a multicast address, that in our network will be 239.0.0.1, it comes from the same source address, and the destination addresses interested in the traffic will get the traffic, but the difference lies in that this time we only send it once instead of various times. This is better.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-13-15-22-08.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item An analogy Neil describes is like tunning into a radio station, the radio station is a multicast because all interested destination hosts tune into it, the frequency they tune into is like the special multicast address we described earlier. By tunning in to there, they will get the traffic that is forwarded. 
+            \item Here if there were 50 interested hosts the bandwidth required would still be just 1MB (assuming the traffic was 1MB) it would not be 50MB like we would get with unicast, but it would be only 1MB. Much more efficient and cheaper.
+        \end{itemize}
+    
+    \item Class E:
+        \begin{itemize}
+            \item This class E addresses are 'experimental and reserved for future use'.
+            \item The high-order bits in a class E addrfess are set to 1111. 
+            \item These addresses are not allocated to host and there is no default subnet mask.
+            \item Addresses range from 240.0.0.0 to 255.255.255.255.
+            \item 255.255.255.255 is the broadcast address for 'this network'.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-01-13-15-27-15.png}
+                % 	\caption{}
+                \end{figure}
+            \item 243.0.192.10
+            \item Class E addresses are really just experimental, class D is used in multicast, but you need to know both especially for the CCNA.
+        \end{itemize}
+    
+    \item IP address class summary:
+        \begin{center}
+            \begin{tabular}{ |c|c|c|c| }
+                \hline
+                    Class & First octet & Default subnet mask \\
+                \hline
+                    A & 1-126 & /8 \\
+                    B & 128-191 & /16 \\
+                    C & 192-223 & /24 \\
+                    D & 224-239 &  \\
+                    E & 240-255 &  \\
+                \hline
+            \end{tabular}
+        \end{center}
+        \begin{itemize}
+            \item Class A,B, and C can be assigned to hosts.
+            \item Class D is for multicast.
+            \item Class E is experimental.
+        \end{itemize}
+\end{itemize}
+
