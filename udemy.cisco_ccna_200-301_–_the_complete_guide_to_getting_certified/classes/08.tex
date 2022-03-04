@@ -111,3 +111,92 @@
             \item This is important because on the updated standards we don't use the 2 subnets we use to take off for the network, we ONLY DO THIS FOR THE HOSTS. Hence, you DO NOT SUBTRACT 4, you subtract 2. Do not do that for the CCNA.
         \end{itemize}
 \end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Subnetting classs C networks and VLSM}
+\begin{itemize}
+    \item Class C /31 subnet:
+        \begin{itemize}
+            \item Let's say we've been allocated class C 200.15.10.0/24.
+            \begin{figure}[H]
+                \centering
+                \includegraphics[width=0.4\textwidth]{./Figs/2022-02-14-13-14-18.png}
+            % 	\caption{}
+            \end{figure}
+            \begin{itemize}
+                \item If we want to have any hosts available then the highest subnetmask we can have is /31. In that case we leave 1 bit remaining for the hosts.
+            \end{itemize}
+        \item If we move the line all the way to the right we're now using /31 (or 255.255.255.254).
+        \item This leaves one bit for the host address, with a possible value of 0 or 1.
+        \item It borrows 7 bits from the network address.
+        \item This gives us 128 subnets $\displaystyle 2^7$ which accommodates 2 hosts each.
+        \item We subnet using /31. Valid host addresse:
+            \begin{itemize}
+                \item 200.15.10.0 to 200.15.10.1
+                \item 200.15.10.2 to 200.15.10.3
+                \item etc. to: 
+                \item 200.15.10.254 to 200.15.10.255
+            \end{itemize}
+        
+        \item Notice that the first three octets never change. The subnet mask changes in the first 7 bits.
+        \item What about the network and broadcast address?
+            \begin{itemize}
+                \item /31 breaks the standard rules of IP addressing.
+                \item /31 subnets are supported in cisco routers for point to point links (which have no need for a network or broadcast address).
+                    \begin{itemize}
+                        \item A point to point link means that all traffic moves from one to the other in terms of all messages sent can only be sent to the one other host in that subnet. There is no other place for the message to go so this is why we don't need a broadcast and network address. 
+                        \item This is why cisco allowed that exception, we can have a /31 subnet mask on a point to point link.
+                    \end{itemize}
+            \end{itemize}
+        \end{itemize}
+
+    \item Class C /31 subnet mask:
+        \begin{itemize}
+            \item Let's say we've been allocated a class C 200.15.10.0/24.
+            \item Let's move the line back a place. We're now using /30 (or 255.255.255.252).
+            \item This leaves 2 bits for the host address, $\displaystyle 2^2-2=2$ hosts available and the network and broadcast address.
+            \item It borrows 6 bits for the network address.
+            \item This gives us 64 subnets $\displaystyle 2^6$ which accommodate 2 hosts each.
+            \item Notice that the line is after the 4. The network addres goes up in values of 4.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./Figs/2022-02-14-13-28-13.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item Valid hosts addresses:
+                \begin{itemize}
+                    \item 200.15.10.1 to 200.15.10.2 (network .0, broadcast .3).
+                    \item 200.15.10.5 to 200.15.10.6 (network .4, broadcast .7).
+                    \item etc. to:
+                    \item 200.15.10.253 to 200.15.10.254 (network .252, broadcast .255).
+                \end{itemize}
+            
+            \item 
+        \end{itemize}
+\end{itemize}
+
+\subsection{/31 vs /30}
+\begin{itemize}
+    \item /31 and /30 both accommodate 2 hosts per subnet.
+    \item /31 supports 128 subnets, /30 only 64.
+    \item /31 us useful if you need to maximize use of your address space.
+    \item /30 is more standard and commonly used.
+    \item For the CCNA exam, use /30 when a subnet to support 2 hosts is required, unless told to use /31. 
+        \begin{itemize}
+            \item Because usually a /30 is the correct answer.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Class C /29 subnet}
+\begin{itemize}
+    \item Let's say we've been allocated Class C 200.15.10.0/24.
+    \item Let's move the line back a place. We've now using /29 (or 255.255.255.248).
+    \item This leaves 3 bits for the host addresses, $\displaystyle 2^3 - 2 = 6$ possible hosts.
+    \item It borrows 5 bits for the network address.
+    \item This gives us 32 subnets $\displaystyle 2^5$ which accommodate 6 hosts each.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------

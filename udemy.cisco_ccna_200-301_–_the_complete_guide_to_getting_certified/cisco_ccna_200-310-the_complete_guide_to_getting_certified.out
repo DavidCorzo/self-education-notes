@@ -1,16 +1,7 @@
-\BOOKMARK [0][-]{chapter.1}{OSI Layer 3 - The network layer}{}% 1
-\BOOKMARK [1][-]{section.1.1}{Introduction}{chapter.1}% 2
-\BOOKMARK [1][-]{section.1.2}{The IP header}{chapter.1}% 3
-\BOOKMARK [1][-]{section.1.3}{Unicast, Broadcast, and Multicast Traffic}{chapter.1}% 4
-\BOOKMARK [1][-]{section.1.4}{Converting from decimal to binary}{chapter.1}% 5
-\BOOKMARK [1][-]{section.1.5}{IPv4 Addresses}{chapter.1}% 6
-\BOOKMARK [1][-]{section.1.6}{Calculating and IPv4 Address in binary}{chapter.1}% 7
-\BOOKMARK [1][-]{section.1.7}{The subnet mask}{chapter.1}% 8
-\BOOKMARK [1][-]{section.1.8}{Slash notation}{chapter.1}% 9
-\BOOKMARK [0][-]{chapter.2}{IP Address Classes}{}% 10
-\BOOKMARK [1][-]{section.2.1}{Introduction}{chapter.2}% 11
-\BOOKMARK [1][-]{section.2.2}{Class A IP Address}{chapter.2}% 12
-\BOOKMARK [1][-]{section.2.3}{IP addresses class B and C}{chapter.2}% 13
-\BOOKMARK [1][-]{section.2.4}{IP address classes D and E}{chapter.2}% 14
-\BOOKMARK [0][-]{chapter.3}{Subnetting}{}% 15
-\BOOKMARK [1][-]{section.3.1}{Introduction}{chapter.3}% 16
+\BOOKMARK [0][-]{chapter.1}{\376\377\000S\000u\000b\000n\000e\000t\000t\000i\000n\000g}{}% 1
+\BOOKMARK [1][-]{section.1.1}{\376\377\000I\000n\000t\000r\000o\000d\000u\000c\000t\000i\000o\000n}{chapter.1}% 2
+\BOOKMARK [1][-]{section.1.2}{\376\377\000C\000I\000D\000R\000\040\000-\000\040\000C\000l\000a\000s\000s\000l\000e\000s\000s\000\040\000I\000n\000t\000e\000r\000-\000D\000o\000m\000a\000i\000n\000\040\000R\000o\000u\000t\000i\000n\000g}{chapter.1}% 3
+\BOOKMARK [1][-]{section.1.3}{\376\377\000S\000u\000b\000n\000e\000t\000t\000i\000n\000g\000\040\000o\000v\000e\000r\000v\000i\000e\000w}{chapter.1}% 4
+\BOOKMARK [1][-]{section.1.4}{\376\377\000S\000u\000b\000n\000e\000t\000t\000i\000n\000g\000\040\000c\000l\000a\000s\000s\000s\000\040\000C\000\040\000n\000e\000t\000w\000o\000r\000k\000s\000\040\000a\000n\000d\000\040\000V\000L\000S\000M}{chapter.1}% 5
+\BOOKMARK [2][-]{subsection.1.4.1}{\376\377\000/\0003\0001\000\040\000v\000s\000\040\000/\0003\0000}{section.1.4}% 6
+\BOOKMARK [2][-]{subsection.1.4.2}{\376\377\000C\000l\000a\000s\000s\000\040\000C\000\040\000/\0002\0009\000\040\000s\000u\000b\000n\000e\000t}{section.1.4}% 7
