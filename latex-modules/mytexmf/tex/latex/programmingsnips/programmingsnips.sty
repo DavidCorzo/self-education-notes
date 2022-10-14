@@ -1,0 +1,74 @@
+\NeedsTeXFormat{LaTeX2e}[2014/08/24]
+\ProvidesPackage{programmingsnips}[2020/07/06]
+
+
+\RequirePackage{amsmath}
+% \RequirePackage{xfp}
+% \RequirePackage{siunitx}
+% \RequirePackage[spanish]{babel}
+\RequirePackage{tikz}
+\RequirePackage{xcolor}
+\RequirePackage{minted}
+\RequirePackage{listings}
+\RequirePackage{lstautogobble}
+
+% \usetikzlibrary{arrows,positioning,shapes,calc,trees}
+% \sisetup{output-decimal-marker={.}}
+
+
+\newcommand{\setautogobble}{
+    \lstset{
+        basicstyle=\ttfamily,
+        mathescape=true,
+        escapeinside=||,
+        autogobble
+  }
+}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom Commands made by David Corzo
+
+\UseRawInputEncoding
+
+\usemintedstyle{monokai}
+\definecolor{bg}{HTML}{282828} % from https://github.com/kevinsawicki/monokai
+
+\newcommand{\darktheme}{
+    \definecolor{idedark}{rgb}{0.13,0.13,0.13}
+    \pagecolor{idedark}
+    \color{white}
+}
+
+\newcommand{\codetextframe}[1]{
+\begin{Verbatim}[breaklines=true, breakanywhere=true]
+#1
+\end{Verbatim}
+}
+
+\newcommand{\inputcode}[2]{
+    \fvset{frame=single,numbers=left,numbersep=3pt,breakanywhere=true,breaklines=true}
+    \inputminted[linenos,tabsize=2,breaklines]{#1}{#2}
+    % \VerbatimInput{#1}
+}
+
+\newcommand{\inputfile}[1]{
+    \fvset{frame=single,numbers=left,numbersep=3pt,breakanywhere=true,breaklines=true}
+        \VerbatimInput{#1}
+}
+
+\newcommand{\inputcodelines}[3]{
+    \fvset{frame=single,numbers=left,numbersep=3pt,firstline=#1,lastline=#2,breaklines=true, breakanywhere=true}
+    \VerbatimInput{#3}
+}
+
+\newcommand{\invertdocumentcolors}{
+    \pagecolor[rgb]{0,0,0}
+    \color[rgb]{1,1,1}
+}
+
+% \newcommand{\idedark}{
+%     \definecolor{idedark}{rgb}{0.13,0.13,0.13}
+% }
+
+\endinput

@@ -179,24 +179,162 @@
 
 \subsection{/31 vs /30}
 \begin{itemize}
-    \item /31 and /30 both accommodate 2 hosts per subnet.
+    \item /31 and /30 both accommodate 2 hosts per subnet. Because /31 subnets dont have a network and broadcast address.
     \item /31 supports 128 subnets, /30 only 64.
     \item /31 us useful if you need to maximize use of your address space.
     \item /30 is more standard and commonly used.
     \item For the CCNA exam, use /30 when a subnet to support 2 hosts is required, unless told to use /31. 
         \begin{itemize}
-            \item Because usually a /30 is the correct answer.
+            \item Because usually a /30 is the correct answer. Only to maximize use /31, otherwise always use /30.
         \end{itemize}
 \end{itemize}
 
 \subsection{Class C /29 subnet}
 \begin{itemize}
     \item Let's say we've been allocated Class C 200.15.10.0/24.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=\width\textwidth]{./figs/20220610123227.png}
+        \end{figure}
     \item Let's move the line back a place. We've now using /29 (or 255.255.255.248).
     \item This leaves 3 bits for the host addresses, $\displaystyle 2^3 - 2 = 6$ possible hosts.
     \item It borrows 5 bits for the network address.
     \item This gives us 32 subnets $\displaystyle 2^5$ which accommodate 6 hosts each.
+    \item The valid host addresses are:
+        \begin{itemize}
+            \item 200.15.10.1 to 200.15.10.6 (network .0, broadcast .7)
+            \item 200.15.10.9 to 200.15.10.14 (network .8, broadcast .15)
+            \item etc. to:
+            \item 200.15.10.249 to 200.15.10.254 (network .248, broadcast .255)
+        \end{itemize}
+\end{itemize}
+
+\subsection{Other class C subnet masks}
+\begin{itemize}
+    \item We can carry on moving the red line back a place.
+    \item We can do for example: 
+        \begin{itemize}
+            \item /28 or (255.255.255.240) = 16 networks of 14 hosts each.
+            \item /27 or (255.255.255.224) = 8 networks of 30 hosts each.
+            \item /26 or (255.255.255.192) = 4 networks of 62 hosts each.
+            \item /25 or (255.255.255.128) = 2 networks of 126 hosts each.
+            \item /24 or (255.255.255.0) = 1 network of 254 hosts (the default, no subnetting).
+        \end{itemize}
 \end{itemize}
 
 
 %----------------------------------------------------------------------------------------
+\section{Subnetting practice questions}
+\begin{itemize}
+    \item What are the network address, broadcast address, and valid host address for the IP address 198.22.45.173/26?
+        \begin{itemize}
+            \item 198.22.45.173 = \hl{11000110.00010110.00101101.10}101101
+            \item The highlighted part is the /26, we cannot do anything with those bits, only with the reamining.
+            \item The network and broadcast addresses:
+                \begin{tabular}{|c|c|}
+                    \hline
+                    Network address & Broadcast address \\
+                    \hline
+                        \hl{11000110.00010110.00101101.10}000000 & 
+                        \hl{11000110.00010110.00101101.10}111111 \\
+                    \hline
+                        198.22.45.128 &
+                        198.22.45.191
+                     \\
+                    \hline
+                \end{tabular}
+            
+            \item The valid host addresses: 198.22.45.129 - 198.22.45.190.
+        \end{itemize}
+
+    \item What is the subnet mask in dotted decimal notation? 
+        \begin{itemize}
+            \item 255.255.255.192
+        \end{itemize}
+    
+    \item Note that when we subnet a class C address the magic is all going to happen in the last subnet.
+    \item So we didn't really need to write out the 198.22.45 part.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Variable Length Subnet Masks VLSM}
+\begin{itemize}
+    \item Early routing protocols only supported fixed length subnet masking (FLSM) where all the subnets had to be the same size. You couldn't have a subnet with 14 hosts and another with 64 hosts in the same network.
+        \begin{itemize}
+            \item If you had a subnet that was /28 they all had to be /28 no /27 or any other submask within the same larger network.
+            \item Now variable length subnet masks are supported.
+        \end{itemize}
+        
+    \item All modern routing protocols support variable length subnet masking. This allows us to size subnets differently according to how many hosts they have. 
+\end{itemize}
+
+\subsection{Subnetting considerations}
+\begin{itemize}
+    \item How many locations do we have in the network?
+    \item How many hosts are in each location?
+    \item What are the IP addressing requirements fro each location? (Should different department types of host be in different subnets?)
+    \item What size is appropriate for each subnet? (Don't waste addresses, but leave room for growth)
+        \begin{itemize}
+            \item Don't make it too big, and don't make it too slow as to have to make a topology redesign later.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Network topology diagram}
+\begin{itemize}
+    \item We have a network topology diagram, we have an organization with an office in NY, another one in Boston, NY is the headquarters, they have 14 hosts in the sales department and 28 hosts in the engineering department. In boston they have 28 in engineering and 7 in the sales department.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=\width\textwidth]{./figs/20220610143719.png}
+        \end{figure}
+
+    \item We've been allocated the class C network 200.15.10.0/24 from our internet service provider.
+    \item We have Point to point link between the routers, this means that each of them are going to get one of the host ip addresses.
+\end{itemize}
+
+\subsection{Subnetting design steps}
+\begin{itemize}
+    \item Find the largest segments and allocate a suitable subnet size for it.
+    \item Allocate this subnet at the start of the address space.
+    \item Continue going down the list.
+    \item In the real world you want a scalable design -- you will likely allocate spare subnets for future growth, and leave space in the subnets for additional hosts.
+        \begin{itemize}
+            \item Example: the engineering department we have 28 hosts, don't give the subnet that size because you never know if you might need mor in the future.
+            \item Maybe you need 2 more hosts in the next month for new employees, you need to keep this in mind.
+            \item And if you allocate 2 subnets of 30 for the engineering and sales, don't do this, instead leave 3 or 4 subnets of 30 hosts, because that way you have the capacity for growth and you don't need to redesign the topology later on, everything is still sequential and contigous and everything works.
+            \item Don't design for what is required right now, leave some room for growth.
+            \item THIS IS WHAT YOU DO IN THE REAL WORLD, IN THE EXAM DON'T THINK LIKE THIS. DO EXACTLY AS YOU ARE TOLD. Even if you think that would be a stupid thing to do.
+        \end{itemize}
+    \item In the CCNA exam do exactlu what the question asks, don't worry about wether it's best practice or not.
+\end{itemize}
+
+\subsection{Engineering departments}
+\begin{itemize}
+    \item The engineering deparments in both sites have 28 hosts.
+    \item For our example we've been told that the departments will not grow and we need to use the smallest subnets possible to maximise our address space.
+    \item Let's find the optimal subnetmask for the engineering departments, and determine the network and broadcast addresses of each.
+\end{itemize}
+
+\subsection{Engineering departments answer}
+\begin{itemize}
+    \item We've been allocated 200.15.10.0/24
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=\width\textwidth]{./figs/20220610144836.png}
+            %\caption{}
+        \end{figure}
+    
+    \item /27 or (255.255.255.224) supports 30 hosts. It is not 28 because we need the network address and the broadcast + the 28 hosts.
+    \item New york engineering subnet:
+        \begin{itemize}
+            \item Network address: 200.15.10.0/27
+            \item Broadcast address: 200.15.10.31
+            \item Hosts 200.15.10.1-30.
+        \end{itemize}
+    
+    \item Boston engineering subnet:
+        \begin{itemize}
+            \item Network address: 200.15.10.32/27
+            \item Broadcast address: 200.15.10.63
+            \item Hosts: 200.15.10.33-62
+        \end{itemize}
+\end{itemize}

@@ -1,0 +1,172 @@
+\NeedsTeXFormat{LaTeX2e}[2014/08/24]
+\ProvidesPackage{calculussnips}[2020/03/05 first release]
+
+
+\RequirePackage{amsmath}
+% \RequirePackage[spanish]{babel}
+\RequirePackage{tikz}
+\RequirePackage{xintexpr}
+\RequirePackage{tikz-3dplot} 
+\RequirePackage{tkz-euclide}
+\RequirePackage{amsmath}
+\RequirePackage{amsthm}
+\RequirePackage{titlesec}
+\RequirePackage{xpatch}
+\RequirePackage{fancyhdr}
+\usetikzlibrary{arrows,positioning,shapes,calc}
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Custom commands
+
+
+\newcommand{\floor}[1]{
+    \left\lfloor #1 \right\rfloor
+}
+
+
+\newcommand{\dervpar}[2]{
+           \ensuremath{
+		\frac{\partial {#1}}{\partial {#2}}
+	}
+} % abreviation: derpar
+
+\newcommand{\righttriangle}[4][1.5]{
+    \begin{center}
+        \begin{tikzpicture}[scale=#1]
+            \coordinate [] (C) at (-1.5cm,-1.cm);
+            \coordinate [] (A) at (1.5cm,-1.0cm);
+            \coordinate [] (B) at (1.5cm,1.0cm);
+            \draw (C) -- node[above=0.50] {$\displaystyle #2$} (B) -- node[right] {$\displaystyle #3$} (A) -- node[below] {$\displaystyle #4$} (C); 
+            \draw (1.25cm,-1.0cm) rectangle (1.5cm,-0.75cm); 
+            \tkzMarkAngle[size=0.5cm,color=black,mark=|](A,C,B);
+            
+            \coordinate[label={45:$\displaystyle \theta$}] (theta) at (-0.95,-0.95);
+            \coordinate[label={45:$\displaystyle \alpha$}] (alpha) at (1,0.25);
+                
+            \tkzMarkAngle[size=0.5cm,color=black](C,B,A); 
+        \end{tikzpicture}
+    \end{center}
+} % abreviation: rtri
+\newcommand{\trigonometricsubstitution}[3]{
+
+    \begin{center}
+        % requires tikz, tkz-euclide, tikzlibs: arrow, shapes, calc, enumitem
+        \begin{tabular}{ c | c }
+            % \hline
+                \begin{tabular}{c}
+                \\[0.75cm]
+                \qquad\qquad
+                    \begin{tikzpicture}[scale=1.5]
+                    \coordinate [] (C) at (-1.5cm,-1.cm);
+                        \coordinate [] (A) at (1.5cm,-1.0cm);
+                        \coordinate [] (B) at (1.5cm,1.0cm);
+                        \draw (C) -- node[above=0.50] {$\displaystyle #1$} (B) -- node[right] {$\displaystyle #2$} (A) -- node[below] {$\displaystyle #3$} (C); 
+                        \draw (1.25cm,-1.0cm) rectangle (1.5cm,-0.75cm); 
+                        \tkzMarkAngle[size=0.5cm,color=black,mark=|](A,C,B);
+                        \coordinate[label={45:$\displaystyle \theta$}] (theta) at (-0.98,-0.95);
+                        \tkzMarkAngle[size=0.5cm,color=black](C,B,A); 
+                    \end{tikzpicture}    \qquad\qquad\quad \\ \\
+                \end{tabular}
+                &
+                \begin{tabular}{ c c c }
+                    \qquad\qquad	
+                    \\[0.75cm]
+                        $\displaystyle \sin(\theta) = \frac{#2}{#1}$ &
+                        $\displaystyle \cos(\theta) = \frac{#3}{#1}$ &
+                        $\displaystyle \tan(\theta) = \frac{#2}{#3}$ \\[1cm]
+                
+                        $\displaystyle \csc(\theta) = \frac{#1}{#2}$ &
+                        $\displaystyle \sec(\theta) = \frac{#1}{#3}$ &
+                        $\displaystyle \cot(\theta) = \frac{#3}{#2}$ \\[1cm]
+                    \qquad\qquad
+            \end{tabular} \\[0.75cm]
+            % \hline
+        \end{tabular}
+    \end{center}
+} % abreviation: trigsubs
+
+\newcommand{\matrixijk}[6]{
+    \ensuremath{
+        \begin{vmatrix}
+            \hat{i} & \hat{j} & \hat{k} \\
+            #1      & #2      & #3 \\
+            #4      & #5      & #6 \\
+        \end{vmatrix}
+    }
+} % abreviation: 
+
+\newcommand{\leriangle}[1]{
+    \ensuremath{
+        \left\langle #1 \right\rangle
+    }
+} % abreviation: 
+
+\newcommand{\p}[1]{
+    \ensuremath{
+        \left(#1\right)
+    }
+} % abreviation: ppp
+
+\newcommand{\cb}[1]{
+    \left\{#1\right\}
+}
+
+\newcommand{\hati}{
+    \ensuremath{
+        \hat{i}
+    }
+} % abreviation: 
+\newcommand{\hatj}{
+    \ensuremath{
+        \hat{j}
+    }
+} % abreviation: 
+\newcommand{\hatk}{
+    \ensuremath{
+        \hat{k}
+    }
+} % abreviation: 
+\newcommand{\qq}{
+    \ensuremath{
+        \quad
+    }
+} % abreviation: qq
+\newcommand{\evaluate}[2]{
+    \ensuremath{
+        \Big|_{#1}^{#2}    
+    }
+} % abreviation: evaluate
+\newcommand{\qqq}{
+    \ensuremath{
+        \qquad
+    }
+} % abreviation: 
+\newcommand{\absval}[1]{
+    \left| #1 \right|
+} % abreviation: absval
+\newcommand{\intbyparts}[6]{ 
+    % 1->function 2->var 3->u, 4->du, 5->dv, 6->v
+    \begin{center}
+        \[
+        \int #1 d#2
+        \]
+        \begin{align*}
+            u &= #3 \quad \qquad dv = #5 d#2 \\ 
+            du &= #4 d#2 \quad \qquad v = #6 \\ 
+        \end{align*} 
+        \[
+            \underbrace{\left(#3\right)}_{u}
+            \underbrace{\left(#6\right)}_{v}
+            -\int
+            \underbrace{\left(#6\right)}_{v}
+            \underbrace{\left(#4\right)}_{du} 
+    \]  
+    \end{center}
+} % abreviation: 
+
+
+\newcommand{\sqb}[1]{
+    \left[#1\right]
+}
