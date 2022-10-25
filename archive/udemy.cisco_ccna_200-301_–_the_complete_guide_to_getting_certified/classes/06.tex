@@ -1,0 +1,448 @@
+\section{Introduction}
+\begin{itemize}
+    \item Format of the IP header.
+    \item Format of IP addresses.
+    \item Different types of traffic: unicast, broadcast, and multicast.
+    \item Subnet mask.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{The IP header}
+\begin{itemize}
+    \item The network layer:
+        \begin{itemize}
+            \item The network layer is responsible for routing packets to their destination and for Quality of Service.
+                \begin{itemize}
+                    \item Quality of service: when some levels of trafic require better quality of traffic, so for example, a voice or video is sensitive to delay so it will need a better quality service than something like email.
+                \end{itemize}
+            \item IP (Internet Protocol) is the best known Layer 3 Protocol. IPv4 is the focus of this section.
+                \begin{itemize}
+                    \item There is also IPv6 which is a newer protocol.
+                \end{itemize}
+            \item It is a connectionless protocol with no acknowledgements at Layer 3.
+                \begin{itemize}
+                    \item You can have reliable traffic by using TCP at layer 4, but itself has no acknowledgement. You can also have reliable traffic by building it into the upper layers.
+                \end{itemize}
+            \item Other Layer 3 Protocols include ICMP (Internet Control Message Protocol) and IPSec.
+                \begin{itemize}
+                    \item The ICMP is used for troubleshooting, IPSec is for secure and encrypted communications. There are others as well but these are the most common.
+                \end{itemize}
+        \end{itemize}
+    
+    \item IP addressing:
+        \begin{itemize}
+            \item IP addressing is a logical addressing scheme which is implemented at layer 3.
+            \item The network designer uses IP addressing to partition the overall network into smaller 'subnets'.
+            \item This improves performance and security and makes troubleshooting easier.
+                \begin{itemize}
+                    \item It improves performance because instead of having a big network we have a set of small 'subnets' and we can keep the traffic to the particular subnet that it needs to be on rather than everywhere.
+                    \item We also get better security. Example: if we have accounting servers, we can put it in it's own subnet and better control who has access to those servers.
+                    \item Troubleshooting becomes easier because we now know that if a problem occurs it will show only on that particular subnet rather than in the entire network.
+                \end{itemize}
+            \item Layer 2 MAC addresses use one big flat addressing scheme. There is no logical separation between networks at layer 2, it's done at Layer 3.
+                \begin{itemize}
+                    \item IP addressing is a logical addressing scheme, whereas MAC addresses are a big flat scheme.
+                \end{itemize}
+        \end{itemize}
+    
+    \item OSI Reference Model - Encapsulation:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./figs/2022-01-05-22-39-03.png}
+        % 	\caption{}
+        \end{figure}
+    
+    \item The IP header:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./figs/2022-01-05-22-39-43.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item Version (4 bit): Ip version 4 or version 6.
+            \item header length: (4 bit): the length of the header.
+            \item Type of service: this is actually the quality of servie information, we can mark the packet with quality of service information so that we can make routers respond to this information.
+            \item total length (16 bit): length of the packet.
+            \item The second row of information (identification, flags, fragment offset) handles the fragments. Fragments: packets have a maximum size, when the information that is to be sent exceds the maximum packet size it is split up into several packets and sends them, these split up packets are called fragments.
+            \item time to live: everytime a packet goes through a router, the router will decrement the TTL by one, if it goes down to 0 the router drops the packet. This is to avoid routing loops, routing loops are when a packet is being sent through the same routers endlessly without being able to find its destination because of some error, to prevent this the time to live is decreased to be able to discard the packet once it has reached the maximum amount of times. This doesn't fix the problem in the network that caused the routing loop, but it will allow us to mitigate a potentially growing problem in our network.
+            \item 8-bit protocol: specify the layer 4 information type, usually TCP or UDP.
+            \item Check sum: to ensure that the packet has not been corrupted in transit.
+            \item source IP address (32 bit): from where the packet is comming from.
+            \item destination IP address (32 bit): to where it is headed.
+            \item Header options (0-40 bytes): this field is used to send any additional information in the header, it is not typically used.
+            \item Data (variable length): the actual data being transmitted.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Unicast, Broadcast, and Multicast Traffic}
+\begin{itemize}
+    \item Unicast, Broadcast, and Multicast Traffic
+        \begin{itemize}
+            \item There are 3 main IP traffic types: unicast, broadcast, adn multicast.
+            \item Unicast traffic is to a single destination host.
+            \item Broadcat traffic is to all hosts on a subnet.
+            \item Multicast traffic is to multiple interested hosts.
+        \end{itemize}
+    
+    \item Unicast traffic:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./figs/2022-01-05-23-14-20.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item The traffic is coming from a sender, and is going just to one receiver.
+        \end{itemize}
+    
+    \item Broadcast traffic:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./figs/2022-01-05-23-18-22.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item The sender sends ONE copy of the traffic that will come into the switch, and then it gets to all of the hosts connected to the switch.
+            \item *Important: when a broadcast is sent in a subnetwork, routers do not forward broadcast traffic, only switches do that.
+        \end{itemize}
+    
+    \item Unicast Traffic to Multiple Hosts:
+        \begin{figure}[H]
+            \centering
+            
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item With unicast you send out one individual copy of the requested data to the other hosts. This can potentially become expensive because of the extra bandwidth and can cause a lot of overhead. 
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-05-23-24-16.png}
+                % 	\caption{}
+                \end{figure}
+            \item When you unicast a message to several computers you send to each individual destination host a different copy. With multicast you send one copy that goes to several different receivers, with this arrangement you don't produce a different copy for all of the interested receivers, you send out one, and that one copy gets forwarded to all the different receivers.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-05-23-25-35.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item Multicast goes to multiple receivers but only if the receivers request it, with broadcast all hosts on a network get the data regardless of request, multicast is targeted. 
+            \item *Analogy: multicast is like tunning to a radio station, you have to tune in to get that particular radio station.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Converting from decimal to binary}
+\begin{itemize}
+    \item Counting in decimal:
+        \begin{itemize}
+            \item Humans are conditioned to count in decimal.
+            \item For each 'column' in a number we have 10 possible choices, from 0-9.
+            \item Every time we add a column to the left, the value is multiplied by 10.
+            \item We start with '1s' as the further right column.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-05-23-39-44.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item Writing 236 implies the following: 
+        \end{itemize}
+    
+    \item Counting in binary:
+        \begin{itemize}
+            \item Computers work in binary.
+            \item Electrical impulses are either off or on, so there's only two choices (0 or 1), unlike 10 in decimal (0-9).
+            \item For each 'column' in a number we have 2 possible choices, 0 or 1.
+            \item Everytime we add a column to the left, the value is multiplied by 2.
+            \item In this case the columns are like so:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-05-23-41-13.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item The number we are going to get in the end is 11101100. We do this like so. A final check is that at the end of the process you should have 0 left over.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{IPv4 Addresses}
+\begin{itemize}
+    \item IPv4 Addresses:
+        \begin{itemize}
+            \item An IPv4 address is 32 bits long.
+            \item It is written as 4 'octets' in dotted decimal format.
+            \item For example 192.168.10.15
+            \item Each octet is 8 bits long, 4 octets are 32 bits.
+        \end{itemize}
+    
+    \item Seeing your IP address:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./figs/2022-01-05-23-49-32.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item If we were to type 'ipconfig' in cmd (windows) or 'ifconfig' in the terminal (linux and macos) we would get all sorts of information regarding the IP address.
+            \item IPv4 address is printed, the subnetmask is also printed, and the default gateway is printed. A default gateway is used when traffic is going to another host on another subnet, when the destination host is in the same subnet it can get there directly but if it is not it will go through a router and enter a different subnet, the default gateway in that case is the router to the other subnets and networks. 
+            \item To see the default gateway on linux or macos enter 'ip route'.
+            \item To get your ip in Cisco OS, enter the enable prompt and type 'show ip interface brief'.
+        \end{itemize}
+    
+    \item Static and automatic addressing:
+        \begin{itemize}
+            \item The IP address is usually se manually on servers, printers and network devices such as routers and switches. On desktop computers it is usually assigned automatically through the Dynamic Host Configuration Protocol (DHCP).
+                \begin{itemize}
+                    \item The reason you want to get your IP is set automatically on desktops is because you would not want to set it up manually because you would need to see which IP address is not in use and then set it up, instead you are automatically assigned one. With servers and routers you can do it manually because you they are fewer and they are going to almost always be the same IP address.
+                \end{itemize}
+            \item To understand how the logical separation between subnets works, you need to understand the IP address in binary.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Calculating and IPv4 Address in binary}
+\begin{itemize}
+    \item Each octet in the IP address has a value ranging from 0 to 255.
+        \begin{itemize}
+            \item Since an octet has 8 bits, and its binary we know that it has a maximum of 255.
+                \begin{center}
+                    \begin{tabular}{ |c|c|c|c|c|c|c|c| }
+                        \hline
+                            128 & 64 & 32 & 16 & 8 & 4 & 2 & 1  \\
+                        \hline
+                            0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 \\
+                        \hline
+                            1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+                        \hline
+                    \end{tabular}
+                \end{center}
+            
+            \item Notice if we replace the 8 bits with 0's we get 0. If we replace everything with 1 we get $\displaystyle 128 + 64 + 32 + 16 + 8 + 4 + 2 + 1 = 255$.
+        \end{itemize}
+    
+    \item Example: Let's convert that 192.168.10.15 address to binary, starting with the first octet of 192.
+        \begin{itemize}
+            \item Write out the binary columns on a piece of paper to do this: The final result is 11000000
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-21-01-16.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item The second octet of 168.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-21-03-21.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item And so on.
+            \item The final answer should be:
+                \[
+                  192.168.10.15 = 11000000.10101000.00001010.00001111
+                \]
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-21-05-33.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item To set the boundary between logical network (subnet), the IP address is combined with the subnet mask. 
+    \item The subnet masked has not been explained, it will be explained in the next section.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{The subnet mask}
+\begin{itemize}
+    \item The subnet mask:
+        \begin{itemize}
+            \item The subnet mask can be visualized by using the command prompt. You can enter the appropriate command to show you your IP and you will see your IP, default gateway, and it's subnet mask.
+            \item A host can send traffic directly to another host on the same subnet via switches.
+            \item For host to send traffic to another host in a different subnet, it must be forwarded by a router.
+                \begin{itemize}
+                    \item Routers are devices that link our different subnets together and route the traffic between them.
+                \end{itemize}
+            \item The host therefore sends to understand if the destination is on the same or a different subnet in order to know how to send it.
+                \begin{itemize}
+                    \item If the destination is on the same subnet it can send it there directly and no router is required. If the destination host is not in the same subnet then we must send it to a router, this router is the default gateway. 
+                    \item The way that the sender host knows if the destination host is on the same network is by simply comparing the sender's and reciever's IP address and subnet mask, if the mask is the same then just switches are required and no routing is done.
+                \end{itemize}
+            \item The subnet mask is used for this. 
+            \item The subnet mask is also 32 bits long and can be written in dotted decimal or slash notation.
+        \end{itemize}
+    
+    \item Network and host portion:
+        \begin{itemize}
+            \item A host's IP address is divided into a network portion and a host portion.
+            \item The subnet mask defines where the boundary is.
+            \item The easiest way to explain this is through example...
+        \end{itemize}
+    
+    \item Subnet 'Masking':
+        \begin{itemize}
+            \item Let's say the host's IP address is 192.168.10.15 and its subnet mask is 255.255.255.0
+            \item We write the IP address out in binary notation, and then the subnet mask underneath.
+            \item Starting wit IP$=$192.168.10.15 and subnet mask$=$255.255.255.0 we convert to binary:
+                \begin{align*}
+                    192.168.10.15 &= 11000000\;10101000\;00001010\;00001111 \\ 
+                    255.255.255.0 &= 11111111\;11111111\;11111111\;00000000 \\
+                \end{align*}
+                \begin{itemize}
+                    \item Notice the IP address, the IP address actuall contains part of the subnet mask, we just need to know where it starts and where it ends. The way we know when it starts is by simply seeint the subnet mask, whenever there is a 1 aligned in the position, this means that part of the IP is also the network address.
+                    \item So in this example notice that the first 24 bits in the subnet mask are set to 1. This means that the first 24 bits -- or from bit 0-23 -- of the IP are part of the network address.
+                    \item It is counter intuitive but just see how the numbers are linged up. We convert them to binary and align them up vertically as for the first bit of the IP address to correspond with the first bit of the subnet mask, same with the second, third, ... all the way up to the 32nd bit.
+                    \item Now you see the subnet mask, wherever there is a 1, that is the network address.
+                        \begin{figure}[H]
+                            \centering
+                            \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-21-31-50.png}
+                        % 	\caption{}
+                        \end{figure}
+                    
+                    \item In the picture above, notice the red line, the 1s come up to the third octet. To the left of that border lies the network address, to the right of that border lies the host address.
+                \end{itemize}
+            
+            \item The IP address is compared ('masked') with the subnet mask.
+            \item A '1' in the subnet mask indicates that bit in the IP address is part of the network address.
+            \item A '0' indicates the bit is part of the host address.
+            
+            \item Below you can see the network portion:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-21-33-42.png}
+                % 	\caption{}
+                \end{figure}
+                
+            \item Below you can see the host portion:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-21-34-47.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item Local subnet or routed traffic:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-21-37-50.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item If the host wants to communicate with another host with an IP address which also begins with 192.168.10 (network portion for the example 192.168.10.20), it knows it's on the same subnet and it can send the traffic directly.
+            \item If it wants to communicate with another host with any other network address (for example 192.168.11.20), it knows it has to send the traffic via a router.
+            \item For a destination address to be in the same subnet, the network portion has to be exactly 192.168.10.
+            \item Otherwise it's a in a different subnet and traffic must be sent via a router.
+        \end{itemize}
+    
+    \item Valid subnet masks:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-21-41-33.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item The subnet mask always begins with contiguous '1's.
+            \item For example: $\displaystyle 11111111.11110000.00000000.00000000$ is a legal subnet mask.
+            \item $\displaystyle 11101101.11110000.00001111$ is not.
+            \item With IP addresses the '0's and '1's can be mixed, in the subnet mask it is always a '1's and then '0's, we don't mix them up in subnet masks.
+        \end{itemize}
+    
+    \item The host portion:
+        \begin{itemize}
+            \item The host portion of the address is available to be allocated to the different hosts on the subnet (eg PCs, Servers, Printers, Router interfaces and Switch Management Addresses).
+            \item With two exceptions (that will be explained in a moment).
+            \item Again, this is the host portion of the address:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-21-43-42.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item Host addresses:
+        \begin{itemize}
+            \item The host portion of the address specifies the individual host and must be unique on that subnet.
+            \item Hosts do not have to be numbered sequentially.
+                \begin{itemize}
+                    \item Any number can be assigned as long as they are not duplicated.
+                \end{itemize}
+            \item If the network portion of the address is 10.10.10.10, you can have a host with IP address 10.10.10.10 and another with 10.10.10.20.
+            \item You can't have two different hosts both with IP address 10.10.10.10. That would be a duplicate IP address. Whenever another host sent traffic to 10.10.10.10, the network wouldn't know which one to send it to.
+            \item We have host 10.10.10.10 on one subnet and host 10.10.20.10 on another subnet.
+        \end{itemize}
+    
+    \item The network address (network ID) FIRST EXCEPTION:
+        \begin{itemize}
+            \item The first exception to the host portion is that all '0's in the host portion designates the network address and is not allowed to be allocated to a host.
+                \begin{itemize}
+                    \item Basically you can pick the host portion to be anything except all 0s because all 0s it is asumed to be the network address.
+                \end{itemize}
+            
+            \item In our example the network address is 192.168.10.0. Remember the network address is also 32 bits, it just so happens that when you have the host portion in all 0s, that has been reserved for the network address and you cannot allocate it to a host. In our example the network address is 192.168.10.0.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-22-13-51.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item The broadcast address SECOND EXCEPTION:
+        \begin{itemize}
+            \item The second exception to host numbers are all 1s. 
+            \item All '1's designates the directed broadcast address for the subnet.
+            \item Traffic with this destination address will be sent to all hosts in the subnet.
+            \item In our example the broadcast address is 192.168.10.255.
+            \item So all 0s and all 1s in the host's portion are the exceptions.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-22-16-26.png}
+                % 	\caption{}
+                \end{figure}
+        \end{itemize}
+    
+    \item Host addresses:
+        \begin{itemize}
+            \item So taking out the exceptions of the host portion (all 1's and all 0's) that leaves the host portion free to be anything from 1-254. In our example that leaves 192.168.10.1 to 192.168.10.254 available to be allocated to hosts. All hosts connected to network address 192.168.10.0 can send traffic directly through switches because they are in the same subnet without going via their default gateway router.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Slash notation}
+\begin{itemize}
+    \item Subnet mask in slash notation:
+        \begin{itemize}
+            \item So notice that the subnet mask is always contigous 1s followed by contigous 1s. This is long and tidious, there is a better way of writing it down. For IP address 192.168.10.15 and subnet mask 255.255.255.0 we can simply enumerate the 32 bits of the subnet mask and just write down the range from 1-n where the '1's are at.
+            \item Because the subnet mask always begines with contiguous '1's, it will be 1 to 32 bits ling counting from left to right.
+            \item This allows us to write the subnet mask in slash notation which is more convenient than dotted decimal for network diagrams or in conversation.
+            \item So look at the following example:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-22-23-51.png}
+                % 	\caption{}
+                \end{figure}
+            
+            \item We see that the first three octets are 1s and the last octet is all 0s. So the slash notation for this case would be \verb|/24| because the first 24 bits are set to 1, the remaining are 0s.
+            \item In cisco IOS the subnet mask is written in dotted decimal.
+        \end{itemize}
+    
+    \item Subnet mask in slash notation example 2:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=0.4\textwidth]{./figs/2022-01-07-22-29-18.png}
+        % 	\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item This example can be written as either 10.10.10.15 255.0.0.0 or 10.10.10.15\verb|/|8.
+            \item The network address is 10.0.0.0/8.
+            \item The last three octets is the host portion.
+            \item The available addresses would be 10.0.0.1 to 10.255.255.255.254, not 10.255.255.255 because that is the broadcast address.
+        \end{itemize}
+\end{itemize}
