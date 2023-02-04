@@ -12,6 +12,7 @@ clear
 echo "Latex main file name: "
 read latex_main_name
 latex_main_name+='.tex'
+front_page_name='frontpage.tex'
 clear
 
 # Set the color variable
@@ -69,7 +70,7 @@ BEFORE_DOC+='\\darktheme\n'
 BEFORE_DOC+='\\pagestyle{empty}\n'
 BEFORE_DOC+='\\UseRawInputEncoding\n\n\n'
 BEFORE_DOC+='\\begin{document}\n'
-BEFORE_DOC+='\\maketitle\n'
+BEFORE_DOC+='\\input{'$front_page_name'}\n'
 BEFORE_DOC+='\\tableofcontents\n'
 BEFORE_DOC+=$PERCENTAGE_SEPARATORS
 BEFORE_DOC+='\n\n\n'
@@ -79,6 +80,7 @@ AFTER_DOC+='\\end{document}'
 
 DOCUMENT=${LATEX_DT}${LATEX_LIBS}${BEFORE_DOC}${AFTER_DOC}
 
+# adding the template data to the document.
 echo -e $DOCUMENT > $folder_name/$latex_main_name
 
 echo -e "${green_color}TERMINATED SUCCESSFULLY.${clear_color}"
