@@ -312,6 +312,170 @@
             Trust t; 
             do_withdraw(t, 1000); // Trust::withdraw
         \end{minted}
+\end{itemize}
 
-    \item 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Pure virtual functions and abstract classes}
+\begin{itemize}
+    \item Abstract class:
+        \begin{itemize}
+            \item Cannot instantiate object.
+            \item These classes are used as base classes in inheritance hiearchies.
+            \item Often refered to as abstract base classes.
+        \end{itemize}
+    
+    \item Concrete class:
+        \begin{itemize}
+            \item These classes can instantiate objects.
+            \item All their member funtions are defined, in short, the ones we have been using up until this point in the course.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Polymorphism}
+Pure virtual functions and obstract classes.
+\begin{itemize}
+    \item Abstract base class:
+        \begin{itemize}
+            \item Too generic to create objects from: shape, employee, account, player.
+            \item Serves as parent to derived classes that me have objects.
+            \item Contains at least one pure virtual function.
+            \item Can be thought out as a parent class to other classes.
+        \end{itemize}
+    
+    \item What is a pure virtual function:
+        \begin{itemize}
+            \item Used to make a class abstract.
+            \item Specified with ''=0´´ in its declaration.
+                \begin{minted}[autogobble]{cpp}
+                    virtual void function() = 0; // pure virtual function.
+                \end{minted}
+            
+            \item Typically do not provide implementations. So no \mintinline{cpp}|{code...}| curly braces, or implementation usually, however we can implement some functionality.
+            \item Once a class has at least one virtual function, it is now an abstract class and cannot be instantiated.
+        \end{itemize}
+    
+    \item Pure virtual functions and abstract classes:
+        \begin{itemize}
+            \item Virtual functions must be override the base class.
+            \item If the derived class does not override the derived class is also abstract and therefore cannot be instantiated.
+            \item Used when it doesn't make sense for a base class to have an implementation:
+                \begin{itemize}
+                    \item But concrete classes must implement it.
+                \end{itemize}
+            \begin{minted}[autogobble]{cpp}
+                virtual void draw() = 0; // Shape
+                virtual void defend() = 0; // Player
+            \end{minted}
+        \end{itemize}
+    
+    \item So why have an abstract class?
+        \begin{itemize}
+            \item Say we are creating a class called shape. At the moment we know that shapes can be of all types, triangle, square, parallelogram, but we know that these shapes all will need a draw() method. So what we can do is create an abstract class called Shape, and define a virtual draw method, then create all the class variations and inherit from the parent. We must always override the draw() method, otherwise it is inherited as virtual and makes the derived class also abstract.
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=\width\textwidth]{./figs/20230204190832.png}
+                    %\caption{}
+                \end{figure}
+            
+            \item Here some code for the shape class:
+                \begin{minted}[autogobble]{cpp}
+                    class Shape {
+                        private:    
+                            // attributes commont to all shapes.
+                        public:
+                            virtual void draw() = 0; // pure virtual function.
+                            virtual void rotate() = 0; // pure virtual function.
+                            virtual ~Shape(); // pure virtual function.
+                            ...
+                    };
+                    class Circle : public Shape { // Concrete class.
+                        private:
+                            // attributes for a circle.
+                        public:
+                            virtual void draw() override {
+                                // code to draw a circle.
+                            }
+                            virtual void rotate() override {
+                                // code to rotate a circle.
+                            }
+                            virtual ~Circle;
+                            ...
+                    };
+                \end{minted}
+            
+            \item If we try to instantiate the abstract class we get an error:
+                \begin{minted}[autogobble]{cpp}
+                    Shape shape;              // Error.
+                    Shape *ptr = new Shape(); // Error.
+                \end{minted}
+            
+            \item We can use pointers and refernces to dynamically refer to concrete classes derived from them. Example:
+                \begin{minted}[autogobble]{cpp}
+                    Shape *ptr = new Circle(); // OK.
+                    ptr->draw();
+                    ptr->rotate();
+                \end{minted}
+        \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Polymorphism}
+\begin{itemize}
+    \item What does it mean to use a class as an interface?
+        \begin{itemize}
+            \item An abstract class that has only pure virtual functions.
+            \item These functions provide a general set of services to the other user of the class.
+            \item Provided as public. These methods need to be public.
+            \item Each subclass is free to implement these services as needed.
+            \item Every service (by service we just mean method) must be implemented.
+            \item The service type information is strictly enforced.
+        \end{itemize}
+    
+    \item A printable example:
+        \begin{itemize}
+            \item C++ does not provide true interfaces.
+            \item We use abstract classes and pure virtual functions to achieve it.
+            \item We suppose we want to be able to printable support for any object we wish without knowing its implementation at compile time.
+                \begin{minted}[autogobble]{cpp}
+                    std::cout << any_object << std::endl;
+                \end{minted}
+            
+            \item \mintinline{cpp}{any_object} must comform to the printable interface.
+            \item So for this example we want to create an abstract class that gives all derived classes the capacity to print themselves.
+                \begin{minted}[autogobble]{cpp}
+                    class Printable {
+                            friend ostream &operator<<(ostream &os, Printable &obj);
+                        public:
+                            virtual void print(ostream &os) const = 0;
+                            virtual ~Printable() {};
+                            ...
+                    };
+                    ostream &operator<<(ostream &os, const Printable &obj) {
+                        obj.print(os);
+                        return os;
+                    }
+                \end{minted}
+            
+            \item So for any class to get the services from the Printable class it must override the Printable::print() method implemented in the Printable class.
+            
+            \item So things like this work:
+                \begin{minted}[autogobble]{cpp}
+                    Any_class *ptr = new Any_class();
+                    cout << *ptr << endl;
+
+                    void function1(Any_class &obj) {
+                        cout << obj << endl;
+                    }
+                    void function2(Printable &obj) {
+                        cout << obj << endl;
+                    }
+
+                    function1(*ptr); // "Hi from Any_class"
+                    function2(*ptr); // "Hi from Any_class"
+                \end{minted}
+            
+            \item function1 and function2 will be exactly the same, since Any\_class is a printable so it works on function 2 and Any\_class is also an Any\_class, so it works on function 1.
+        \end{itemize}
+    
+    \item Usually when a class is intended to be used as an interface it is preceded by I\_ to indicate that this is intended as an interface.
 \end{itemize}
