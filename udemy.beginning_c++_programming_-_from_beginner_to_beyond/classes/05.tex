@@ -1,0 +1,211 @@
+\section{Overview of structure of a C++ program}
+\begin{itemize}
+    \item C++ has lots of keywords.
+    \item Compared to other languages:
+        \begin{itemize}
+            \item Java has about 50.
+            \item C has 32.
+            \item Python has 33.
+            \item C++ has 90.
+        \end{itemize}
+    
+    \item You can view these words in the following link: \hyperlink{https://en.cppreference.com/w/cpp/keyword}{c++ reference}.
+    \item Keywords cannot be redefined nor used in a way they are not intentionally made for. This is why variables have naming conventions for example.
+    \item Difference between keywords and identifiers, a keyword is something that is built in the programming language, a keyword has specific purpose and meaning that cannot be changed; identifiers are defined and user for the programmers purposes, a variable name is an example of an identifier, another example are function names, there are rules for identifiers, also conventions.
+    \item C++ also has punctiation, and you must adhere to the punctuation rules, things such as "", $<<$, $>>$, ;, etcetera, are examples of punctuation.
+    \item When you assemble rules of punctuation, keywords, identifiers, rules, you end up with \emph{syntax} this refers to rules and conventions that you must follow.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\section{\#include Preprocessor directive}
+\begin{itemize}
+    \item What is a preprocessor?
+        \begin{itemize}
+            \item A preprocessor is a program that processes your source code before your compiler sees it. C++ preprocessor strips all the comments from the source code and then sends it to the compiler, it replaces each comment with a single space. 
+        \end{itemize}
+    
+    \item Directives in C++ start with a \# sign. Examples include:
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            #include "myfile.h"
+            #if 
+            #elif  
+            #else 
+            #endif  
+            #ifdef 
+            #ifndef  
+            #define 
+            #undef
+            #line 
+            #error 
+            #pragma
+        \end{minted}
+        \begin{itemize}
+            \item In simple terms the compiler replaces the include directive with the file that its refering to, then it recursively processes that file as well.
+            \item By the time the compiler sees the source code it has been stripped of all comments and all preprocessor directives have been processed and removed. 
+            \item Preprocessor directives are routinely used to conditionally compile code, for example say I want to execute some piece of code only if the program is running in the windows operating system and execute some other if the program is being run by MacOS, preprocessor directives can check to see if you are on windows and run your code, if you're not on windows then the preprocesor directive will run the MacOS code.
+            \item The C++ preprocessor does not understand C++. It simply processes the preprocessor directives and gets the code ready for the compiler, the compiler is the program that does understand C++.
+        \end{itemize}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\section{Comments in C++}
+\begin{itemize}
+    \item Comments are programmer readable explanations in the source code; explanations, notes, annotations, or anything that adds meaning to what the program is doing. 
+    \item The comments never makes it to the compiler, the preprocessor strips them, the comments are just to enhance the readibility of your source code, it's intended for humans and the compiler never sees it.
+    \item There are basically two ways of writing comments, single line comments and multiline comments.
+    \item Single line comments start with \mintinline{cpp}{//}, the remaining characters in that line are considered a comment by the preprocessor.
+        \begin{minted}[autogobble]{cpp}
+            int var = 100; // This is a comment.
+        \end{minted}
+    
+    \item Multiline comments start with \mintinline{cpp}{/*} anything after these characters up until \mintinline{cpp}{*/} are considered a comment by the preprocessor. Everything between the \mintinline{cpp}{/* */} will be ignored.
+        \begin{minted}[autogobble]{cpp}
+            /* This is a line.
+            This is another commented line.
+            This is yet another. 
+            ... 
+            */ int var = 100;
+        \end{minted}
+    \item The idea behind comments are to make self documenting code. Self documenting code is the practice of wrinting down what your code does and how it does it so that other people may understand it.
+        \begin{minted}[autogobble]{cpp}
+            int var = 100; // I'm initializing a variable to 100 in order to use <where I will use it> for <state the purpose>.
+        \end{minted}
+        \begin{itemize}
+            \item Keep in mind not every single line needs commenting, comments must be used only when they are needed, sometimes code can be very hard to read and that's were you want to use comments. You don't want to write a comment for every line of code saying what you do because what you are doing is easily and clearly dedusable, other code however can become very unreadable and complicated and that's were you might want to use comments so that other people know what you are doing. Don't comment the obvious.
+            \item As a rule: don't comment the obvious, good commenting doesn't justify bad code, and if you made changes to code make sure you also change the comments to save time and confusion, keep comments in sync.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{The main() function}
+\begin{itemize}
+    \item Every C++ program must have exactly one \mintinline{cpp}{main()} function.
+    \item main() is the starting point of program execution.
+    \item the \mintinline{cpp}{return 0;} statement in the \mintinline{cpp}{main()} function indicates successful program execution.
+    \item When a C++ program executes the operating system calls the \mintinline{cpp}{main()} and the code between the curly braces executes. When execution hits the return statement, the program returns the integer 0 to the operating system, if the return value is 0 then the program terminated sucesfully, if the value returned is not 0 then the operating system can check the value returned and determine what when wrong.
+    \item There are two posible ways of writing the main function. They work almost the same and the differences are suttle. All the program actions are contained in the main function.
+        \begin{minted}[autogobble]{cpp}
+            // First way:
+            int main(/* No parameters. */) {
+                // <code>
+                return 0;
+            }
+            // Second way:
+            int main(int argc, char *argv[]){
+                // <code>
+                return 0;
+            }
+        \end{minted}
+        \begin{itemize}
+            \item The first version expects no information to be passed in from the operating system in order to run. This is the most common version.
+            \item The second version allows for parameters to be passed in to the main function when its called, so for example you can pass in an integer or a string that you can then use in your program when it's called from the command line. You would call your program like this in the command line: \verb|program.exe n arg1 arg2 argn| the first argument or \mintinline{cpp}{int argc} must be the number of arguments that you will pass in, the next arguments are delimited by spaces and collected and stored inside your program in the \mintinline{cpp}{char *argv[]} array which you can use in your program respectively.
+            \item It's important to see the distinction in order not to get confused when you are looking at code out on the internet.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Namespaces}
+\begin{itemize}
+    \item As C++ programs become more complex the combination of our own code, the C++ standard library, and other third party libraries, sooner or later C++ encounters two names repeated, and at that point C++ doesn't know which one to use. This is called a naming conflict and its described when company X named something the same as company Y.
+    \item This is where namespaces come in, you can specify which library you are refering to by using the name of the library and the scope resolution operatior (\verb|::|)
+    \item C++ allows developers to use namespaces as container to group their code entities in to a namespace scope.
+    \item An example is the \mintinline{cpp}{std::cout} statement, tecnically it is saying to the C++ compiler to search in ``std'' or the standard library the function ``cout'' and use that one.
+    \item Namespaces are introduced to reduce the posibility of a naming conflict.
+    \item However, it can get tedious to write the library name, then the scope resolution operator and finally the function name; thus you can use the \mintinline{cpp}{using namespace <insert library name>;} statement to specify that any function from there on will come from the library spefied, now C++ knows which namespace you are using.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream> 
+            using namespace std;
+            int main() {
+                // <code>.
+                return 0;
+            }
+        \end{minted}
+        \begin{itemize}
+            \item C++ in the code above knows the moment we said \mintinline{cpp}{using namespace std;} that any function referenced from that point will be refering to the std library function.
+        \end{itemize}
+    
+    \item However there is still a problem, \mintinline{cpp}{using namespace std;} doesn't just state to use cout and cin, it brings a lot of other functions we might not know about, for this we can explicitly say we just want to use a certain function of a certain library.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream> 
+            using std::cout;
+            using std::cin;
+            int main() {
+                // <code>.
+                return 0;
+            }
+        \end{minted}
+        \begin{itemize}
+            \item You can still use \mintinline{cpp}{cout} and \mintinline{cpp}{cin} without having to write \mintinline{cpp}{std::cout} and \mintinline{cpp}{std::cin} and we are not getting any other names from the standard library of which we won't need. In larger programs its best practice to declare the functions you will use manually and not the namespace.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Basic input and output  }
+\begin{itemize}
+    \item \mintinline{cpp}{cout, cin, cerr, clog} are objects representing streams. They are defined in the iostream library. 
+    \item \mintinline{cpp}{cout}:
+        \begin{itemize}
+            \item It is a standard output stream.
+            \item Defaults to the console.
+        \end{itemize}
+    \item \mintinline{cpp}{cin}:
+        \begin{itemize}
+            \item It is a standard input stream. 
+            \item Defaults to the keyboard.
+        \end{itemize}
+    \item \mintinline{cpp}{cerr}: 
+        \begin{itemize}
+            \item It is a standard error stream.
+            \item Defaults to the console with the error stream.
+        \end{itemize}
+    \item \mintinline{cpp}{clog}:
+        \begin{itemize}
+            \item It is a standard log stream.
+            \item Defaults to the console with the log stream.
+        \end{itemize}
+    
+    \item \mintinline{cpp}{<<} is the insertion operator: 
+        \begin{itemize}
+            \item Used on output streams.
+        \end{itemize}
+    
+    \item \mintinline{cpp}{>>} is the extraction operator: 
+        \begin{itemize}
+            \item Used on input streams.
+        \end{itemize}
+\end{itemize}
+
+\subsection{\mintinline{cpp}{<<} with \mintinline{cpp}{cout}}
+\begin{itemize}
+    \item The insertion operator (\mintinline{cpp}{<<}) inserts data into the cout stream. It inserts the value of the operad(s) to its right, this operand can chain various variables or objects.
+        \begin{minted}[autogobble]{cpp}
+            cout << data;
+        \end{minted}
+    \item Chaining multiple insertion in the same statement: 
+        \begin{minted}[autogobble]{cpp}
+            cout << "data 1 is " << data1 << endl;
+            cout << "data 1 is " << data1 << "\n";
+        \end{minted}
+    \item It is important to understand that the insertion operator does not automatically add line breaks to what is printed, that can be added by \mintinline{cpp}{endl} or by explicitly adding it using the newline escape character \mintinline{cpp}{"\n"}. The \mintinline{cpp}{endl} manipulator it will also flush the stream, this is important because if the stream is buffered the program might not print anything until its flushed.
+\end{itemize}
+
+\subsection{\mintinline{cpp}{>>} with \mintinline{cpp}{cin}}
+\begin{itemize}
+    \item Used to extract data from the cin (which defaults to the keyboard) stream based on the data's type and then stores the information into the variable to the right of the extraction operator.
+        \begin{minted}[autogobble]{cpp}
+            cin >> data;  
+        \end{minted}
+    \item It can be chained.
+        \begin{minted}[autogobble]{cpp}
+            cin >> data1 >> data2;
+        \end{minted}
+    \item Can fail if the entered data cannot be interpreted. For example if the variable being read is expecting an integer and what is read is a string of characters the cin will fail and nothing will be assigned to the variable. The cin function will ignore white space and tabs.
+    \item The cin function will only be executed when the enter key is pressed.
+    \item We can use the extraction and insertion operator to work with data from different streams, for example file streams.
+\end{itemize}
+
+

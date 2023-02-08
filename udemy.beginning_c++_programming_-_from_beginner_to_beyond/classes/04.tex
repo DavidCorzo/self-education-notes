@@ -1,0 +1,193 @@
+
+%----------------------------------------------------------------------------------------
+\section{Writting our first program}
+\begin{itemize}
+    \item Create a project.
+    \item Create a file and type the following code. 
+    \item This program is going to take in a number and then display "Wow that is my favorite number".
+\end{itemize} 
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    int main() {
+        int favorite_number; // stores what the user will enter.
+        std::cout << "Enter your favorite number between 1 and 100"; // prints.
+        std::cin >> favorite_number;
+        std::cout << "Amazing!! That's my favorite number too!" << std::endl; // prints that line. endl adds "\n" and flushes the buffer.
+    }
+\end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{Building our first program}
+\begin{itemize}
+    \item Building involves compiling and linking.
+    \item In vscode you can run the compile task by pressing ctrl+b.
+    \item Linking means grabbing all the dependencies the main function needs, making .o or object files and adding them to the executable or the .exe.
+    \item Tipically modern compilers have the option to not produce the object files and go ahead and just produce a single executable. IDEs tipically also hide the object files if they are produced.
+    \item By \emph{cleaning} a project what we mean is the object files are deleted and an executable will be produced.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\section{What are compiler errors?}
+\begin{itemize}
+    \item Programming languages have rules.
+    \item Syntax errors: something wrong with the structure.
+        \begin{minted}[autogobble]{cpp}
+            std::cout << "Errors << std::endl; // the string is never terminated.
+        \end{minted}
+    
+    \item Semantic errors: something wrong with the meaning:
+        \begin{minted}[autogobble]{cpp}
+            a + b; // to sum a and b when it doesn't make sense to add them, maybe they are not numbers for example.
+        \end{minted}
+\end{itemize}
+
+\subsection{Examples of errors}
+\noindent
+Not enclosing a string with the " characters.
+\begin{minted}[autogobble]{cpp}
+    int main() {
+        std::cout << "Hello world << std::endl; // string is not terminated with the other ".
+        return 0;
+    }
+\end{minted}
+\noindent
+Typos in your program: 
+\begin{minted}[autogobble]{cpp}
+    int main() {
+        std::cout << "Hello world" << std::endll; // endll doesn't exist, this is syntaxis errors.
+        return 0;
+    }
+\end{minted}
+\noindent
+Missing semi-colons: 
+\begin{minted}[autogobble]{cpp}
+    int main() {
+        std::cout << "Hello world" << std::endl // missing semicolon. 
+        return 0;
+    }
+\end{minted}
+\noindent
+Function doesn't return the type specified, in this case the function doesn't return an integer.
+\begin{minted}[autogobble]{cpp}
+    int main() {
+        std::cout << "Hello" << std::endl;
+        return; // main needs to return an integer and it is returning a void.
+    }
+\end{minted}
+\noindent
+Not returning the specified type.
+\begin{minted}[autogobble]{cpp}
+    int main() {
+        std::cout << "Hello World" << std::endl;
+        return "Hello"; // "Hello" is not an integer. Error.
+    }
+\end{minted}
+\noindent
+Missing Curly brace: 
+\begin{minted}[autogobble]{cpp}
+    int main() // opening curly brace missing.
+        std::cout << "Hello World" << std::endl;
+    }
+\end{minted}
+\noindent
+Semantic error (example: adding something when it doesn't make sense).
+\begin{minted}[autogobble]{cpp}
+    int main() {
+        std::cout << ("Hello world" / 125) << std::endl; // dividing a string by a number, this doesn't make sense.
+        return 0;
+    }
+\end{minted}
+
+
+%----------------------------------------------------------------------------------------
+\section{What are compiler warnings?}
+\begin{itemize}
+    \item It is good practice to never ignore compiler warnings.
+    \item The compiler will recognize a potential issue but is still able to produce object code from the source code, things such as uninitialized variables.
+    \item It's only a warning because the compiler is still able to generate correct machine code.
+    \item Example: 
+        \begin{minted}[autogobble]{cpp}
+            int miles_driven; // never initialized, this value could be anything.
+            std::cout << miles_driven << std::endl;
+            /* Warning: 'miles_driven' is used uninitialized in this function. */
+        \end{minted}
+    
+    \item Another example is when you declare variables and never use them.
+        \begin{minted}[autogobble]{cpp}
+            int miles_driven = 100; 
+            std::cout << "Hello world" << std::endl;
+            /* Warning: unused variable 'miles_driven'. */
+        \end{minted}
+    
+    \item As a rule you want to produce warning free source code.
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Linked errors}
+\begin{itemize}
+    \item The linker is having trouble linking all the object files together to create an executable.
+    \item Usually there is a library or object file that is missing.
+\end{itemize}
+\subsection{Example}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    extern int x; // this means the variable is defined outside this file.
+    int main() {
+        std::cout << "Hello world" << std::endl;
+        std::cout << x;
+        return 0;
+    }
+    /* This program will compile, but in runtime you will get a linker error. */
+\end{minted}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{\figs/linker_e}
+\end{figure}
+
+%----------------------------------------------------------------------------------------
+\section{Runtime Errors}
+\begin{itemize}
+    \item Errors that occur when the program is executing.
+    \item Some typical runtime errors include:
+        \begin{itemize}
+            \item Divide by zero.
+            \item File not found.
+            \item Out of memory.
+        \end{itemize}
+    
+    \item Can cause your program to crash.
+    \item Exception handling can help deal with runtime errors.
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\section{What are logic errors?}
+\begin{itemize}
+    \item Errors or bugs in your code that cause your program to run incorrectly.
+    \item Logic errors are mistakes made by the programmer.
+\end{itemize}
+Suppose we have a program that determines if a person can vote in an election and you must be 18 years or older to vote.
+\begin{minted}[autogobble]{cpp}
+    if (age > 18) { // This means that age cannot be 18 thus 18 yearolds would not be able to vote. 18 is not included.
+        std::cout << "Yes you can vote" << endl;
+    }
+\end{minted}
+
+%----------------------------------------------------------------------------------------
+\section{Section challenge solution}
+\begin{minted}[autogobble]{cpp}
+    #include <iostream>
+    int main() {
+        int favorite_number;
+        std::cout << "Enter your favorite number between 1 and 100: ";
+        std::cin >> favorite_number;
+        std::cout << "Amazing!! Thats my favorite number too!" << std::endl;
+        std::cout << "No really!!, " << favorite_number << " is my favorite number!" << std::endl;
+    }
+    /* Output:
+    Enter your favorite number between 1 and 100: 67
+    Amazing!! Thats my favorite number too!
+    No really!!, 67 is my favorite number!
+    */
+\end{minted}

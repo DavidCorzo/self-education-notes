@@ -1,0 +1,943 @@
+\section{Expressions and statements}
+\begin{itemize}
+    \item An expression is: 
+        \begin{itemize}
+            \item The most basic building block of a program.
+            \item ``A sequence of operatiors and operands that specifies a computation.'' — C++ STD.
+            \item Computes a value from a number of operands.
+            \item There is much, much more to expressions — Not necessary at this level.
+        \end{itemize}
+    
+    \item Examples of expressions:
+        \begin{minted}[autogobble]{cpp}
+            34 // literal.
+            favorite_number // variable.
+            1.5 + 2.8 // addition.
+            2 * 5 // multiplication.
+            a > b // relational.
+            a = b // assignment.
+        \end{minted}
+    
+    \item Difference between a statement and expression: 
+        \begin{itemize}
+            \item A statement is: 
+                \begin{itemize}
+                    \item A complete line of code that performs some action. 
+                    \item Usually terminated with a semi-colon.
+                    \item Usually contain expressions.
+                    \item C++ has many types of statements:
+                        \begin{itemize}
+                            \item Expression, null, compound, selection, iteration, declaration, jump, try blocks, and others. 
+                        \end{itemize}
+                    \item Expressions are used to make up the statement.
+                \end{itemize}
+                \begin{minted}[autogobble]{cpp}
+                    // Example of statements:
+                    int x; // declaration.
+                    favorite_number = 12; // assignment.
+                    1.5 + 2.8; // expression.
+                    x = 2 * 5; // assignment.
+                    if ( a > b ) cout << "a is greater than b"; // if statement.
+                \end{minted}
+            
+            \item A null statement is a statement that doesn't perform any computation, it would be the equivalent of the following example: 
+                \begin{minted}[autogobble]{cpp}
+                    int a;
+                    for (int i = 0; i < 10; i ++ ) {
+                        ; // null statement.
+                    }
+                \end{minted}
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Using operators}
+\begin{itemize}
+    \item C++ has a rich set of operators, most of them are binary operators which means they operate on two operands, for example the multiplication operator operates on two operands (numbers). However C++'s operators aren't just binary.
+    \item C++ has a rich set of operators.
+        \begin{itemize}
+            \item Unary (operates on one operand), binary (operates on two operands), ternary (operates on three operands).
+        \end{itemize}
+    
+    \item Common operators can be grouped as follows:
+        \begin{itemize}
+            \item Assignment: used for modifying the value of some object by assigning a new value to it.
+            \item Arithmetic: used to perform mathematical operations on operands.
+            \item Increment/Decrement: these operators work as an assignment and arithmetic, they increment or decrement the operand by one.
+            \item Relational/Comparison: allow you to compare the value of objects, examples include: $=, \neq, \geq, \leq, $ etcetera.
+            \item Logical: used to test for logical or boolean conditions, for example: if you want to execute certain part of your code only when the temperature is less than freezing. These include the logical not, and, or operators.
+            \item Member access: used to allow access to a specific member. An example is the array subscript operator ([]). others that work with objects and pointers which will be introduced later.
+            \item Other: other operators.
+        \end{itemize}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{The assignment operator}
+\begin{itemize}
+    \item Nearly all programming languages have the ability to change the value of a variable.
+    \item In C++ we can change the value stored in a variable using the assignment operator (=).
+        \begin{minted}[autogobble]{cpp}
+            lhs = rhs;
+        \end{minted}
+    \item This does not represent equality, this represents that the value of \verb|rhs| will be the value of \verb|lhs|.
+    \item We are not asserting that the left-hand side is equal to the right-hand side, nor are we comparing the left-hand side to the right-hand side. We are evaluating the value of the expression on the right-hand side and storing the value to the left-hand sign.
+    \item \verb|rhs| is an expression that is evaluated to a value.
+    \item The value of the \verb|rhs| is stored to the \verb|lhs|.
+    \item The value of the \verb|rsh| must be type compatible with the \verb|lhs|, meaning they must be of the same type.
+    \item C++ is statcally typed which means that the compiler will be checking if it makes sense to asssign the right-hand side to the left-hand side, if it doesn't make sense you'll get a compiler error.
+    \item In order to store the right-hand side to the left-hand side, the left-hand side must be assignable, it can't be a literal, it can't be a constant.
+    \item An assignment expression is evaluated to what was just assigned, this makes it posible to chain more than one variable in a single assignment, such as: 
+        \begin{minted}[autogobble]{cpp}
+            a = b = c = d = e = 10;
+        \end{minted}
+    
+    \item It is important to understand that assignment is not initialization, initialization happens only when the variable is declared and the variable gets that value for the very first time, assignment is when you change a value that already exists in the variable after initializing it.
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item Example: 
+        \begin{itemize}
+            \item In C++ there is a concept in assignment know as r-value and l-value, whenever we say the r-value we are denoting the content of some variable or an expression that evaluates to a value, the l-value is the a location, the statement: \mintinline{cpp}{lhs=rhs} means ``store whatever value is in \verb|rhs| to location \verb|lhs|''. The \verb|rhs| could be very complex, the program will evaluate and compute that value and store it in location \verb|lhs|.
+            \item In C++ all this checking is done at compile time, thus when something compiles without errors or warnings you are guaranteed to have done it correctly. This is also because C++ is statically typed.
+        \end{itemize}
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num1 {10}; // initialization.
+                int num2 {20}; // initialization.
+                num1 = 100; // assignment. lhs = rhs;
+                cout << "num1 is " << num1 << endl;
+                cout << "num2 is " << num2 << endl;
+                cout << endl;
+                return 0;
+            } 
+            /* OUTPUT:
+            num1 is 100
+            num2 is 20
+
+            */
+        \end{minted}
+    
+    \item Chain assignment: 
+        \begin{itemize}
+            \item In assignment operators they are done from right to left, the left-hand side of the expression is done last, while the further right part of the expression is done first.
+            \item So something like this:
+                \begin{align*}
+                    num1 &= num2 = num3 = 1'000; \\ 
+                    num1 &= num2 = \underbrace{num3 = 1'000;}_{\text{Evaluates to 1'000}} \\ 
+                    num1 &= \underbrace{num2 = num3 = 1'000;}_{\text{Evaluates to 1'000}} \\ 
+                \end{align*}
+                \begin{itemize}
+                    \item Finally the last part of the assignment is assigning the value of num2 to num1.
+                \end{itemize}
+        \end{itemize}
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num1 {10}; // initialization.
+                int num2 {20}; // initialization.
+                num1 = num2 = 1'000; // chained assignment.
+                cout << "num1 is " << num1 << endl;
+                cout << "num2 is " << num2 << endl;
+                cout << endl;
+                return 0;
+            } 
+            /* OUTPUT: 
+            num1 is 1000
+            num2 is 1000
+
+            */
+        \end{minted}
+    
+    \item The compiler will constantly be checking if it makes sense to assign something to a variable. For example the following code produces a compiler error because an \mintinline{cpp}{int} variable can only hold integers not strings.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num1 {10}; // initialization.
+                int num2 {20}; // initialization.
+                num1 = "String"; // assignment to a string of an integer variable is illegal.
+                cout << "num1 is " << num1 << endl;
+                cout << "num2 is " << num2 << endl;
+                cout << endl;
+                return 0;
+            } 
+            /* OUTPUT: Compiler error.
+            ./Code/main.cpp:6:12: error: invalid conversion from 'const char*' to 'int' [-fpermissive]    
+                num1 = "String"; // assignment.
+            */
+        \end{minted}
+    
+    \item The following code will produce an error, though we are assigning an int to the variable which makes sense, we are declaring it as a constant, thus we cannot change the value of that constant after initialization.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int const num1 {10}; // initialization.
+                int num2 {20}; // initialization.
+                num1 = 100; // assignment to a constant is illegal.
+                cout << "num1 is " << num1 << endl;
+                cout << "num2 is " << num2 << endl;
+                cout << endl;
+                return 0;
+            } 
+            /* OUTPUT: Compiler error.
+            ./Code/main.cpp:6:12: error: assignment of read-only variable 'num1'
+                num1 = 100; // assignment to a constant is illegal.
+            */
+        \end{minted}
+    
+    \item The following code will produce a compiler error because we are assigning a variable to a literal:
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num1 {10};
+                100 = num1; // assignment
+                return 0;
+            }
+            /* OUTPUT: Compiler error.
+            ./Code/main.cpp:5:11: error: lvalue required as left operand of assignment
+                100 = num1; // 100 is a literal and does not have a location in memory.
+            */
+        \end{minted}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Arithmetic operators}
+\begin{itemize}
+    \item The arithmetic operators are: 
+        \begin{itemize}
+            \item Addition: $+$ 
+            \item Subtraction: $-$ 
+            \item Multiplication: $*$ 
+            \item Division: $/$ 
+            \item Modulo or remainder (works only with integers): $\%$
+        \end{itemize}
+    
+    \item These operators can be overloaded, what 'overloaded' means is that they work with different types, for example you can use the addition operator to add floats, integers, doubles, etcetera.
+\end{itemize}
+
+\subsection{Examples}
+\begin{itemize}
+    \item Adding variables and assigning the result to another.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num1 {100};
+                int num2 {200};
+                int result {num1 + num2};
+                cout << num1 << " + " << num2 << " = " << result << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            100 + 200 = 300
+            */
+        \end{minted}
+    
+    \item Arithmetic: 
+        \begin{itemize}
+            \item It is important to notice that multiplication is not like algebra where you can omit adding the multiplication symbol, in C++ we need to add the multiplication symbol explicitly. There are no such thing as: $(3)(4)$ rather write it as: \mintinline{cpp}{(3)*(4);}.
+            \item Another thing to watch out for is when dividing integers you don't get a decimal part, you will only get the whole number part, dividing $100/200=0.5$ however we just store the whole part, which is to say as far as C++ is concerned when you divide the integers $100/200$ the result is floor division and you are left with the result being $0$.
+            \item The modulus operator is the remainder of division, for example if we divide 10 by 3 we get that we can divide 10 by 3 a total of 3 times, however we are left with a remainder, that remainder is 1 ($3\times 3 + 1 = 10$).
+            \item There is operator precedence in C++, it goes in the order of PEMDAS, P(Parenthesis), E(Exponents), M(multiplication), D(division), A(addition), and S(subtraction). So for example in the expression $(8*10+1)-10$ the parenthesis are evaluated first, inside the parenthesis the multiplication of 8 and 10 are evaluated and the one is added resulting in 81, then the subtraction of 10 is done and the result is 71.
+        \end{itemize}
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num1 {100};
+                int num2 {200};
+                int result {0};
+                result = num1 + num2;
+                cout << num1 << " + " << num2 << " = " << result << endl;
+                result = num1 - num2;
+                cout << num1 << " - " << num2 << " = " << result << endl;
+                result = num1 * num2;
+                cout << num1 << " * " << num2 << " = " << result << endl;
+                result = num1 / num2; // floor division
+                cout << num1 << " / " << num2 << " = " << result << endl; 
+                result = num1 % num2;
+                cout << num1 << " % " << num2 << " = " << result << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            100 + 200 = 300
+            100 - 200 = -100
+            100 * 200 = 20000
+            100 / 200 = 0
+            100 % 200 = 100
+
+            */
+        \end{minted}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Increment and decrement operators}
+\begin{itemize}
+    \item The increment and decrement operators are unary operators, \mintinline{cpp}{++, --} the \mintinline{cpp}{++}.
+    \item The increment and decrement operators are simply just saying: \mintinline{cpp}{++} increment its operand by one, \mintinline{cpp}{--} decrement the operand by one.
+    \item This operator can also be overloaded, which is to say that they will increment or decrement different types, such as incrementing or decrementing floats, doubles, integers, and even pointers.
+    \item There are two variants to this operator, postfix and suffix. 
+        \begin{itemize}
+            \item Postfix notation: \mintinline{cpp}{++num} this means to increment num by one before using it. 
+            \item Prefix notation: \mintinline{cpp}{num++} this means to increment num by one after using it.
+        \end{itemize}
+    
+    \item Don't overuse this operator, \textbf{never use it twice for the same variable in the same statement} because that will cause undefined behavior. Things such as the following are not allowed: 
+        \begin{minted}[autogobble]{cpp}
+            num = num1++ + ++num1; // or
+            cout << i++ << ++i << i << endl; // will cause undefined bahaviour.
+        \end{minted}
+    
+    \item The post fix and prefix notation work exactly the same if they are alone on one line, such as: \mintinline{cpp}{num++;}. However, if they are accompanied such as: \mintinline{cpp}{arr[num++] = 10;} will work differently.
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item Incrementing: 
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int counter {10};
+                int result {0};
+                cout << "Counter: " << counter << endl;
+                counter = counter + 1; // 11
+                cout << "Counter: " << counter << endl;
+                counter++;
+                cout << "Counter: " << counter << endl;
+                ++counter;
+                cout << "Counter: " << counter << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Counter: 10
+            Counter: 11
+            Counter: 12
+            Counter: 13
+
+            */
+        \end{minted}
+    
+    \item Pre-increment example: 
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int counter {10};
+                int result {0};
+                result = ++counter; // Counter will be incremented before its used.
+                cout << "Result: " << result << endl;
+                cout << "Counter: " << counter << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Result: 11
+            Counter: 11
+            */
+        \end{minted}
+    
+    \item Post-increment example: 
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int counter {10};
+                int result {0};
+                result = counter++; // Counter will be incremented after its used.
+                cout << "Result: " << result << endl;
+                cout << "Counter: " << counter << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Result: 10
+            Counter: 11
+            */
+        \end{minted}
+    
+    \item Saying \mintinline{cpp}{i = ++num + 10;} is the same as saying:
+        \begin{align*}
+            Considering num = 10. \\ 
+            i &= \underbrace{++num}_{num = num + 1 \to num = 11} + 10; \\ 
+            i &= \underbrace{num}_{\text{has been incremented by one}} + 10; \\ 
+            i &= 11 + 10 = 21; \\ 
+        \end{align*}
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num {10};
+                int i {0};
+                i = ++num + 10;
+                cout << "i: " << i << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            i: 21
+            */
+        \end{minted}
+    
+    \item The same example with the post-increment:
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num {10};
+                int i {0};
+                i = num++ + 10; // for this addition it will use the value of num as is and then increment so\alpha 10 + 10 = 20.
+                cout << "i: " << i << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            i: 20
+            */
+        \end{minted}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Mixed expressions and conversions}
+\begin{itemize}
+    \item C++ operations occur on the same type operands. For example $a+b$ where $a$ is an integer and $b$ is a double. 
+    \item If operands are of different types, C++ will convert one. In many cases this happens automatically.
+    \item This is important since it could affect calculation results.
+    \item C++ will attempt to automatically convert types (coercion). If automatic conversion or coercion is not possible a compiler error will occur.
+\end{itemize}
+
+\subsection{Conversions}
+\begin{itemize}
+    \item In order to understand how these automatic conversions happen we need to understand higher vs lower types.
+        \begin{itemize}
+            \item Higher type is a type that can hold higher or more values.
+            \item Lower type is a type that can hold lower or less values than the higher type.
+        \end{itemize}
+    \item Higher vs Lower types are based on the size of the values the type can hold. 
+        \begin{itemize}
+            \item \mintinline{cpp}{long double, double, float, unsigned long, long, unsigned int, int, short int, char} are always converted to an \mintinline{cpp}{int}.
+        \end{itemize}
+    
+    \item Coercion always happens by converting the lower type to the higher type, because the lower type will always fit in to the higher type whereas the higher type will almost never fit in to the lower type.
+    \item Type coercion: happens when we convert a lower type operand to a higher type operand in order to operate them. For example, adding an integer and a double, automatic conversion will occur, first the integer will get converted to a double, then added.
+    \item Promotion: conversion to a higher type: 
+        \begin{itemize}
+            \item Used in mathematical expressions.
+        \end{itemize}
+    
+    \item Demotion: conversion to a lower type:
+        \begin{itemize}
+            \item Used with assignment to lower types.
+            \item For example when performing integer division the result is operated on a double and then the decimal part is truncated until we are left with just the whole number part.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Example type coercion}
+\begin{itemize}
+    \item Lower operand to higher operand, the lower is promoted to a higher. 
+        \begin{minted}[autogobble]{cpp}
+            2 * 2.5; // 2 is promoted to 2.0, integer -> double. 
+        \end{minted}
+    
+    \item lower = higher; the higher is demoted to a lower: (this risks potentially loosing information)
+        \begin{minted}[autogobble]{cpp}
+            int num {0}; 
+            num = 100.2; // float demoted to a int.
+        \end{minted}
+\end{itemize}
+
+
+\subsection{Examples explicit type casting}
+\begin{itemize}
+    \item We can explicitly cast or coerce to a certain type.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int total_amount {100};
+                int total_number {8};
+                double average {0.0};
+                average = total_amount / total_number;
+                cout << "Without explicit coercion: " << average << endl; // Here we are doing integer division.
+                average = static_cast<double>(total_amount) / total_number; // now one of the operands is a double so the other will be converted to the higher and the result will be a double.
+                cout << "With explicit coersion: " << average << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Without explicit coercion: 12
+            With explicit coersion: 12.5
+            */
+        \end{minted}
+    
+    \item There are two major ways of casting, the first is the syntax we already have seen: \mintinline{cpp}{static_cast<double>(var1);} the second is the c-style cast which is \mintinline{cpp}{(double)var1;}. It is better to use the C++ style cast since it is more robust as it also checks for congruence and if it makes sense to cast the variable, rather than the C-style cast just does it and it doesn't check for congruence nor if it makes sense.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int total {};
+                int num1 {}, num2 {}, num3 {};
+                const int count {3};
+                cout << "Enter 3 integers separated by spaces: ";
+                cin >> num1 >> num2 >> num3;
+                cout << endl;
+                total = num1 + num2 + num3;
+                double average {0.0};
+                average = static_cast<double>(total) / count; // C++ style cast.
+                // average = (double)(total) / count; // older C-style cast
+                cout << average << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Enter 3 integers separated by spaces: 15 13 12
+
+            13.3333
+
+            */
+        \end{minted}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Testing for equality}
+\begin{itemize}
+    \item These operators compare the values of two expressions and evaluate to a boolean.
+    \item These operators are the \mintinline{cpp}{==} which is the equality operator and the \mintinline{cpp}{!=} which is the not equals operator.
+        \begin{minted}[autogobble]{cpp}
+            expr1 == expr2; // evaluates to true if both values are the same, else false.
+            expr1 != expr2; // evaluates to false if both values are the same, else true.
+            100 == 200; // evaluates to false.
+            num1 != num2; // evaluates to true if they are different, else false.
+        \end{minted}
+    \item Remember to use two equals signs not just one.
+    \item Another example: 
+        \begin{minted}[autogobble]{cpp}
+            bool result {false};
+            result = (100 == 50+50); // store the boolean in result.
+        \end{minted}
+    
+    \item In C++ there is a standard library string manipulator called \mintinline{cpp}{std::boolalpha} once you use it all boolean output printed to console will result in the words ``true'' or ``false'' being printed instead of 0 or 1. \mintinline{cpp}{std::noboolalpha} will deactivate this feature and allows you to print the default of 0 and 1.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num1 {10}, num2 {10};
+                cout << "num1: " << num1 << ", num2:" << num2 << endl;
+                cout << "(num1 == num2) -> " << (num1 == num2) << endl; // 0 or 1
+                cout << "(num1 != num2) -> " << (num1 != num2) << endl;
+                cout << std::boolalpha;
+                cout << "(num1 == num2) -> " << (num1 == num2) << endl; // true or false
+                cout << "(num1 != num2) -> " << (num1 != num2) << endl;
+                cout << std::noboolalpha;
+                return 0;
+            }
+            /* OUTPUT:
+            num1: 10, num2:10
+            (num1 == num2) -> 1
+            (num1 != num2) -> 0
+            (num1 == num2) -> true
+            (num1 != num2) -> false
+            */
+        \end{minted}
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item Example with integers: keep in mind you can do this with any primitive type and with the correct overloading with any user defined type.
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+
+            int main() {
+                cout << boolalpha;
+                int num1 {0}, num2 {0};
+                bool equal_result {false};
+                bool not_equal_result;
+                cout << "Enter 2 integers: " << endl;
+                cin >> num1 >> num2;
+                equal_result = (num1 == num2);
+                not_equal_result = (num1 != num2);
+                cout << "Comparison result (equals): " << equal_result << endl;
+                cout << "Comparison result (not equals): " << not_equal_result << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Enter 2 integers:
+            10 10
+            Comparison result (equals):true
+            Comparison result (not equals): false
+            */
+        \end{minted}
+    
+    \item Example with characters:
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+
+            int main() {
+                cout << boolalpha;
+                bool equal_result {false}, not_equal_result {false};
+                char char1{}, char2{};
+                cout << "Enter two characters separated by a space: ";
+                cin >> char1 >> char2;
+                equal_result = (char1 == char2);
+                not_equal_result = (char1 != char2);
+                cout << "Comparision result (equals) : " << equal_result << endl;
+                cout << "Comparision result (not equals) : " << not_equal_result << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Enter two characters separated by a space: a a
+            Comparision result (equals) : true
+            Comparision result (not equals) : false
+            */
+        \end{minted}
+    
+    \item Example with doubles: 
+        \begin{itemize}
+            \item The following evaluates to true because of the way computers store information, as far as it is concerned 11.9999999999999999 is 12.
+        \end{itemize}
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+
+            int main() {
+                cout << boolalpha;
+                bool equal_result {false}, not_equal_result {false};
+                double double1{}, double2{};
+                cout << "Enter two doubles separated by a space: ";
+                cin >> double1 >> double2;
+                equal_result = (double1 == double2);
+                not_equal_result = (double1 != double2);
+                cout << "Comparision result (equals) : " << equal_result << endl;
+                cout << "Comparision result (not equals) : " << not_equal_result << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Enter two doubles separated by a space: 12 11.9999999999999999
+            Comparision result (equals) : true
+            Comparision result (not equals) : false
+            */
+        \end{minted}
+    
+    \item Example with integer and a double: 
+        \begin{itemize}
+            \item In the below example we see another example of coercion, the 10 will get promoted to 10.0 then compared with the other with is 10.0, the expression evaluates to true.
+        \end{itemize}
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+
+            int main() {
+                cout << boolalpha;
+                bool equal_result {false}, not_equal_result {false};
+                int num1 {};
+                double double1 {};
+                cout << "Enter an integer and a double separated by a space: ";
+                cin >> num1 >> double1;
+                equal_result = (num1 == double1);
+                not_equal_result = (num1 != double1);
+                cout << "Comparision result (equals) : " << equal_result << endl;
+                cout << "Comparision result (not equals) : " << not_equal_result << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Enter an integer and a double separated by a space: 10 10.0
+            Comparision result (equals) : true
+            Comparision result (not equals) : false
+            */
+        \end{minted}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Relational operators}
+\begin{itemize}
+    \item In addition to the equality operators C++ also provides another set of operators to compare objects.
+        \begin{center}
+            \begin{tabular}{ |c|c| }
+                \hline
+                    Operator & Meaning \\
+                \hline
+                    \mintinline{cpp}{>} & greater than. \\ 
+                    \mintinline{cpp}{>=} & greater than or equal to. \\ 
+                    \mintinline{cpp}{<} & less than. \\ 
+                    \mintinline{cpp}{<=} & less than or equal to. \\ 
+                    \mintinline{cpp}{<=>} & three-way comparison (C++20). \\ 
+                \hline
+            \end{tabular}
+        \end{center}
+        \begin{itemize}
+            \item The three-way comparison operator compares two expressions and evaluates to 0 if they are equal, less than 0 if the left-hand side is greater than the right-hand side, and greater than 0 if the right-hand side is greater than the left-hand side.
+        \end{itemize}
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item Example: 
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+
+            int main() {
+                cout << boolalpha;
+                int num1 {}, num2 {};
+                cout << "Enter 2 integers separated by a space: ";
+                cin >> num1 >> num2;
+                cout << num1 << " > "   << num2  << " : " << (num1 > num2) << endl;
+                cout << num1 << " >= " << num2  << " : " << (num1 >= num2) << endl;
+                cout << num1 << " < "  << num2  << " : " << (num1 < num2) << endl;
+                cout << num1 << " <= " << num2  << " : " << (num1 <= num2) << endl;
+                cout << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Enter 2 integers separated by a space: 10 20
+            10 > 20 : false
+            10 >= 20 : false
+            10 < 20 : true
+            10 <= 20 : true
+
+            */
+        \end{minted}
+    
+    \item Checking user obedience: 
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+
+            int main() {
+                cout << boolalpha;
+                int num1 {}, num2 {};
+                const int lower {10};
+                const int upper {20};
+                cout << "Enter an integer that is greater than " << lower << " : " ;
+                cin >> num1;
+                cout << num1 << " > " << lower << " is " << (num1 > lower) << endl;
+                cout << "Enter an integer that is less than or equal to " << upper << " : " ;
+                cin >> num1;
+                cout << num1 << " <= " << upper << " is " << (num1 <=  upper) << endl;
+                cout  << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Enter an integer that is greater than 10 : 12
+            12 > 10 is true
+            Enter an integer that is less than or equal to 20 : 16
+            16 <= 20 is true
+
+            */
+        \end{minted}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Logical operators}
+\begin{itemize}
+    \item C++ has three logical operators: 
+        \begin{center}
+            \begin{tabular}{ |c|c| }
+                \hline
+                    Operator & Meaning \\
+                \hline
+                    \mintinline{cpp}{!} & negation, logical not. \\ 
+                    \mintinline{cpp}{&&} & logical and. \\
+                    \mintinline{cpp}{||} & logical or. \\ 
+                \hline
+            \end{tabular}
+        \end{center}
+    
+    \item These operators work on boolean expressions and evaluate to boolean values themselves.
+    \item There are two ways to write the logical operators, you can write the keywords: \mintinline{cpp}{not, and, or} or the symbols \mintinline{cpp}{!, &&, ||}.
+    \item The \mintinline{cpp}{!} operator is a unary operator and it simply negates the value.
+        \begin{center}
+            \begin{tabular}{ |c|c| }
+                \hline
+                    expression $a$ & not $a$ / $!a$ \\
+                \hline
+                    true & false \\ 
+                    false & true \\ 
+                \hline
+            \end{tabular}
+        \end{center}
+    
+    \item The \mintinline{cpp}{&&} operator is a binary operator and it performs a logical and.
+        \begin{center}
+            \begin{tabular}{ |c|c|c| }
+                \hline
+                    Expression $a$ & Expression $b$ & $a$ and $b$ / $a$ \mintinline{cpp}{&&} $b$ \\
+                \hline
+                    true & true & true \\ 
+                    true & false & false \\ 
+                    false & true & false \\ 
+                    false & false & false \\ 
+                \hline
+            \end{tabular}
+        \end{center}
+    
+    \item The \mintinline{cpp}{||} operator is a binary operator and it performs the logical or.
+        \begin{center}
+            \begin{tabular}{ |c|c|c| }
+                \hline
+                    Expression $a$ & Expression $b$ & $a$ or $b$ / $a$ \mintinline{cpp}{||} $b$ \\
+                \hline
+                    true & true & true \\ 
+                    true & false & true \\ 
+                    false & true & true \\ 
+                    false & false & false \\ 
+                \hline
+            \end{tabular}
+        \end{center}
+\end{itemize}
+
+\subsection{Precedence}
+\begin{itemize}
+    \item Logical operators have precedence. 
+    \item The \mintinline{cpp}{!} or logical \emph{not} has higher precedence than the logical \emph{and}.
+    \item The logical \emph{and} has higher precedence than the logical \emph{or}.
+    \item The logical \emph{not} is a unary operator.
+    \item The logical \emph{and}  and logical \emph{or} are binary operators.
+\end{itemize}
+
+\subsection{Examples}
+\begin{itemize}
+    \item In the below code we write the statements \mintinline{cpp}{10 <= 20 && 20 <= 30}, we cannot write chained logical operators such as for example: $10 \leq 20 \leq 30$ we would need to write $10 \leq 20$ and $20 \leq 30$.
+    \item Other examples: 
+        \begin{minted}[autogobble]{cpp}
+            num1 >= 10 && num1 < 20; // return true if num1 is greater or equal to 10 and num1 is less than 20.
+            num1 <= 10 || num1 >= 20; // return true if num1 is less than or equal to 10 or num1 greater or equal to 20.
+            !is_raining && temperature > 32.0; // return true if it is not raining and the temperature is above 32.0.
+            is_raining || is_snowing; // returns true if it is raining or snowing.
+            temperature > 100 && is_humid || is_raining; // returns true if temperature is above 100 and it is humid or raining.
+        \end{minted}
+\end{itemize}
+
+\subsection{Short-Circuit evaluation}
+\begin{itemize}
+    \item When evaluating a logical expression in C++ stops as soon as the result is known, for example: 
+        \begin{minted}[autogobble]{cpp}
+            expr1 && expr2 && expr3; // if expr1 is false there is no way the statement is true, so it simply stops.
+            expr1 || expr2 || expr3; // if expr1 is true it already knows the statement is true because only one true expression is required to be true in the logical or for the statement to be true.
+        \end{minted}
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item Example of user entering numbers within bounds:
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num {0};
+                const int lower {10}, upper {20};
+                cout << boolalpha;
+                cout << "Enter an integer - the bounds are " << lower << " and " << upper << ": ";
+                cin >> num;
+                bool within_bounds {false};
+                within_bounds = (num > lower && num < upper);
+                cout << num << " is between " << lower << " and " << upper << " : " << within_bounds << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Enter an integer - the bounds are 10 and 20: 15 13
+            15 is between 10 and 20 : true
+
+            */
+        \end{minted}
+    
+    \item Example outside the lower and upper bounds: 
+        \begin{minted}[autogobble]{cpp}
+            #include <iostream>
+            using namespace std;
+            int main() {
+                int num {0};
+                const int lower {10}, upper {20};
+                cout << boolalpha;
+                cout << "Enter an integer out of bounds - the bounds are " << lower << " and " << upper << ": ";
+                cin >> num;
+                bool within_bounds {false};
+                within_bounds = (num < lower || num > upper);
+                cout << num << " is outside " << lower << " and " << upper << " : " << within_bounds << endl;
+                return 0;
+            }
+            /* OUTPUT:
+            Enter an integer out of bounds - the bounds are 10 and 20: 3 45
+            3 is outside 10 and 20 : true
+
+            */
+        \end{minted}
+\end{itemize}
+
+
+%----------------------------------------------------------------------------------------
+\section{Compound assignment operators}
+\begin{itemize}
+    \item Compound assignment operators:
+        \begin{center}
+            \begin{tabular}{ |c|c|c| }
+                \hline
+                    Operator & Example & Meaning \\
+                \hline
+                    \mintinline{cpp}{+=} & \mintinline{cpp}{lhs += rhs;} & \mintinline{cpp}{lhs = lhs + (rhs)}; \\  
+                    \mintinline{cpp}{-=} & \mintinline{cpp}{lhs -= rhs;} & \mintinline{cpp}{lhs = lhs - (rhs)}; \\  
+                    \mintinline{cpp}{*=} & \mintinline{cpp}{lhs *= rhs;} & \mintinline{cpp}{lhs = lhs * (rhs)}; \\  
+                    \mintinline{cpp}{/=} & \mintinline{cpp}{lhs /= rhs;} & \mintinline{cpp}{lhs = lhs / (rhs)}; \\  
+                    \mintinline{cpp}{%=} & \mintinline{cpp}{lhs %= rhs;} & \mintinline{cpp}{lhs = lhs % (rhs)}; \\  
+                    \mintinline{cpp}{>>=} & \mintinline{cpp}{lhs >>= rhs;} & \mintinline{cpp}{lhs = lhs >> (rhs)}; \\  
+                    \mintinline{cpp}{<<=} & \mintinline{cpp}{lhs <<= rhs;} & \mintinline{cpp}{lhs = lhs << (rhs)}; \\  
+                    \mintinline{cpp}{&=} & \mintinline{cpp}{lhs &= rhs;} & \mintinline{cpp}{lhs = lhs & (rhs)}; \\  
+                    \mintinline{cpp}{^=} & \mintinline{cpp}{lhs ^= rhs;} & \mintinline{cpp}{lhs = lhs ^ (rhs)}; \\  
+                    \mintinline{cpp}{|=} & \mintinline{cpp}{lhs |= rhs;} & \mintinline{cpp}{lhs = lhs | (rhs)}; \\  
+                \hline
+            \end{tabular}
+        \end{center}
+    
+    \item Example:
+        \begin{minted}[autogobble]{cpp}
+            a += 1; // a = a + 1
+            a /= 5; // a = a / 5
+            a *= b + c; // a = a * (b + c)
+        \end{minted}
+\end{itemize}
+
+%----------------------------------------------------------------------------------------
+\section{Operator Precedence}
+You can find a table of the complete precedence and associativity \href{https://en.cppreference.com/w/cpp/language/operator_precedence}{here}.
+
+\begin{itemize}
+    \item What is associativity?
+        \begin{itemize}
+            \item Use precedence rules when adjacent operators are different.
+        \end{itemize}
+        \begin{center}
+           expr1 \textbf{op1} expr2 \textbf{op2} expr3 // precedence.
+        \end{center}
+    
+    \item Use associativity rules when adjacent operators have the same precedence.
+        \begin{center}
+           expr1 \textbf{op1} expr2 \textbf{op1} expr3 // associativity.
+        \end{center}
+    
+    \item Use parenthesis to absolutely remove any doubt.
+\end{itemize}
+
+\subsection{Example}
+\begin{itemize}
+    \item Precedence viewed with parenthesis: 
+        \begin{align*}
+            result &= num1 + num2 * num3; \\ 
+            result &= (num1 + (num2 * num3)); \\ 
+        \end{align*}
+    
+    \item Use associativity from left to right since additiona and subtraction have the same precedence.
+        \begin{align*}
+            result &= num1 + num2 - num3; \\ 
+            result &= ((num1 + num2) - num3); \\ 
+        \end{align*}
+\end{itemize}
