@@ -124,3 +124,341 @@
 \begin{itemize}
     \item Initializing a doubly linked list is not as straight forward as initializing. With a doubly linked list the pointers are both ways. When adding the first element the first element by definition does not have a previous element nor a next. We will add NULL pointers and when the next is added we will change.
 \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Implementing a doubly linked list}
+\begin{minted}[autogobble]{cpp}
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+
+    typedef struct listitem {
+        struct listitem *next; // pointer to next item.
+        struct listitem *prev; // pointer to prev item.
+        int data; // the data that this node will hold.
+    } LISTITEM;
+
+    int main() {
+        /* We need a head and a temporary node, the head will be the node in which the dll will start. The temp will be the pointer to the nodes when we need to traverse the dll. */
+        LISTITEM head, *temp;
+
+        /* Since the head element is the first node, we point the next and prev to itself, since there are no other nodes to point at. It is also common for the first node's next and prev to point to null, in this case we make it point to the head. We initialize the data to be some arbitrary number, in this case -1. */
+        head.next = (LISTITEM*)&head;
+        head.prev = (LISTITEM*)&head;
+        head.data = -1;
+        
+        /* We create a loop that will iterate from 0-2 (3 times).*/
+        for (int i = 0; i < 3; i++) {
+            /* Allocating the memory for this node. */
+            temp = malloc(sizeof(LISTITEM));
+            /* Given the memory already allocated we initialize the 'data' member of the node. */
+            temp->data = i;
+            /* We get the current node's next pointer and point it to head.next, which in this case will make a circular linked list. */
+            temp->next = head.next;
+            /* Next we get the head node and modify the 'next' pointer to this current node, since now the head must point to the next node. */
+            head.next = temp;
+            /* We get the current node's prev pointer and point it to head.*/
+            temp->prev = &head;
+            /* Now that the next element is pointing to a node, we access the current node's next pointer, then get the current node's next pointer's prev pointer and point it to temp. Tricky. */
+            temp->next->prev = temp;
+        }
+
+        // Traversing a list forward.
+        temp = head.next;								// initialize our temporary variable to the head of the list
+        while (temp != &head) {							// keep going until we've reach the end
+            printf("forward list item: current is %p; next is %p; prev is %p; data is %d\n", temp, temp->next, temp->prev, temp->data);
+            temp = temp->next;							// move to the next item in the list					
+        }
+
+        // Traversing a list backward.
+        temp = head.prev;								// initialize our temporary variable to the tail of the list
+        while (temp != &head) {							// keep going until we've reach the end
+            printf("backward list item: current is %p; next is %p; prev is %p; data is %d\n", temp, temp->next, temp->prev, temp->data);
+            temp = temp->prev;							// move to the previous item in the list					
+        }
+        return 0;
+    }
+\end{minted}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\width\textwidth]{./figs/20230209142008.png}
+    %\caption{}
+\end{figure}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{What is a queue?}
+\begin{itemize}
+    \item A queue is like a list in which the first element added is the first element served, FIFO First In First Out. As the elements are added, the order in which they are added are the order in which they are processed.
+    \item Its common in operating systems, when there is a process to run or execute it gets added to the process queue and processed in the order in which it was added.
+    \item A queue ensures that the correct order is maintained.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Queues}
+\begin{itemize}
+    \item The followign code is the adapted code from our doubly linked list turned into a queue. 
+    \item The enqueue function adds an element to the list and the dequeue removes it. The idea is that every element inserted usign enqueue, is dequeued in the order in which it was dequeued. Example enqueue(1), enqueue(2), enqueue(3) -> dequeue()=1, dequeue()=2 dequeue()=3.
+\end{itemize}
+\begin{minted}[autogobble]{cpp}
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+
+    // this what is going to be in the queue
+    typedef struct listitem {
+        struct listitem *next;  // pointer to next item
+        struct listitem *prev;  // pointer to previous item
+        int data;		        // some data
+    } LISTITEM;
+
+    // this is the queue 'header'
+    typedef struct {
+        struct listitem *first;	// pointer to first item
+        struct listitem *last;	// pointer to last item
+    } LISTHDR;
+
+    LISTHDR head; // declare this statically so that 'enqueue' and 'dequeue' can use it
+
+    // this puts an item in at the end of the queue
+    void enqueue(LISTITEM *item) {
+        LISTITEM *temp;
+
+        temp = head.last;				// get the 'last' item in the queue and keep hold of it
+        head.last = item;				// put the item in the queue at the end
+        item->prev = temp;				// link back to old 'last' item
+        item->next = (LISTITEM*)&head;	// set the forward link of the new item
+        temp->next = item;				// and finally set the forward link of the old 'last' item to the new one
+    }
+
+    // this removes an item from the front of the queue - returns the item or NULL if there are no more items
+    LISTITEM *dequeue() {
+        LISTITEM *temp;
+
+        temp = head.first;				// get the 'first' item
+        if (temp == (LISTITEM*)&head) {	// if the head of the queue points to itself ...
+            temp = NULL; // ... then the queue is empty 			
+        } else {
+            head.first = temp->next; // and set the queue header to point to the 'second' item
+            head.first->prev = (LISTITEM*)&head;
+        }
+        return temp;
+    }
+
+    int main() {
+        LISTITEM *temp;
+
+        // first, make an empty queue
+        // ... which is a queue where the header points to itself and there are no items in it
+        head.first = (LISTITEM*)&head;
+        head.last = (LISTITEM*)&head;
+
+        for (int i = 0; i < 3; i++) {	// as before, populate the queue
+            temp = malloc(sizeof(LISTITEM)); // allocate some memory for the new queue item
+            temp->data = i;				// set the item's data to the loop count so that we can see where it is in the queue
+            enqueue(temp);				// and put it in the queue
+        }
+
+        printf("first item = %d\n", head.first->data);
+        printf("last item = %d\n\n", head.last->data);
+
+        // now let's dequeue from the end of the queue
+        do {							// keep going until the queue is empty
+            temp = dequeue();			// if the queue is empty we will get NULL returned
+            if (temp != NULL) {
+                printf("data is %d\n", temp->data);
+                free(temp);				// call 'free' to tidy up 
+            }
+        } while (temp != NULL);
+
+        return 0;
+    }
+    /* output:
+    first item = 0
+    last item = 2
+
+    data is 0
+    data is 1
+    data is 2
+    */
+\end{minted}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{What is a stack?}
+\begin{itemize}
+    \item A stack is a data structure in which the last element that is added is the first element that comes out. An example of this is a stack of any object, you stack these objects one over another, when you remove one you simply get the last you added in.
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Stacks}
+\begin{itemize}
+    \item A stack is usually implemented using a fixes size array. It is not usually implemented using linked lists of any kind. Thus it is faster because there are no pointers being accessed, it's simpler and much less memory is needed.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=\width\textwidth]{./figs/20230210132723.png}
+            %\caption{}
+        \end{figure}
+    
+    \item A stack grows upward or downward, it all depends on how you push and pop, if you push an element if you make your stack grow downward, then when you pop it you must make sure that the one that you pushed last is the one that is popped.
+\end{itemize}
+\begin{minted}[autogobble]{c}
+    #include <stdio.h>
+    #include <stdlib.h>
+    #include <string.h>
+    typedef struct DATA {
+        int a; double b;
+    } DATA;
+    DATA *base, *end, *top;
+    #define STACKSIZE 5
+    int push(DATA *data) {
+        if (top == end) {
+            return 0;
+        } else {
+            memcpy(top, data, sizeof(DATA));
+            top++;
+            return 1;
+        }
+    }
+    DATA *pop() {
+        if (top == base) {
+            return NULL;
+        } else {
+            top--;
+            return top;
+        }
+    }
+    int main(int, char**) {
+        DATA data, *pdata;
+        
+        base = (DATA*)malloc(STACKSIZE * sizeof(DATA));
+        end = base + STACKSIZE;
+        top = base;
+
+        // add the data items to the stack until stack overflow.
+        for (int i = 0; ; i++) {
+            data.a = i;
+            data.b = i * 2;
+            if (!push(&data)) {
+                break;
+            }
+        }
+        
+        printf("First item: %d %lf\n", base->a, base->b);
+        pdata = base + 4;
+        printf("Last item: %d %lf\n\n", end->a, end->b);
+
+        do {
+            pdata = pop();
+            if (pdata != NULL) {
+                printf("data popped: %d %lf\n", pdata->a, pdata->b);
+            }
+        } while (pdata != NULL);
+
+        free(base);
+        
+        return 0;
+    }
+    /* output:
+    First item: 0 0.000000
+    Last item: 0 0.000000
+
+    data popped: 4 8.000000
+    data popped: 3 6.000000
+    data popped: 2 4.000000
+    data popped: 1 2.000000
+    data popped: 0 0.000000
+    */
+\end{minted}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Calculating the length of a list}
+\begin{itemize}
+    \item Calculating the length of a linked list is a matter of traversing through all of the linked list counting. There is a much better way of doing this which is to simply keep track of each insertion and deletion, but for the purposes of this lets calculate it in this inefficient way.
+\end{itemize}
+\begin{minted}[autogobble]{c}
+    #include <stdio.h>
+    #include <stdlib.h>
+    typedef struct node {
+        struct node *next, *prev;
+        int data;
+    } node;
+    typedef struct list  {
+        node *head, *tail;
+    } list;
+    unsigned int calculate_length(list *l) {
+        unsigned int length = 0;
+        node *current = l->head;
+        while (current != NULL) {
+            length++;
+            current = current->next;
+        }
+        return length;
+    }
+    void push(list *l, int data) {
+        node *new_node = (node*)malloc(sizeof(node));
+        new_node->data = data;
+        new_node->next = new_node->prev = NULL;
+        if ((l->head == NULL) && (l->tail == NULL)) {
+            l->head = l->tail = new_node;
+        } else {
+            l->tail->next = new_node;
+            new_node->prev = l->tail;
+            l->tail = new_node;
+        }
+    }
+    int pop(list *l) {
+        if ((l->head == NULL) && (l->tail == NULL)) {
+            return -999;
+        } else if (l->head == l->tail) {
+            int last = l->head->data;
+            free(l->head);
+            l->head = l->tail = NULL;
+            return last;
+        } else {
+            int last = l->tail->data;
+            l->tail = l->tail->prev;
+            free(l->tail->next);
+            l->tail->next = NULL;
+            return last;
+        }
+    }
+    int main(void) {
+        list l;
+        l.head = l.tail = NULL;
+        for (int i = 0; i < 10; i++) {
+            push(&l, i*2);
+            printf("pushed: %d\n", i*2);
+        }
+        printf("\n\nlength: %u\n\n", calculate_length(&l));
+        for (int i = 0; i < 11; i++) {
+            printf("popped: %d\n", pop(&l));
+        }
+        return 0;
+    }
+    /* output:
+    pushed: 0
+    pushed: 2
+    pushed: 4
+    pushed: 6
+    pushed: 8
+    pushed: 10
+    pushed: 12
+    pushed: 14
+    pushed: 16
+    pushed: 18
+
+
+    length: 10
+
+    popped: 18
+    popped: 16
+    popped: 14
+    popped: 12
+    popped: 10
+    popped: 8
+    popped: 6
+    popped: 4
+    popped: 2
+    popped: 0
+    popped: -999
+    */
+\end{minted}
