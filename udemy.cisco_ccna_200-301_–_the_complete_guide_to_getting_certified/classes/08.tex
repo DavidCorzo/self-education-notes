@@ -414,7 +414,7 @@
     \item Valid host addresses are 200.15.10.97 to 200.15.10.98.
 \end{itemize}
 
-\subsection{Network topologyh diagram}
+\subsection{Network topology diagram}
 \begin{itemize}
     \item Revisit the network diagram again:
         \begin{figure}[H]
@@ -446,4 +446,119 @@
     
     \item If we subnet this in /29 subnets, we have 3 bits for host addressing. This allows 6 hosts per network ($2^3-2$), the same as if we used /29 with a class C address.
     \item Because we were allocated a Class B /16 address range, we have 13 bits for network addresses. This allows for 8292 subnets ($2^{13}$)
+\end{itemize}
+
+\subsection{Examples}
+\begin{itemize}
+    \item Example 1: For the IP address 135.15.10.138/29, what is the network address, broadcast address, and range of valid IP addresses.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=\width\textwidth]{./figs/20230220135938.png}
+            %\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item Notice in the above figure, the lower binary word is the subnetmast, since it has a contigous stream of 1's and then three zeros. The upper is the ip address.
+            \item Thus the broadcast address is simply the ip in which the last 3 binary digits is 1, the network is when the last three digits are 0:
+                \begin{itemize}
+                    \item The base IP: 135.15.10.138 = 10000111.00001111.00001010.10001010
+                    \item Network address: 10000111.00001111.00001010.10001000 = 135.15.10.136
+                    \item Broadcast address: 10000111.00001111.00001010.10001111 = 135.15.10.143
+                    \item Valid hosts: from the network address to the broadcast address - 2: 10000111.00001111.00001010.10001001 - 10000111.00001111.00001010.10001110 = 135.15.10.137 - 135.15.10.142
+                \end{itemize}
+        \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Subnetting Large Networks}
+Example: class A on the third octet.
+\begin{itemize}
+    \item We are allocated a class A 60.0.0.0/8:
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=\width\textwidth]{./figs/20230220165003.png}
+            %\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item If we subnet this into fixed size subnet masks using /19, how many subnets do we have?
+            \begin{itemize}
+                \item The answer is /19 means we have 32-19 bits, or 13 bits for host addressing. This means we can reference up to $(2^{13}-2)$.
+                \item This because we were allocated a class A /8 address range, we have 11 bits for network addresses, or $2^{11}=2048$ subnets.
+                    \begin{figure}[H]
+                        \centering
+                        \includegraphics[width=\width\textwidth]{./figs/20230220184630.png}
+                        %\caption{}
+                    \end{figure}
+            \end{itemize}
+        \end{itemize}
+    \item The IP address 60.15.10.75/19, what is the network address, broadcast address, adn range of valid IP addresses?
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=\width\textwidth]{./figs/20230220184754.png}
+            %\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item Notice that the line is after the 32, so the network address goes up in multiples of 32.
+            \item Network address: 60.15.0.0
+            \item Next network address: 60.15.32.0
+            \item Broadcast address: 60.15.31.255
+            \item Valid host addresses: 60.15.0.1 - 60.15.31.254.
+        \end{itemize}
+    
+    \item You have been asked to subnet the 134.65.0.0 network into six different networks.
+        \begin{figure}[H]
+            \centering
+            \includegraphics[width=\width\textwidth]{./figs/20230220190745.png}
+            %\caption{}
+        \end{figure}
+        \begin{itemize}
+            \item 134.65.0.0 is a class B network so we'll be subnetting on the third octet to get 6 subnets.
+            \item 3 bits would provide 8 subnets $2^3$
+            \item So the answer is /19 or 255.255.224. Since the subnet mask provided by class B ip addresses specify that the network address is the first 2 octets, we extend the subnet mask by three bits of the third octet the required 8 subnets.
+            \item Network addresses would be 134.65.0.0, 134.65.32.0, 134.65.64.0, etc.
+            \item 8190 hosts in each subnet $2^{13}-2$
+        \end{itemize}
+\end{itemize}
+
+\subsection{Subnetting question categories}
+\begin{itemize}
+    \item Most exam questions will have the following format:
+        \begin{itemize}
+            \item Given a network requirement of 'x' amount of subnets and 'y' amount of hosts per subnet, what network addresses and subnet mask should be used for each subnet?
+            \item Given a particular IP address and subnet mask, calculate: 
+                \begin{itemize}
+                    \item The subnet's network address. 
+                    \item The broadcast address.
+                    \item The range of valid host IP addresses.
+                \end{itemize}
+        \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Private IP addresses part 1}
+\begin{itemize}
+    \item Private addresses were documented by the IETF (Internet Engineering Task Force), when this organization documents anything it issues a RFC which stands for Request For Comment, basically its calling for peer reviewing of the documentation, so other engineers can comment and suggest improvements.
+    \item The RFC 1918 specifies private IP address ranges which are not routable on the public internet.
+        \begin{itemize}
+            \item It is not common to memorize RFC numbers, but most engineers just know about RFC 1918 for private addresses, it is common terminology.
+        \end{itemize}
+
+    \item RFC 1918 Private Addresses:
+        \begin{itemize}
+            \item When the internet was thought out, there was some situations in which you wanted some IP addresses to not be connected to the internet. 
+            \item For example in a company, you have a LAN that is not connected to the internet. 
+            \item So private addresses were designed to have no connectivity to the internet.
+            \item A publich IP, in contrast, costs money. So if you don't require IPs to connect to the internt it would be a waste of money and a potential vulnerability threat to use public. Instead use private.
+            \item An example of organizations that use this are banks: it makes sense that banks would want to a part of their network to be completely cut off the internt for security reasons. They would use private IP addresses there. 
+            \item There is a range of private addresses in each address class:
+                \begin{itemize}
+                    \item 10.0.0.0 - 10.255.255.255: class A /8 subnet mask.
+                    \item 172.16.0.0 - 172.31.255.255: class B /12 subnet mask.
+                    \item 192.168.0.0 - 192.168.255.255: class C /16 subnet mask.
+                \end{itemize}
+        \end{itemize}
+    
+    \item Example of when we would use private addresses:
+        \begin{itemize}
+            \item 
+        \end{itemize}
 \end{itemize}

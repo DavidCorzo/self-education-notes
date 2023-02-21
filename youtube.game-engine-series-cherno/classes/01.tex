@@ -64,7 +64,82 @@ The game engine will do some things, and will not do other things. Defining what
 \end{itemize}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Project setup}
+% \section{Project setup}
+% \begin{itemize}
+%     \item The game engine will be called Hazel.
+% \end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Entry point}
 \begin{itemize}
-    \item The game engine will be called Hazel.
+    \item An application's entry points is the point in which the application runs.
+    \item Our engine is a dll file, which means when we attach the code to our game engine application, the entry point will be the point in which the application starts the engine.
+    \item The game engine is supposed to be attached to the end user application. So we don't expect it to have a main function, because the main function will be in the end user application.
 \end{itemize}
+
+\subsection{Code}
+\begin{itemize}
+    \item First we create the following folder and files:
+        \begin{verbatim}
+            ├── src
+            │   ├── Hazel
+            │   │   ├── Application.cpp
+            │   │   ├── Application.h
+            │   │   ├── Core.h
+            │   │   └── Entrypoint.h
+            │   └── Hazel.h
+            └── sandbox
+                └── src
+                    └── SandboxApp.cpp
+        \end{verbatim}
+\end{itemize}
+
+\subsection{Commented files}
+Now the commented first code in this lecture explained.
+\begin{itemize}
+    \item First there is the core file. The core file for now will have only macros. Since we are building a DLL which stands for Dynamic Link Library the idea is that we develop the engine that gets linked at compile time with the end user application.
+    \item So to tell the C++ compiler we are building a DLL we specify in the appropriate definitions to export or import a DLL. Importing a DLL means to grab the already compiled DLL and attaching it to the client application. To export it is to offer the DLL to be used in the client application.
+    \item To import use: \mintinline{cpp}{__declspec(dllimport)}
+    \item To export use: \mintinline{cpp}{__declspec(dllexport)}
+    \item We are going to be making a macros so that we do not hard code the import and export commands. Whenever we are building the DLL the HAZEL\_API macro will expand to the export command \mintinline{cpp}{__declspec(dllexport)}. If we are not building the DLL but rather ataching it to the client application the macro will expand to \mintinline{cpp}{__declspec(dllimport)}.
+\end{itemize}
+\begin{minted}[autogobble]{cpp}
+    // On src/Hazel/Core.h
+    #pragma once
+    #ifndef HZ_PLATFORM_WINDOWS
+        #ifdef HZ_BUILD_DLL
+            #define HAZEL_API __declspec(dllexport)
+        #else
+            #define HAZEL_API __declspec(dllimport)
+    #else
+        #error Hazel only support windows!
+    #endif
+\end{minted}
+
+\begin{itemize}
+    \item Now this is the application that contains the functions we are supposed to override from the client application.
+\end{itemize}
+\begin{minted}[autogobble]{cpp}
+    // On src/Hazel/Application.h
+    #pragma once
+    #include "Core.h"
+    namespace Hazel {
+        // HAZEL_API is a macro defined in Core.h
+        class HAZEL_API Application {
+        public:
+            Application();
+            virtual ~Application();
+            void Run();
+        }
+    }
+\end{minted}
+\begin{itemize}
+    \item In our sandbox application, we are going to import the DLL from the main project, sandbox is nothing more that just a trial client app that uses the engine, its to try out our code.
+\end{itemize}
+\begin{minted}[autogobble]{cpp}
+    // On sandbox/src/SandboxApp.cpp
+    #include <Hazel.h>
+    int main(void) {
+        Hazel::print();
+    }
+\end{minted}
