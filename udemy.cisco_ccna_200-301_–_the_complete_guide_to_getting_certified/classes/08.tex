@@ -559,6 +559,99 @@ Example: class A on the third octet.
     
     \item Example of when we would use private addresses:
         \begin{itemize}
-            \item 
+            \item Given the following topology environment:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=\width\textwidth]{./figs/20230221142215.png}
+                    %\caption{}
+                \end{figure}
+            
+            \item Bank A has a public and a private part of their network. The public one is used to access the internet (175.11.0.0/24). The private LAN cannot access the internet (10.10.10.0/24). 
+            \item The same configuration is followed by Bank B. Notice that the public LAN of each bank is different, and that is to be expected, but the private is exactly the same. This is not a problem since these IPs are only significant in each bank's network. So no conflict here. They can't use the same public addresses since they would conflict.
         \end{itemize}
+    
+    \item The IPv4 Global Address Space Problem, the solution IPv6:
+        \begin{itemize}
+            \item Let's revisit the problem of the IPv4 design.
+            \item Remember that the class A loopback address 127.0.0.0 removed millions of ips that could been allocated to organizations? The designers of the ipv4 protocol did not forsee that the IPs would soon run out and the available 4.3 billion addresses would not be enough.
+            \item They ran out of addresses. The internet authorities started to predict address exhaustion in the late 1980's, and IPv6 was developed in the 90's as the long term solution.
+            \item IPv6 uses a 128 bit (16 byte) address, compared to IPv4's 32 bit (4 byte) address.
+            \item IPv6 provides more than $7.9\times 10^{28}$ times as many addresses as IPv4. Keep in mind that because 16 bytes and 4 bytes there is an exponential difference, its not just "4 times as large", its actually exponentially bigger ($7.9\times 10^{28}$ bigger to be exact).
+        \end{itemize}
+    
+    \item The IPv6 problem and NAT:
+        \begin{itemize}
+            \item There is not a seamless migration path from the IPv4 and IPv6.
+            \item Changing from ipv4 to ipv6 is not easy, one is not compatible with the other, so until organizations can upgrade from ipv4 to ipv6, a technology (a work around) was developed as a temporary solution to this, its called NAT.
+            \item NAT stands for Network Address Translation, and it basically works like this:
+                \begin{itemize}
+                    \item Let's say that we have an organization that has the private IP addresses mentioned in the last example. So it has a public and a private LAN. With NAT the private addresses can communicate with the internet as if they were public. So the organization can use the RFC 1918 private IP addresses which are not publicly routable, so they don't work in the public internet. On the way out, NAT converts the communications coming from the private IPs to public IP addresses. 
+                    \item So when then the internet trafic goes out from your private IP address, NAT transforms it to a public IP and the internet can send trafic back through NAT.
+                    \item Many hosts on the inside that are using the RFC 1918 private IP addresses can share a single public IP on the outside.
+                \end{itemize}    
+        \end{itemize}
+    
+    \item Now for an example of private IP addresses and NAT:
+        \begin{itemize}
+            \item Given the following topology: 
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=\width\textwidth]{./figs/20230221143926.png}
+                    %\caption{}
+                \end{figure}
+            
+            \item Office A and B have the same configuration, a range of public and private IP addresses. The private IPs cannot communicate with the internet. Not yet...
+            \item So NAT will translate the private IPs whenever they are communicating with anybody on the internet. This saves lots of addresses in the ipv4 public address space. And it saves organization's money because public IPs cost money, we can have just one, and have loads of private IPs, and just communicate through that one public IP using NAT.
+        \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Private IP addresses part 2}
+\begin{itemize}
+    \item Today's networks:
+        \begin{itemize}
+            \item Back in the 2000s everybody was saying that they were living the final days of ipv4. But the truth is that it has not happened, almost everybody is using ipv4 with NAT using RFC 1918 private addresses. 
+            \item There are several reasons for this, first there is security benefit of hiding hosts inside a private LAN, the hosts do not have a privately routable IP address. Another reason is that ipv6 has not completely taken over is because most people have more experience using ipv4. Ipv6 is actually a very different format, so most people are not familiar to the format of ipv4.
+            \item Despite this, ipv6 is still found in some companies, primarily service provider networks, mobile services and large countries that adopted the internet later such as India and China.
+            \item Spare public IPv4 addresses were exhausted in 2011 so IPv6 is still the future path. It will be a slow process of adoption but eventually ipv4 will be deprecated and ipv6 will completely take hold.
+            \item Subnetting is used in RFC 1918 private IP addressing to optimise performance and security.
+            \item You also need to understand subnetting to be able to troubleshoot IP.
+            \item Because most people use the private IP RFC 1918, it is common to see /24 subnets being used for end hosts, /30 subnetting for point to point links, and /32 for loopback. Remember that if we use the private IPs with NAT, we can have all the range of IPs as if they were ours, so all the possible values from 0.0.0.0 to 255.255.255.255 is ours to do with as we please. We communicate trafic with the internet using our public IP RFC 1918.
+            \item Using many subnets in the same networks is called VLSM is more common in enterprises which use public IP addresses on their side of networks and need to maximize their use.
+        \end{itemize}
+    
+    \item Contiguos addresses and route summarization:
+        \begin{itemize}
+            \item Even if you are using private IPs, route summarisation still needs to be used.
+            \item The folllowing example:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=\width\textwidth]{./figs/20230221223230.png}
+                    %\caption{}
+                \end{figure}
+            
+            \item Notice that the advertise address in the center left router is 10.0.0.0/1y6, this is because it is the common bits that all the IPs have, all of the IPs start with 10.0. Same on the right side, all IPs start with 10.1. 
+            \item So when using private IPs you must be careful allocating them, always look to allocate them in contigous blocks. It would be a mistake to not allocate them in contigous blocks like this:
+                \begin{figure}[H]
+                    \centering
+                    \includegraphics[width=\width\textwidth]{./figs/20230221223458.png}
+                    %\caption{}
+                \end{figure}
+            
+            \item Notice in the above image that we cannot summarize because the IPs don't have much in common, in this scenario the routers would have to have a list of all routers complete addresses. The IPs dont start with 10.0, but are different i.e. 10.1, 10.0. so you cannot summarise them. Always plan your private IP addressing address space.
+        \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Where to get more subnetting practice?}
+\begin{itemize}
+    \item Consider using this to study for CCNA.
+    \item \url{http://www.subnettingquestions.com/}
+        \begin{itemize}
+            \item For questions on subnetting.
+            \item Every refreshing of the site will give you a new question.
+        \end{itemize}
+    \item \url{http://www.subnetting.org/}
+    \item \url{https://subnettingpractice.com/}
+    \item Search in google for Subnetting calculators and questions.
 \end{itemize}
