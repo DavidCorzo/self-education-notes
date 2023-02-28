@@ -1,0 +1,197 @@
+\section{Welcome to class}
+\begin{itemize}
+    \item This is the second part of the C programming course for begginers.
+    \item After taking this class you should be an expert in C.
+    \item The last class is a pre-requisite to this one. If you are a begginer this course is not for you.
+    \item Topics:
+        \begin{itemize}
+            \item Storage classes: auto, register, static, and extern.
+            \item Advanced data types: typedef, variable length arrays, flexible array numbers, complex number types.
+            \item Type qualifiers: const, volatile, and restrict.
+            \item Bit manipulation: 
+                \begin{itemize}
+                    \item Binary numbers and bits
+                    \item Bitwise operators (logical and shifting).
+                    \item Bitmasks and bitfields.
+                \end{itemize}
+            \item Advanced control flow: goto, null, comma operator, setjmp and longjmp.
+            \item More on input and output: getchar, putchar, fgets, puts, sprint, fprintf, fflush, etc.
+            \item Advanced function concepts: veriadic functions (variable number of arguments to a function), recursive functions, inline functions.
+            \item unions: overview, defining and accedding union members.
+            \item Advanced preprocessor concepts: \#define, \#pragma, \#error, \#, \#\#. Conditional compilation (\#ifdef, \#endif, \#else, \#elif, \#undef, etc). Include guards.
+            \item Macros: overview (vs. functions when to use). Predefined macros, creating your own macros.
+            \item Advanced debugging and compiler flags: 
+                \begin{itemize}
+                    \item Debugging with the pre-processor, more on gdb.
+                    \item Core files, getting the stack trace.
+                    \item Static analysis and profiling.
+                \end{itemize}
+            \item Static libraries and shared objects: overview, creation, dynamic loading.
+            \item Working with larger programs: dividing your program into multiple files and compiling multiple files.
+            \item Advanced pointers: double pointers (pointers to pointers), function pointers, more on void parameters.
+            \item Useful C libraries: the assert library, general utilities library (stdlib.h), (exit, atexit, qsort, memcpy, abort), date and time functions.
+            \item Data structures: linked lists, stacks, queues, and trees.
+            \item Inter-process communication (IPC) (unix based using cygwin): overview (message queues, shared memory, piping), forking and signals.
+            \item Threads (pthread (posix), not \mintinline{c}{<threads.h>} (mainly because it's not portable) from C11): overview, creating a thread, mutexes, and semaphores, thread management (multi-threading, join, detach).
+            \item Networking (unix based using cygwin): overview (client/server model), creating server and client sockets.
+        \end{itemize}
+    
+    \item Expectations:
+        \begin{itemize}
+            \item Many challenges, solutions, and examples.
+            \item Practicing theory in real time, lots of coding.
+            \item Ability to write advanced C programs.
+            \item You will be able to write efficient, high quality code that is modulat, lowly coupled (low dependencies).
+            \item Master the art of problem solving in programming using efficient, proven methods.
+            \item You will understand advanced concepts of C.
+            \item And have fun.
+        \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Class organization}
+\begin{itemize}
+    \item This class is not a tutorial, or a how to, its focused on the why:
+        \begin{itemize}
+            \item This with the purpose of having a genuine learning experience.
+            \item Understand the programming language as a whole.
+            \item Most udemy courses are not like this.
+        \end{itemize}
+    
+    \item Powerpoint slides: 
+        \begin{itemize}
+            \item This is the way the instructor found best to demonstrate code and abstract concepts.
+            \item The instructor will not just be reading off of slides.
+                \begin{itemize}
+                    \item He will be proving insight through experience.
+                    \item Providing through explanations.
+                \end{itemize}
+        \end{itemize}
+    
+    \item Demonstrations:
+        \begin{itemize}
+            \item Code examples in an IDE.
+            \item Applying the theory.
+        \end{itemize}
+    
+    \item Challenges (coding challenges):
+        \begin{itemize}
+            \item All challenges will have the solutions, but try first without looking at the solution.
+        \end{itemize}
+\end{itemize}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The C99 Standard}+
+\begin{itemize}
+    \item Overview:
+        \begin{itemize}
+            \item C has several standards (C89, C99, C11).
+            \item We already covered concepts of the C99 standard, but in the begginer course we maily focused on C89, the only parts of C99 we touched on were:
+                \begin{itemize}
+                    \item bool data type in stdbool.h.
+                    \item Variable length arrays.
+                    \item Single line comments.
+                \end{itemize}
+        \end{itemize}
+    
+    \item This class will include more C99 functionality.
+\end{itemize}
+
+\subsection{History}
+\begin{itemize}
+    \item C99 is a revised standard for the C programming language. the ''99´´ in the name stads for the year it came out.
+    \item C99 has not been widely adopted:
+        \begin{itemize}
+            \item Not all popular C compilers support it.
+            \item Of all the compilers that offer C99 support, most support only a subset of the language. Partially supported.
+        \end{itemize}
+    \item This is why the begginer course focused on C89. C89 is almost universally supported where as C99 is not.
+\end{itemize}
+
+\subsection{C99 features}
+\begin{itemize}
+    \item The features that we will be looking at will be:
+        \begin{itemize}
+            \item macros with a variable number of arguments.
+            \item The added data types: \_Complex (floating points for complex number), \_Imaginary (imaginary floating numbers.)
+            \item Designated initializers: initialize elements of an array, union, or struct explicitly by subscript or name.
+            \item Restricted pointers: type qualifier only used on pointers.
+            \item New comment sintax: \mintinline{c}{//} the double slash.
+            \item Inline functions: supplies a hint for the compiler to perform optimizations.
+            \item Variable length arrays: in C89 the array size has to be declared, C99 permits declaration of array sizes using an integer variable or any valid integer expression.
+            \item Flexible array members: declare an array of unspecified length as the last member of a struct.
+            \item Declaration of members: now its legal to declare variables at any point in the program, so instead of \mintinline{c}{int i; for (i = 0; i < 10; i++) {}} you can declare the variable in the loop itself \mintinline{c}{for (int i = 0; i < 10; i++) {}} this is an additional feature included in C99. Better because they are local and cannot be accidentaly misused after the loop ends if they were going to be used only in the loop.
+        \end{itemize}
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{The C11 Standard}
+\begin{itemize}
+    \item We have not seen C11 concepts.
+    \item Features added to C11:
+        \begin{itemize}
+            \item Multithreading support, safer standard libraries, better compliance with other industry standards.
+        \end{itemize}
+    
+    \item Fixing issues of C99:
+        \begin{itemize}
+            \item Some mandatory features are optional (variable length arrays and complex types).
+            \item Basically if you want to use variable length arrays, the compiler will optionally include this feature, so if you use C11 compilers be ware that some C99 features are not always included.
+        \end{itemize}
+    
+    \item C11 focuses on better compatibility with C++ as much as possible.
+    \item We may touch on some concepts of C11 but it will be minimal.
+    \item C11 standarizes many features that have already been available in common compiler implementations.
+    \item Defines a memory model that better suits multithreading.
+    \item Fixes problems with the C99 standard:
+        \begin{itemize}
+            \item Some of its mandatory features proved difficult to implement in some platforms.
+            \item Politics: cooperation with C and C++ standards commitees in the 90s was lacking, C11 is more compatible.
+            \item Design mistakes of C99 are fixed in C11.
+        \end{itemize}
+    
+    \item C11 focuses on security (string manipulation functions, input/output):
+        \begin{itemize}
+            \item A new set of safer standard functions that aim to replace the traditional unsafe funtions:
+                \begin{itemize}
+                    \item bounds checking functions: begin and end in \_s (strcat\_s, strcpy\_s, etc).
+                    \item Removal of the ''gets´´ functions. This was an unsafe function and got people hacked.
+                    \item C11 has optional to the standard features (will not focus on due to most compilers supporting it).
+                \end{itemize}
+        \end{itemize}
+    
+    \item Topics pending:
+        \begin{itemize}
+            \item Support for anonymous structs and unions:
+                \begin{itemize}
+                    \item Has neither a tag name nor a typedef name.
+                    \item Useful when unions and structures are nested.
+                \end{itemize}
+            
+            \item Static assertions:
+                \begin{itemize}
+                    \item Evaluated during translation at a later phase than \#if and \#error.
+                    \item Let you catch errors that are impossible to detect during the preprocessing phase.
+                \end{itemize}
+            
+            \item No-return functions:
+                \begin{itemize}
+                    \item Declares a function that does not return.
+                    \item Suppresses compiler warnings on a function that doesn't return.
+                    \item Enables certain optimizations that are allowed only on functions that don't return.
+                \end{itemize}
+            
+            \item Multithreading:
+                \begin{itemize}
+                    \item The biggest change in C11 is its standardized multithreading support.
+                    \item C has supported multithreading for decades:
+                        \begin{itemize}
+                            \item However, all of the popular C threading libraries have thus far been non-standard extensions and hence not-portable.
+                        \end{itemize}
+                    
+                    \item The new C11 header file \mintinline{c}{<threads.h>} declares functions for creating and managing threads, mutexes, condition variables.
+                    \item However it is not supported on windows, and thus we will learn \mintinline{c}{<pthread.h>} instead (which is posix compliant).
+                \end{itemize}
+        \end{itemize}
+\end{itemize}
