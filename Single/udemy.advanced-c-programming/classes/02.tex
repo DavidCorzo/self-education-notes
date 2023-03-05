@@ -1,0 +1,51 @@
+\section{Overview}
+\begin{itemize}
+    \item Up until now we have made programs that can fit into a single file. In the real world the programs can span across thousands of files and folders.
+    \item The methods we use to compile and administer the small one file programs cannot be the same approach we use for the larger programs. So it is important to learn the proper techniques for dealing with these larger programs.
+        \begin{itemize}
+            \item One way this is done is using the modulization approach, divide and conquer. 
+        \end{itemize}
+    
+    \item Important: C provides all the features required to develop large programs.
+    \item In real world projects putting all the code into a single file is not acceptable. This approach is doomed to fail.
+    \item IDEs:
+        \begin{itemize}
+            \item Developing in an IDE is imperative for dealing with these large programs.
+            \item Large projects usually require a team of people, having separate files makes coordinating work easier across team members.
+            \item Having one file is unmanagable.
+            \item Modulization is all about separating things based on their functionality.
+        \end{itemize}
+    
+    \item Advantages of using IDEs:
+        \begin{itemize}
+            \item Allows you to achieve abstraction and promotes the re-usability of code, all of this done via the modulization approach..
+            \item Teams of programmers can work on programs: each person can work on their own file (usually git is used for this too).
+            \item Files can contain all functions from a related group: example math.h.
+            \item Well implemented functions can be re-used in other programs, reducing development time.
+            \item When cahnges are made to a file, only that file need to be re-compiled to rebuild the program (makefiles).
+            \item Any serious project on Github will be organized in this way, it will be decentralized into many number of sub-modules. Each individual module contributes to a specific critical function of the program.
+        \end{itemize}
+    
+    \item How do you design a really large program?
+        \begin{itemize}
+            \item Programmers usually start designing a program by deviding the problem into easily managable chunks.
+            \item Each of these chunks might be implemented as one or more functions.
+            \item All functions from each section will usually live in a single file.
+            \item The file containsthe definitions of each function. You should create a header file for each of the C files. Each of the C files and H files need to have the same name i.e. math.c and math.h, matrix.h and matrix.c.
+        \end{itemize}
+\end{itemize}
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Compiling multiple source files from the command line}
+\begin{itemize}
+    \item Suppose you have conceptually divided your program into three modules: mod1.c, mod2.c and the main routine into the file main.c.
+    \item To compile these files into the same program you need to tell the compiler:
+        \begin{verbatim}
+            $ gcc mod1.c mod2.c main.c -o dbtest
+        \end{verbatim}
+    
+    \item The above code has the effet of separately compiling the code contained in mod1.c, mod2.c and main.c.
+    \item Errors discovered in mod1.c, mod2.c and main.c are separatel identified by the compiler. The compiler will tell which file and line in the file the error occured.
+    \item 
+\end{itemize}

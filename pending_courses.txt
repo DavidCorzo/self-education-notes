@@ -1,4 +1,0 @@
-Making a game engine in C++:
-https://youtube.com/playlist?list=PL7lh9ryRNHSIzqKzEdYPG94B0uvfqhHpb
-Making a game in C++:
-https://youtube.com/playlist?list=PL7lh9ryRNHSJjzOD070wCctd3PvC0h4uG

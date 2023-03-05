@@ -1,0 +1,318 @@
+javascript {
+    udemy 1 Hour JavaScript
+    udemy Complete Modern JavaScript Firebase BootCamp the beginner
+    udemy JavaScript Complete Beginners Course For Web Development
+    udemy JavaScript for QA Engineers and SDETs
+    udemy Learn JavaScript (just the good bits)
+    udemy The Complete JavaScript Course 2021
+    udemy The Complete JavaScript Course 2023: From Zero to Expert!
+    pirple ES6 JavaScript
+}
+Procedural Programming, Object Oriented Programming, and General Programming Tutorials {
+    udemy Advanced Object Oriented Analysis of Hard Problems using UML
+    udemy Build 17 Beginner's Projects with : Python | JavaScript | C#
+    udemy UML Fundamentals
+}
+Java {
+    udemy Java Programming Masterclass updated to Java 17
+    udemy Java Programming: Complete Beginner to Advanced
+    udemy 25 Design Patterns in Java for Beginners
+    udemy Build 10 Java Beginner Projects from scratch
+    udemy 1Z0-819 Oracle OCP Java 11 Developer Exam Mock Test 1Z0-829
+    udemy Improve your Java code using Amazon CodeGuru
+    udemy OCP Java SE 11 Developer Practice Exams 1Z0-819 updated 2021
+    udemy Practical Java Basics Course with Real-life Examples
+    udemy Professional Certificate in Java Programming
+    udemy Selenium in Java - Setup Simple Test Automation Framework
+    pirple Java Fundamentals
+}
+Data Science, computer vision, NLP, Data Visualization and Machine Learning {
+    udemy Ultimate Python Bootcamp For Data Science & Machine Learning
+    udemy Artificial Intelligence A-Z™: Learn How To Build An AI
+    udemy Web Scraping for Data Science - Python & Selenium - Basics
+    udemy Web scraping in Python with BeautifulSoup by Example
+    udemy Computer Vision with Python
+    udemy Python for Machine Learning with Numpy, Pandas & Matplotlib
+    udemy Machine Learning & Artificial Intelligence with Python
+    udemy Machine Learning with SciKit-Learn with Python
+    udemy Pandas with Python for Data Science
+    udemy Decision Trees, Random Forests, AdaBoost & XGBoost in Python
+    udemy Data Analysis & Statistics: practical course for beginners
+    udemy Data Visualization with Numpy and Pandas
+    udemy Machine Learning From Basic to Advanced
+    udemy Machine Learning with Google Colabs - Beginners Guide
+    udemy Machine Learning- From Basics to Advanced
+    udemy Natural Language Processing [ Building Real World Projects]
+    udemy NLP Course for Beginner
+    udemy NumPy for Data Scientist
+    udemy Social Engineering (Information Gathering) from A to Z
+    udemy Master Artificial Intelligence 2022 : Build 6 AI Projects
+    udemy Fundamental Question on Deep Learning
+    udemy Deep Learning Bootcamp with 5 Capstone Projects
+    udemy Essentials of Data Science
+    udemy SAS Certified Associate SAS Programming Fundamentals
+    pirple Data Mining With Python
+}
+Arduino {
+    udemy Arduino Workshop 2018 | A step-by-step Arduino how-to guide
+}
+Python {
+    udemy Certified Python Questions and detailed Answers
+    udemy Full Stack Programming for Complete Beginners in Python
+    udemy Learn Python Programming From A-Z: Beginner To Expert Course
+    udemy Learn Python: From Basics to Data Structure
+    udemy Python Complete Course For Beginners
+    udemy Python Course 2023 Learn by Python Projects & Python Quizzes
+    udemy Python Course From Basic to Advanced
+    udemy Python Demonstrations For Practice Course
+    udemy Python In Practice : 15 Projects to Master Python
+    udemy Python Practice Test - 4 Practice Exams
+    udemy Python Programming - From Basics to Advanced level [2023]
+    udemy The Complete Python Bootcamp From Zero to Hero in Python
+    udemy The Python Developer Essentials 2023 Immersive Bootcamp
+    udemy The Python Mega Course: Learn Python in 50 Days with 20 Apps
+    pirple Python 3 Fundamentals
+}
+Nodejs {
+    udemy The Complete Node.js Developer Course (3rd Edition)
+    udemy Complete NodeJS course with express, socket io and MongoDB
+    pirple NodeJS
+}
+Web Dev & API Dev {
+    udemy Vue JS and Python Django Full Stack Web Development Course
+    udemy Python And Flask Framework Complete Course
+    udemy Angular 12 and Python Django Full Stack Web Development
+    udemy Angular 12, Python Django and MySQL Full-Stack App
+    udemy Build an API from scratch with Python, Django, SQLite3
+    udemy Rest API Using MongoDB and NodeJS: Beginners Guide
+    udemy Complete Progressive Web App Bootcamp
+    udemy Build Responsive Real-World Websites with HTML and CSS
+    udemy Build Your Own NetApp Storage Lab, For Free!
+    udemy 2023 Spring Professional Certification Test VMware EDU-1202
+    udemy The Complete React Redux Node Express MySQL Developer Course
+    udemy Java Spring Tutorial Masterclass - Learn Spring Framework 5
+    udemy Angular for Beginners Course (includes FREE E-Book)
+    udemy ASP.NET CORE WEB API | The Complete Guide
+    udemy Master HTML:5 from very beginner to Pro
+    udemy Programming for Entrepreneurs - HTML & CSS
+    udemy Practical Web Development with Docker, Django, Nginx, Redis
+    udemy PHP for Beginners - Become a PHP Master - CMS Project
+    udemy PHP for Beginners: PHP Crash Course 2023
+    udemy Modern PHP Web Development w/ MySQL, GitHub & Heroku
+    udemy PHP for Beginners 2023: The Complete PHP MySQL PDO Course
+    udemy React - The Complete Guide with React Hook Redux in 4hr
+    udemy React native Expo for multiplatform mobile app development
+    udemy The Complete HTML&CSS Bootcamp 2021: Zero to Hero HTML&CSS
+    udemy HTML for Beginners
+    udemy Web Designing Professionally: Real World Project
+    udemy Web Development By Doing: HTML / CSS From Scratch
+    udemy Web Development w/ Google’s Go (golang) Programming Language
+    udemy Learn HTML Tables
+    udemy Learn HTML5 In-Depth - With Real-World Examples
+    udemy Learn How To Build Amazing Websites w/ HTML, CSS and Sass
+    udemy Laravel 9 advanced tips and tricks beginner and intermediate
+    udemy Front End Web Development | Ultimate Guide
+    udemy The Complete HTML&CSS Bootcamp 2021: Zero to Hero HTML&CSS
+    udemy Master Class: React + Typescript Web Development
+    udemy Practical Guide to learn Typescript
+    udemy Create a Personal Brand Website without coding | 2021
+    udemy MERN Stack Master Course - Building your own Instagram
+    pirple FrontEnd Fundamentals
+    pirple Python Flask
+}
+C# {
+    udemy C# .NET tutorial for complete beginners - Masterclass in 3h
+    udemy C# And Visual Studio Productivity Masterclass
+    udemy C# Automation Framework for Web Apps
+    udemy Complete C# Masterclass
+    udemy The Complete C# Developers: Code the Right Way
+    pirple C# Fundamentals
+}
+GUI, Game Dev and Game Engines {
+    udemy Qt 5 C++ GUI Development For Beginners : The Fundamentals
+    udemy Create a Flappy Bird game on Android for Beginners/Unity& C#
+    udemy How to get started in game development
+    udemy Learn C# and make a videogame with Unity
+    udemy Complete C# Unity Game Developer 3D
+    youtube The Cherno - Game Engine
+    youtube Programtic - Let's make an engine!
+    youtube Programtic - Let's make a game!
+    youtube Gadot Engine Tutorials
+}
+Computer Science, Assembly, and Nerd Stuff {
+    udemy Absolute beginner's guide to programming and computers
+    udemy Arm assembly for Hackers
+    udemy x86 Assembly Language Programming From Ground Up™
+    udemy The Self-Taught Programmer
+    udemy The Ultimate : Compiler Design for 2023 - Module 1
+    udemy Reverse Engineering 5: Reversing Visual Basic
+}
+C {
+    udemy C Programming For Beginners - Master the C Language
+    udemy The Complete C Programming Course for Beginners
+    udemy Advanced C Programming: Pointers
+    udemy Advanced C Programming Course
+    udemy C Programming - The Ultimate Complete Practice Test
+}
+C++ {
+    udemy Beginning C++ Programming - From Beginner to Beyond
+    udemy Beginning C++ Templates
+    udemy C++ MASTERY Course – Build Extraordinary Apps (Step-by-step)
+    udemy Learn C++ Programming -Beginner to Advance- Deep Dive in C++
+    udemy Object Oriented Programming in C++ & Interview Preparation
+    pirple C++ Fundamentals
+}
+Go {
+    udemy Go: The Complete Developer's Guide (Golang)
+}
+General Linux Skills {
+    udemy 3 Days Linux Administration Course
+    udemy Linux for Scientific Computing Masterclass - 10.5 Hours
+}
+Networking and cybersecurity {
+    udemy Cisco CCNA 200-301 – The Complete Guide to Getting Certified
+    udemy Computer Network and It's Fundamentals from A to Z
+    udemy Cisco CCNA Lab Options
+    udemy Python For Ethical Hackers 2021
+    udemy Python For Ethical Hackers: Build Port Scanner
+    udemy Python For Ethical Hackers: Build Web App Login Brute-Force
+    udemy Complete Introduction to Cybersecurity 2023
+    udemy SQL Injections Unlocked - SQLi Web Attacks
+    udemy Pentest Handbook: SQL Injection To Shell Uploading
+    udemy CCNA Cyber Ops Understanding Cybersecurity Fundamentals
+    udemy Certified Information Security Manager CISM - Practice Exam
+    udemy Ethical Hacking for beginners: Beginner to Advance
+    udemy Ethical hacking with Hak5 devices
+    udemy Mobile Security: Reverse Engineer Android Apps From Scratch
+    udemy Learn Ethical Hacking From A-Z: Beginner To Expert Course
+    udemy TOP Cisco CCNA 200-301 Practice Exams NEW 2021
+    udemy CA1-001 CompTIA Advanced Security Beta Certify Practice Exam
+    udemy Learn Hacking Using Social Engineering
+    udemy Introduction to Computer Networks for Non-Techies
+    udemy Introduction to SAN and NAS Storage
+    udemy WiFi Hacking using Evil Twin Attacks and Captive Portals
+    udemy The Complete Networking Fundamentals Course. Your CCNA start
+    udemy Complete Linux Security & Hardening with Practical Examples
+    udemy Android Security : Android Security Certification Tests 2021
+}
+Cloud, Docker & Virtualization {
+    udemy A Practical Introduction to Cloud Computing
+    udemy DevOps: Terraform & AWS CloudFormation
+    udemy Docker and Kubernetes: The Complete Guide
+    udemy Docker Certified Associate (DCA) Practice Exam
+    udemy Docker for Node.js Projects From a Docker Captain
+    udemy SASS from Beginner to Expert
+    udemy Google : Professional Cloud Network Engineer Certification
+    udemy Up & Running with Containers in AWS
+}
+Rust {
+    udemy Rust Programming Language for Beginners
+}
+Git and version control {
+    udemy Git & GitHub A Practical Course: Beginner To Advanced Level
+    udemy Git Started with GitHub
+}
+Music Production and DAW {
+    udemy Ableton Live 11 - Music Production in Ableton Live
+}
+Scrum {
+    udemy Agile & Scrum in Depth: Guide, Simulation and Best Practices
+}
+Android (Kotlin, Flutter, Vue) & IOS (Swift) Development {
+    udemy Android App UI Design with Adobe Photoshop & Material Design
+    udemy Complete Android Developer Course - Android 11 with Java
+    udemy iOS & Swift - The Complete iOS App Development Bootcamp
+    udemy Learn Flutter and Dart to create Android and IOS apps
+    udemy Complete iOS Bootcamp - Swift & Objective-C
+    udemy Cross Platform Native iOS & Android in Xamarin C# & Firebase
+    udemy Vue JS and Firebase:Build an iOS and Android chat app
+    udemy Flutter 1.2 with Firebase&Stripe Build shop app from scratch
+    pirple IOS Development with Swift
+    pirple Swift Fundamentals
+    pirple MacOs Development with Swift
+    pirple Android App Development With Kotlin
+}
+Data structures and algorithms {
+    udemy The Complete Data Structures and Algorithms Course in Java
+    udemy Fundamental Data Structures & Algorithms using C language.
+    udemy TOP Interview Questions of Data Structures and Algorithms(1)
+    udemy Mastering Data Structures & Algorithms using C and C++
+    udemy Cracking Coding Interviews Masterclass: C++ Data Structures
+}
+Finances, Accounting, Marketing, Business, and Excel {
+    udemy Python for Financial Analysis and Algorithmic Trading
+    udemy Accounting–Financial Accounting Total-Beginners to Advanced
+    udemy Payroll Accounting With Visually Effective Excel Dashboards
+    udemy Learn Microsoft Excel from A-Z: Beginner To Expert Course
+    udemy Marketing Analytics: Customer Value and Promotion Strategy
+    udemy Practical Tools for the Modern Leader
+    udemy Excel Essentials: The Complete Excel Series - Level 1, 2 & 3
+}
+Data Bases and Business Intelligence {
+    udemy The Complete SQL Bootcamp: Go from Zero to Hero
+    udemy Comprehensive SQL Bootcamp : Beginner to Advanced
+    udemy Database Engineer/DBA - (PostgreSQL, IBM-DB2, MariaDB,NoSQL)
+    udemy Database Tnetworkesting MySQL and PostgreSQL practical tests
+    udemy Google BigQuery & PostgreSQL : Big Query for Data Analysis
+    udemy Learn to create database Apps Using C# and SQL Server
+    udemy MySQL Database Development Mastery
+    udemy Oracle : Oracle Database 11g SQL Fundamentals I
+    udemy Querying Data with Transact-SQL
+    udemy SQL CRUD Operations with PostgreSQL
+    udemy SQL Server Database Engine For Beginners
+    udemy Data Warehouse Developer-SQL Server/ETL/SSIS/SSAS/SSRS/T-SQL
+    udemy Practical Database Course for Beginners : 6 courses in 1
+    udemy Foundation for Oracle Database Administrator (DBA)
+    youtube freeCodeCamp - SQL Tutorial Full Database Course Begginers
+}
+Computer Science for Mathematical and Statistical Purposes {
+    udemy LaTeX for Professional Publications
+    udemy Mathematics in MATLAB
+    udemy Practical Linear Regression in R for Data Science in R
+    pirple R Fundamentals
+    youtube Simplilearn - R Programming Full Course
+    youtube Brandon Foltz - Statistics PL19 - Nonparametric Methods
+}
+UX and Design {
+    udemy Adobe XD Mega Course - User Experience Design
+    udemy UI Design with Photoshop from Beginner to Expert in 15 days
+    udemy Ultimate Adobe Photoshop CC Masterclass Basics To Advanced
+    udemy The complete AutoCAD 2018-21 course
+    udemy Getting Started in Inkscape
+    udemy Inkscape Adventure, Master the Free Vector Graphics Software
+    udemy Learn User Experience Design from A-Z: Adobe XD UI/UX Design
+}
+Blockchain, Hashing & Cryptography {
+    udemy Blockchain Mastery 2023 | Infrastructure of Web3 & Crypto
+}
+Foreign Languages {
+    udemy Learn German Language: Complete German Course - Beginners
+}
+Neuroscience {
+    udemy Meet your brain: a short introduction to neuroscience
+}
+Psicology and Social Skills {
+    artforintrovert All about manipulation. How we control one another.
+}
+Project Management {
+    udemy Project Management Course: Master Project Scope Management
+    udemy Project Management Course Beginner-To-Pro
+}
+Software QA and Testing {
+    udemy The Complete Automation PyTest Course for 2023
+    udemy Manual Software Testing
+}
+Vim & IDEs {
+    udemy Vim Basics - One Hour to Proficiency (Vim Tutorial)
+    udemy Vim Masterclass
+}
+Pure Sciences {
+    youtube Khan Academy - Biology Playlist
+    youtube Khan Academy - Chemistry Playlist
+}
+Music Theory {
+    youtube larryjohnny - Yale Music Theory Course
+}
+
+
+
