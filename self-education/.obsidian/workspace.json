@@ -4,24 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "e3f042ac9c8e401f",
+        "id": "327c0958c658b8ac",
         "type": "tabs",
         "children": [
           {
-            "id": "133290effbb950c3",
+            "id": "fbb0446cd9723815",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "The Complete SQL Bootcamp - Go from Zero to Hero/SECTIONS/SECTION 2 - SQL STATEMENT FUNDAMENTALS.md",
+                "file": "The Complete SQL Bootcamp - Go from Zero to Hero/THE COMPLETE SQL BOOTCAMP - GO FROM ZERO TO HERO.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "SECTION 2 - SQL STATEMENT FUNDAMENTALS"
+              "title": "THE COMPLETE SQL BOOTCAMP - GO FROM ZERO TO HERO"
+            }
+          },
+          {
+            "id": "3a558d8ac4a1bb2b",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "Microsoft Power BI Desktop for Business Intelligence/SECTION 5 - CALCULATED FIELDS WITH DAX.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "SECTION 5 - CALCULATED FIELDS WITH DAX"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -165,17 +180,38 @@
       "command-palette:Open command palette": false
     }
   },
-  "active": "0d5fb67263e67b51",
+  "active": "3a558d8ac4a1bb2b",
   "lastOpenFiles": [
-    "The Complete SQL Bootcamp - Go from Zero to Hero/SECTIONS",
-    "The Complete SQL Bootcamp - Go from Zero to Hero/SECTIONS/SECTION 1 - COURSE INTRO.md",
-    "The Complete SQL Bootcamp - Go from Zero to Hero/SECTIONS/SECTION 2 - SQL STATEMENT FUNDAMENTALS.md",
-    "The Complete SQL Bootcamp - Go from Zero to Hero/FIGS/Screen+Shot+2016-04-17+at+12.22.49+PM.png",
-    "The Complete SQL Bootcamp - Go from Zero to Hero/FIGS/Screen+Shot+2016-04-17+at+12.22.49+PM.png.crdownload",
-    "The Complete SQL Bootcamp - Go from Zero to Hero/FIGS",
-    "The Complete SQL Bootcamp - Go from Zero to Hero/New folder",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS/Pasted image 20250425003057.png",
+    "Microsoft Power BI Desktop for Business Intelligence/SECTION 5 - CALCULATED FIELDS WITH DAX.md",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS/Pasted image 20250425003800.png",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS/Pasted image 20250425003442.png",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS/Pasted image 20250425003419.png",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS/Pasted image 20250425003151.png",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS/Pasted image 20250424165326.png",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS/Pasted image 20250425002940.png",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS/Pasted image 20250425002527.png",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS/Pasted image 20250425002357.png",
+    "Pasted image 20250425002227.png",
+    "Microsoft Power BI Desktop for Business Intelligence/SECTION 4 - CREATING A DATA MODEL.md",
+    "Microsoft Power BI Desktop for Business Intelligence/SECTION 3 - CONNECTION & SHAPING DATA.md",
+    "The Complete SQL Bootcamp - Go from Zero to Hero/SECTION 3 - GROUP BY STATEMENTS.md",
+    "The Complete SQL Bootcamp - Go from Zero to Hero/SECTION 5 - JOINS.md",
+    "The Complete SQL Bootcamp - Go from Zero to Hero/SECTION 1 - COURSE INTRO.md",
+    "The Complete SQL Bootcamp - Go from Zero to Hero/THE COMPLETE SQL BOOTCAMP - GO FROM ZERO TO HERO.md",
+    "Microsoft Power BI Desktop for Business Intelligence/FIGS",
+    "Microsoft Power BI Desktop for Business Intelligence/ASSETS/AdventureWorks Report.pbix",
+    "Microsoft Power BI Desktop for Business Intelligence/ASSETS/__MACOSX/AdventureWorks Raw Data/Sales Data",
+    "Microsoft Power BI Desktop for Business Intelligence/ASSETS/AdventureWorks Raw Data/AdventureWorks Territory Lookup.csv",
+    "Microsoft Power BI Desktop for Business Intelligence/ASSETS/AdventureWorks Raw Data/AdventureWorks Product Lookup.csv",
+    "Microsoft Power BI Desktop for Business Intelligence/ASSETS/AdventureWorks Raw Data/AdventureWorks Product Subcategories Lookup.csv",
+    "Microsoft Power BI Desktop for Business Intelligence/ASSETS/AdventureWorks Raw Data/AdventureWorks Customer Lookup.csv",
+    "Microsoft Power BI Desktop for Business Intelligence/ASSETS/AdventureWorks Raw Data/AdventureWorks Product Categories Lookup.csv",
+    "Microsoft Power BI Desktop for Business Intelligence/ASSETS/AdventureWorks Raw Data/Sales Data/AdventureWorks Sales Data 2022.csv",
+    "Microsoft Power BI Desktop for Business Intelligence/ASSETS/AdventureWorks Raw Data/Sales Data/AdventureWorks Sales Data 2021.csv",
+    "Spark and Python for Big Data with Spark/SECTIONS/SECTION 1 - COURSE INTRODUCTION.md",
+    "The Complete SQL Bootcamp - Go from Zero to Hero/SECTION 2 - SQL STATEMENT FUNDAMENTALS.md",
     "Untitled 1.md",
-    "Welcome.md",
-    "The Complete SQL Bootcamp - Go from Zero to Hero"
+    "Welcome.md"
   ]
 }
